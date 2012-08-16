@@ -1,0 +1,70 @@
+{
+	"sitetree": [
+		{
+			"id": "/",
+			"path": "/",
+			"data-id": "01",
+			"childNodes": [
+				{
+					"id": "about",
+					"path": "about",
+					"data-id": "02"
+				},
+				{
+					"id": "work",
+					"path": "work",
+					"data-id": "03",
+					"childNodes": [
+						{
+							"id": "work_1",
+							"path": "work_1",
+							"data-id": "04"
+						},
+						{
+							"id": "work_2",
+							"path": "work_2",
+							"data-id": "04"
+						},
+						{
+							"id": "work_3",
+							"path": "work_3",
+							"data-id": "04"
+						},
+						{
+							"id": "work_4",
+							"path": "work_4",
+							"data-id": "04"
+						}
+					]
+				},
+				{
+					"id": "contact",
+					"path": "contact",
+					"data-id": "05"
+				}
+			]
+		}
+	],
+	"data": [
+		{
+			"id": "01",
+			"title": "Home"
+		},
+		{
+			"id": "02",
+			"title": "About us"
+		},
+		{
+			"id": "03",
+			"title": "Overview of all work"
+		},
+		{
+			"id": "04",
+			"title": "Work #1"
+		},
+		{
+			"id": "05",
+			"title": "Contact uus"
+		}
+	]
+}
