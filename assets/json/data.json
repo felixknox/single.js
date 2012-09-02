@@ -1,7 +1,7 @@
 {
 	"sitetree": [
 		{
-			"id": "/",
+			"id": "home",
 			"path": "/",
 			"data-id": "01",
 			"childNodes": [
@@ -45,25 +45,45 @@
 			]
 		}
 	],
-	"data": [
+	"pages": [
 		{
-			"id": "01",
+			"id": "home",
+			"page": "BasicPage",
 			"title": "Home"
 		},
 		{
-			"id": "02",
+			"id": "about",
+			"page": "BasicPage",
 			"title": "About us"
 		},
 		{
-			"id": "03",
+			"id": "work",
+			"page": "BasicPage",
 			"title": "Overview of all work"
 		},
 		{
-			"id": "04",
+			"id": "work_1",
+			"page": "BasicPage",
 			"title": "Work #1"
 		},
 		{
-			"id": "05",
+			"id": "work_2",
+			"page": "BasicPage",
+			"title": "Work #2"
+		},
+		{
+			"id": "work_3",
+			"page": "BasicPage",
+			"title": "Work #3"
+		},
+		{
+			"id": "work_4",
+			"page": "BasicPage",
+			"title": "Work #4"
+		},
+		{
+			"id": "contact",
+			"page": "BasicPage",
 			"title": "Contact uus"
 		}
 	]

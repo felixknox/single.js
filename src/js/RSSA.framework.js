@@ -10,9 +10,23 @@ RSSA = {};
 RSSA = {
 	PAGE_TYPES: [],
 	SIGNALS: {
-		newPage: new signals.Signal(),
-		pageControlReady: new signals.Signal(),
-		pathSameSame: new signals.Signal()
+		newPage: new signals.Signal(), //new page requested signal
+		pageControlReady: new signals.Signal(), //when the data has been loaded
+		pathSameSame: new signals.Signal() // if path is the same, signals gets fired.
+	},
+
+	initOptions: null,
+	//options
+		//enabledDebug (default: false) - true/false.
+		//
+	init: function(options, data)
+	{
+		this.pages.init(data.pages);
+		this.paths.setup(data.sitetree);
+		if(options.enabledDebug)
+		{
+			RSSA.debug.init(this.paths.rootNode);
+		}
 	},
 
 /***
@@ -30,16 +44,17 @@ RSSA = {
 		previousNode: null, /* keep a memory of the previous node, good for animation references. */
 		currentNode: null, /*PathNode*/
 		currentPage: null,
+		_pagesData: null,
 
-		init: function()
+		init: function(pages)
 		{
-			pathModel.init($("#markup-nav"));
+			this._pagesData = pages;
 		},
 		requestNewPage: function()
 		{
 			//this gets called from internal elements in the site.
-			// log("pageControl: requestNewPage");
-			pathModel.set();
+			log("pageControl: requestNewPage");
+			//this.paths.set();
 		},
 		onNewPageRequested: function(path)
 		{
@@ -58,9 +73,21 @@ RSSA = {
 			// }
 
 			// this.currentNode.page = this.currentPage;
-			RSSA.SIGNALS.newPage.dispatch(this.currentNode);
+			RSSA.SIGNALS.newPage.dispatch(this.currentNode, this.previousNode);
+
+			var data = this.getPageData(this.currentNode.id);
+			var MyClass = RSSA.tools.stringToFunction(data.page);
+			this.currentPage = new MyClass(this.currentNode);
 			
 			// if(this.currentPage) this.currentPage.start();
+		},
+		getPageData: function(id)
+		{
+			for (var i = 0; i < this._pagesData.length; i++) {
+				log(id , this._pagesData[i].id);
+				if(id === this._pagesData[i].id)
+					return this._pagesData[i];
+			}
 		},
 		removeOldPage: function()
 		{
@@ -108,21 +135,13 @@ RSSA = {
 
 			this.loadSiteTree(SITE_TREE_URL);
 		},
-		loadSiteTree: function(url)
-		{
-			$.getJSON(url, bind(this, this.onLoaded));
-		},
-		onLoadError: function(data)
-		{
-			alert("Click OK -> Refresh");
-		},
-		onLoaded: function(data)
+		setup: function(data)
 		{
 			this.data = data;
 			this.nodes = [];
 
 			//map nodes
-			this.map(this.data.sitetree, this.data.sitetree[0].path);
+			this.map(this.data, this.data[0].path);
 
 			var that = this;
 			Path.rescue(function(){
@@ -220,10 +239,10 @@ RSSA = {
 		},
 		set: function(name, path)
 		{
-			if(pageControl.currentNode && pageControl.currentNode.fullPath === path)
+			if(pages.currentNode && pages.currentNode.fullPath === path)
 			{
 				// if path is the same, then it means a user has clicked an already active menu item, therefore we should reset the list.
-				RSSA.SIGNALS.pathSameSame.dispatch(pageControl.currentNode);
+				RSSA.SIGNALS.pathSameSame.dispatch(pages.currentNode);
 			}else
 			{
 				/* falls back to hash tag if HTML5 history is not supported */
@@ -259,6 +278,23 @@ RSSA = {
 		{
 			return this.getNode(this.currentPath);
 		}
+	},
+
+	tools:
+	{
+		stringToFunction: function(str) {
+			var arr = str.split(".");
+
+			var fn = (window || this);
+			for (var i = 0, len = arr.length; i < len; i++) {
+			fn = fn[arr[i]];
+			}
+
+			if (typeof fn !== "function") {
+				throw new Error("function not found");
+			}
+			return  fn;
+		}
 	}
 
 },
@@ -291,11 +327,12 @@ PathNode = Class.extend({
 
 	init: function(data, trailingPath, parentNode, model, index, rootNode)
 	{
+		log("-->", data.id);
 		this._isRooNode = rootNode;
 		this.model = model;
 		this.index = index;
 		this.title = data.title;
-		this.id = data.id === undefined ? pathModel.getUniqueId() : data.id;
+		this.id = data.id === undefined ? model.getUniqueId() : data.id;
 		this.data = data;
 
 		//path handeling.
@@ -393,8 +430,9 @@ BasicPage = Class.extend({
 	{
 		if(!node) throw new Error("Page (Basic Page) error: missing data node.");
 		this.dataNode = node;
-		SIGNALS.resizeSignal.add(this.resize, this);
+		//SIGNALS.resizeSignal.add(this.resize, this);
 		this.resize();
+		log("new BasicPage", node);
 	},
 	start: function()
 	{
@@ -408,12 +446,11 @@ BasicPage = Class.extend({
 	},
 	dealoc: function()
 	{
-		SIGNALS.resizeSignal.remove(this.resize, this);
+		//SIGNALS.resizeSignal.remove(this.resize, this);
 	},
 	resize: function()
 	{
-		this.el.css("left", windowObj.horizontalPaddingForDesktop);
-		this.resize();
+		//this.el.css("left", windowObj.horizontalPaddingForDesktop);
 	}
 });
 

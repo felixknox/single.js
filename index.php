@@ -26,10 +26,10 @@
 		<script src="src/js/libs/libraries.js"></script>
 		<script src="https://raw.github.com/millermedeiros/js-signals/master/dist/signals.min.js"></script>
 		<script src="src/js/libs/path.js"></script>
-		<script src="https://raw.github.com/janl/mustache.js/master/mustache.js"></script>
 
 		<!-- LOGIC -->
 		<script src="src/js/RSSA.framework.js<?php print $cacheBuster; ?>"></script>
+		<script src="src/js/RSSA.debug.js<?php print $cacheBuster; ?>"></script>
 
 
 		<script src="src/js/Test.js<?php print $cacheBuster; ?>"></script>
@@ -42,6 +42,7 @@
 		<section id="site">
 			<!-- dynamic content -->
 			<div id="pages">
+				sadasdas
 			</div>
 		</section>
 	</body>
