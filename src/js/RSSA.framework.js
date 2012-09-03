@@ -50,11 +50,11 @@ RSSA = {
 		{
 			this._pagesData = pages;
 		},
-		requestNewPage: function()
+		requestNewPage: function(path)
 		{
-			//this gets called from internal elements in the site.
-			log("pageControl: requestNewPage");
-			//this.paths.set();
+			//request a new page from a specific path, used for when you don't have a reference to a node.
+			var node = RSSA.paths.getNode(path);
+			node.requestNodeLaunch();
 		},
 		onNewPageRequested: function(path)
 		{
@@ -62,24 +62,16 @@ RSSA = {
 
 			this.currentNode = RSSA.paths.getNode(path);
 			
-			log("pageControl > onNewPageRequested:", path, this.currentNode);//, String(this.currentNode.type));
-
-			// var t = String(this.currentNode.type);
-			// switch(t)
-			// {
-			// 	default :
-
-			// 	break;
-			// }
+			log("pageControl > onNewPageRequested:", path, this.currentNode);
 
 			// this.currentNode.page = this.currentPage;
 			RSSA.SIGNALS.newPage.dispatch(this.currentNode, this.previousNode);
 
 			var data = this.getPageData(this.currentNode.id);
-			var MyClass = RSSA.tools.stringToFunction(data.page);
-			this.currentPage = new MyClass(this.currentNode);
+			var _class = RSSA.tools.stringToFunction(data.page);
+			this.currentPage = new _class(this.currentNode);
 			
-			// if(this.currentPage) this.currentPage.start();
+			this.currentPage.start();
 		},
 		getPageData: function(id)
 		{
@@ -417,40 +409,6 @@ PathNode = Class.extend({
 	{
 		// log("requestNodeLaunch:", this.fullPath);
 		RSSA.paths.set(this.name, this.fullPath);
-	}
-}),
-
-
-/* Basic page */
-BasicPage = Class.extend({
-	el: null,
-	dataNode: null,
-
-	init: function(node)
-	{
-		if(!node) throw new Error("Page (Basic Page) error: missing data node.");
-		this.dataNode = node;
-		//SIGNALS.resizeSignal.add(this.resize, this);
-		this.resize();
-		log("new BasicPage", node);
-	},
-	start: function()
-	{
-		//method will be called from model just after instantiation.
-		this.resize();
-	},
-	remove: function()
-	{
-		//overwrite if the need for a page out animation, but for god sake, remember to call dealoc!;
-		this.dealoc();
-	},
-	dealoc: function()
-	{
-		//SIGNALS.resizeSignal.remove(this.resize, this);
-	},
-	resize: function()
-	{
-		//this.el.css("left", windowObj.horizontalPaddingForDesktop);
 	}
 });
 

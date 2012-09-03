@@ -16,6 +16,7 @@
 
 		<!-- STYLES + RESET -->
 		<link rel="stylesheet" href="src/css/style.css<?php print $cacheBuster; ?>">
+		<link rel="stylesheet" href="src/css/demo.style.css<?php print $cacheBuster; ?>">
 
 		<!-- LIBS -->
 		<!--[if lt IE 9]>
@@ -30,6 +31,7 @@
 		<!-- LOGIC -->
 		<script src="src/js/RSSA.framework.js<?php print $cacheBuster; ?>"></script>
 		<script src="src/js/RSSA.debug.js<?php print $cacheBuster; ?>"></script>
+		<script src="src/js/RSSA.default.js<?php print $cacheBuster; ?>"></script>
 
 
 		<script src="src/js/Test.js<?php print $cacheBuster; ?>"></script>

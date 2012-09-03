@@ -48,42 +48,42 @@
 	"pages": [
 		{
 			"id": "home",
-			"page": "BasicPage",
+			"page": "RSSA.default.BasicPage",
 			"title": "Home"
 		},
 		{
 			"id": "about",
-			"page": "BasicPage",
+			"page": "RSSA.default.BasicPage",
 			"title": "About us"
 		},
 		{
 			"id": "work",
-			"page": "BasicPage",
+			"page": "RSSA.default.BasicPage",
 			"title": "Overview of all work"
 		},
 		{
 			"id": "work_1",
-			"page": "BasicPage",
+			"page": "RSSA.default.BasicPage",
 			"title": "Work #1"
 		},
 		{
 			"id": "work_2",
-			"page": "BasicPage",
+			"page": "RSSA.default.BasicPage",
 			"title": "Work #2"
 		},
 		{
 			"id": "work_3",
-			"page": "BasicPage",
+			"page": "RSSA.default.BasicPage",
 			"title": "Work #3"
 		},
 		{
 			"id": "work_4",
-			"page": "BasicPage",
+			"page": "RSSA.default.BasicPage",
 			"title": "Work #4"
 		},
 		{
 			"id": "contact",
-			"page": "BasicPage",
+			"page": "RSSA.default.BasicPage",
 			"title": "Contact uus"
 		}
 	]

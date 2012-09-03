@@ -5,6 +5,7 @@ RSSA.debug =
 
 	init: function(rootNode)
 	{
+		//requires jQuery to work.
 		RSSA.SIGNALS.newPage.add(this.onPageChange, this);
 		this._el = $("body").prepend("<div id='rssa-debug'></div>").find("#rssa-debug");
 		this.buildTree(rootNode, this._el);
@@ -21,6 +22,7 @@ RSSA.debug =
 						"width: 0px;"+
 						"height: 100%;"+
 						"overflow: hidden;"+
+						"float: left;"+
 					"}"+
 					"#rssa-debug.open {"+
 						"width: 200px"+
