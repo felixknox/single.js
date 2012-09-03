@@ -48,7 +48,10 @@ RSSA = {
 
 		init: function(pages)
 		{
-			this._pagesData = pages;
+			this._pagesData = [];
+			for (var i = 0; i < pages.length; i++) {
+				this._pagesData[pages[i].id] = pages[i];
+			}
 		},
 		requestNewPage: function(path)
 		{
@@ -75,11 +78,7 @@ RSSA = {
 		},
 		getPageData: function(id)
 		{
-			for (var i = 0; i < this._pagesData.length; i++) {
-				log(id , this._pagesData[i].id);
-				if(id === this._pagesData[i].id)
-					return this._pagesData[i];
-			}
+			return this._pagesData[id];
 		},
 		removeOldPage: function()
 		{

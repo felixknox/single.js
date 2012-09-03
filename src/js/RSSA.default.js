@@ -14,7 +14,7 @@ RSSA.default =
 			this._dataNode = node;
 			this.resize();
 		},
-		star: function()
+		start: function()
 		{
 			//method will be called from model just after instantiation.
 			this.resize();
