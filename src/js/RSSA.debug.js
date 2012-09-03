@@ -1,10 +1,13 @@
 RSSA.debug =
 {
+	enabled: false,
+
 	_el: null,
 	_open: false,
 
 	init: function(rootNode)
 	{
+		this.enabled = true;
 		//requires jQuery to work.
 		RSSA.SIGNALS.newPage.add(this.onPageChange, this);
 		this._el = $("body").prepend("<div id='rssa-debug'></div>").find("#rssa-debug");
@@ -72,7 +75,7 @@ RSSA.debug =
 
 		for (var i = 0; i < cn.length; i++)
 		{
-			btn = new RSSA.debugBtn(cn[i], container.append("<li id='"+cn[i].id+"-btn'>"+cn[i].id+"</li>").find("#"+cn[i].id+"-btn"));
+			btn = new RSSA.debugBtn(cn[i], container.append("<li id='"+cn[i].id+"-btn'>"+cn[i].path+"</li>").find("#"+cn[i].id+"-btn"));
 			if(cn[i].childNodes.length > 0)
 				this.buildTree(cn[i], container);
 		}

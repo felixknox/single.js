@@ -1,88 +1,88 @@
 {
 	"sitetree": [
 		{
-			"id": "home",
+			"id": "",
 			"path": "/",
-			"data-id": "01",
+			"dataId": "home",
 			"childNodes": [
 				{
-					"id": "about",
+					"id": "",
 					"path": "about",
-					"data-id": "02"
+					"dataId": "about"
 				},
 				{
-					"id": "work",
+					"id": "",
 					"path": "work",
-					"data-id": "03",
+					"dataId": "work",
 					"childNodes": [
 						{
-							"id": "work_1",
+							"id": "",
 							"path": "work_1",
-							"data-id": "04"
+							"dataId": "work_1"
 						},
 						{
-							"id": "work_2",
+							"id": "",
 							"path": "work_2",
-							"data-id": "04"
+							"dataId": "work_2"
 						},
 						{
-							"id": "work_3",
+							"id": "",
 							"path": "work_3",
-							"data-id": "04"
+							"dataId": "work_3"
 						},
 						{
-							"id": "work_4",
+							"id": "",
 							"path": "work_4",
-							"data-id": "04"
+							"dataId": "work_4"
 						}
 					]
 				},
 				{
-					"id": "contact",
+					"id": "",
 					"path": "contact",
-					"data-id": "05"
+					"dataId": "contact"
 				}
 			]
 		}
 	],
 	"pages": [
 		{
-			"id": "home",
+			"dataId": "home",
 			"page": "RSSA.default.BasicPage",
 			"title": "Home"
 		},
 		{
-			"id": "about",
+			"dataId": "about",
 			"page": "RSSA.default.BasicPage",
 			"title": "About us"
 		},
 		{
-			"id": "work",
+			"dataId": "work",
 			"page": "RSSA.default.BasicPage",
 			"title": "Overview of all work"
 		},
 		{
-			"id": "work_1",
+			"dataId": "work_1",
 			"page": "RSSA.default.BasicPage",
 			"title": "Work #1"
 		},
 		{
-			"id": "work_2",
+			"dataId": "work_2",
 			"page": "RSSA.default.BasicPage",
 			"title": "Work #2"
 		},
 		{
-			"id": "work_3",
+			"dataId": "work_3",
 			"page": "RSSA.default.BasicPage",
 			"title": "Work #3"
 		},
 		{
-			"id": "work_4",
+			"dataId": "work_4",
 			"page": "RSSA.default.BasicPage",
 			"title": "Work #4"
 		},
 		{
-			"id": "contact",
+			"dataId": "contact",
 			"page": "RSSA.default.BasicPage",
 			"title": "Contact uus"
 		}

@@ -50,7 +50,7 @@ RSSA = {
 		{
 			this._pagesData = [];
 			for (var i = 0; i < pages.length; i++) {
-				this._pagesData[pages[i].id] = pages[i];
+				this._pagesData[pages[i].dataId] = pages[i];
 			}
 		},
 		requestNewPage: function(path)
@@ -65,20 +65,21 @@ RSSA = {
 
 			this.currentNode = RSSA.paths.getNode(path);
 			
-			log("pageControl > onNewPageRequested:", path, this.currentNode);
+			if(RSSA.debug.enabled) log("pageControl > onNewPageRequested:", path, this.currentNode);
 
 			// this.currentNode.page = this.currentPage;
 			RSSA.SIGNALS.newPage.dispatch(this.currentNode, this.previousNode);
 
-			var data = this.getPageData(this.currentNode.id);
+			log(this.currentNode.dataId);
+			var data = this.getPageData(this.currentNode.dataId);
 			var _class = RSSA.tools.stringToFunction(data.page);
 			this.currentPage = new _class(this.currentNode);
 			
 			this.currentPage.start();
 		},
-		getPageData: function(id)
+		getPageData: function(dataId)
 		{
-			return this._pagesData[id];
+			return this._pagesData[dataId];
 		},
 		removeOldPage: function()
 		{
@@ -303,6 +304,7 @@ RSSA = {
 PathNode = Class.extend({
 
 	id: "",
+	dataId: "",//reference to the page ID.
 	path: "", /*Same as id but with blank spaces removed*/
 	fullPath: "",
 	data: null,
@@ -318,12 +320,12 @@ PathNode = Class.extend({
 
 	init: function(data, trailingPath, parentNode, model, index, rootNode)
 	{
-		log("-->", data.id);
 		this._isRooNode = rootNode;
 		this.model = model;
 		this.index = index;
 		this.title = data.title;
-		this.id = data.id === undefined ? model.getUniqueId() : data.id;
+		this.id = data.id === undefined || data.id === "" ? model.getUniqueId() : data.id;
+		this.dataId = data.dataId;
 		this.data = data;
 
 		//path handeling.

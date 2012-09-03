@@ -44,7 +44,7 @@
 		<section id="site">
 			<!-- dynamic content -->
 			<div id="pages">
-				sadasdas
+				Non debug view
 			</div>
 		</section>
 	</body>
