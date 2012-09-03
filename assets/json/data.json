@@ -17,7 +17,8 @@
 					"childNodes": [
 						{
 							"id": "",
-							"path": "work_1",
+							"path": "overlay___test",
+							"overlay": "true",
 							"dataId": "work_1"
 						},
 						{
@@ -28,12 +29,71 @@
 						{
 							"id": "",
 							"path": "work_3",
-							"dataId": "work_3"
+							"dataId": "work_3",
+							"childNodes": [
+								{
+									"id": "",
+									"path": "sub_work_1",
+									"dataId": "work_1"
+								},
+								{
+									"id": "",
+									"path": "sub_work_2",
+									"dataId": "work_2"
+								},
+								{
+									"id": "",
+									"path": "sub_work_3",
+									"dataId": "work_3"
+								},
+								{
+									"id": "",
+									"path": "sub_work_4",
+									"dataId": "work_4"
+								},
+								{
+									"id": "",
+									"path": "sub_work_5",
+									"dataId": "work_5"
+								}
+							]
 						},
 						{
 							"id": "",
 							"path": "work_4",
 							"dataId": "work_4"
+						},
+						{
+							"id": "",
+							"path": "work_5",
+							"dataId": "work_5",
+							"childNodes": [
+								{
+									"id": "",
+									"path": "sub_work_1",
+									"dataId": "work_1"
+								},
+								{
+									"id": "",
+									"path": "sub_work_2",
+									"dataId": "work_2"
+								},
+								{
+									"id": "",
+									"path": "sub_work_3",
+									"dataId": "work_3"
+								},
+								{
+									"id": "",
+									"path": "sub_work_4",
+									"dataId": "work_4"
+								},
+								{
+									"id": "",
+									"path": "sub_work_5",
+									"dataId": "work_5"
+								}
+							]
 						}
 					]
 				},
@@ -80,6 +140,11 @@
 			"dataId": "work_4",
 			"page": "RSSA.default.BasicPage",
 			"title": "Work #4"
+		},
+		{
+			"dataId": "work_5",
+			"page": "RSSA.default.BasicPage",
+			"title": "Work #5"
 		},
 		{
 			"dataId": "contact",

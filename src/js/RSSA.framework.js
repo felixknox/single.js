@@ -43,7 +43,9 @@ RSSA = {
 	{
 		previousNode: null, /* keep a memory of the previous node, good for animation references. */
 		currentNode: null, /*PathNode*/
+
 		currentPage: null,
+		currentOverlayPage: null,
 		_pagesData: null,
 
 		init: function(pages)
@@ -61,21 +63,34 @@ RSSA = {
 		},
 		onNewPageRequested: function(path)
 		{
-			this.removeOldPage();
+			var newNode = RSSA.paths.getNode(path);
+			if(!newNode.overlay)
+			{
+				this.removeOldPage();
+			}
 
-			this.currentNode = RSSA.paths.getNode(path);
-			
+			this.removeOldOverlayPage();
+
+			this.currentNode = newNode;
+
 			if(RSSA.debug.enabled) log("pageControl > onNewPageRequested:", path, this.currentNode);
 
 			// this.currentNode.page = this.currentPage;
 			RSSA.SIGNALS.newPage.dispatch(this.currentNode, this.previousNode);
 
-			log(this.currentNode.dataId);
 			var data = this.getPageData(this.currentNode.dataId);
 			var _class = RSSA.tools.stringToFunction(data.page);
-			this.currentPage = new _class(this.currentNode);
-			
-			this.currentPage.start();
+
+			if(this.currentNode.overlay)
+			{
+				this.currentOverlayPage = new _class(this.currentNode);
+				this.currentOverlayPage.start();
+			}
+			else
+			{
+				this.currentPage = new _class(this.currentNode);
+				this.currentPage.start();
+			}
 		},
 		getPageData: function(dataId)
 		{
@@ -93,6 +108,20 @@ RSSA = {
 				this.currentPage.remove();
 
 			this.currentPage = null;
+			// log("pageControl > remove old page");
+		},
+		removeOldOverlayPage: function()
+		{
+			if(this.currentNode)
+			{
+				this.previousNode = this.currentNode;
+				this.currentNode.page = null;
+			}
+
+			if(this.currentOverlayPage)
+				this.currentOverlayPage.remove();
+
+			this.currentOverlayPage = null;
 			// log("pageControl > remove old page");
 		}
 	},
@@ -121,12 +150,6 @@ RSSA = {
 
 		DEFAULT_TITLE: "<insert random title>",
 
-		init: function(markupContainer)
-		{
-			this.nodes = [];
-
-			this.loadSiteTree(SITE_TREE_URL);
-		},
 		setup: function(data)
 		{
 			this.data = data;
@@ -313,6 +336,8 @@ PathNode = Class.extend({
 	type: "",
 	childNodes: [], /* gets dedined in the model */
 
+	overlay: false,
+
 	_isRooNode: false,
 	
 	prevNode: null, /* usefull reference to the previous node in line (if there is one) */
@@ -324,6 +349,7 @@ PathNode = Class.extend({
 		this.model = model;
 		this.index = index;
 		this.title = data.title;
+		this.overlay = data.overlay === "true";
 		this.id = data.id === undefined || data.id === "" ? model.getUniqueId() : data.id;
 		this.dataId = data.dataId;
 		this.data = data;

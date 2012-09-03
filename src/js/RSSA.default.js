@@ -12,6 +12,7 @@ RSSA.default =
 			log("new BasicPage", node);
 
 			this._dataNode = node;
+			this._el = $("body").append("<div id='"+this._dataNode.id+"'>"+this._dataNode.id+"</div>").find("#"+this._dataNode.id);
 			this.resize();
 		},
 		start: function()
@@ -26,6 +27,7 @@ RSSA.default =
 		},
 		dealoc: function()
 		{
+			this._el.remove();
 			this._el = null;
 			this._dataNode = null;
 		},
