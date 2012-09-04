@@ -2,28 +2,34 @@
 	"sitetree": [
 		{
 			"id": "",
+			"title": "Home of Simple example",
 			"path": "/",
 			"dataId": "home",
 			"childNodes": [
 				{
 					"id": "",
+					"title": "About page",
 					"path": "about",
 					"dataId": "about"
 				},
 				{
 					"id": "",
+					"title": "Work",
 					"path": "work",
 					"dataId": "work",
 					"childNodes": [
 						{
 							"id": "",
-							"path": "overlay___test",
+							"title": "Overlay",
+							"path": "OVERLAY",
 							"overlay": "true",
 							"dataId": "work_1"
 						},
 						{
 							"id": "",
-							"path": "work_2",
+							"title": "Nested",
+							"path": "NESTED",
+							"nested": "true",
 							"dataId": "work_2"
 						},
 						{
@@ -39,7 +45,34 @@
 								{
 									"id": "",
 									"path": "sub_work_2",
-									"dataId": "work_2"
+									"dataId": "work_2",
+									"childNodes": [
+										{
+											"id": "",
+											"path": "sub_sub_work_1",
+											"dataId": "work_1"
+										},
+										{
+											"id": "",
+											"path": "sub_sub_work_2",
+											"dataId": "work_2"
+										},
+										{
+											"id": "",
+											"path": "sub_sub_work_3",
+											"dataId": "work_3"
+										},
+										{
+											"id": "",
+											"path": "sub_sub_work_4",
+											"dataId": "work_4"
+										},
+										{
+											"id": "",
+											"path": "sub_sub_work_5",
+											"dataId": "work_5"
+										}
+									]
 								},
 								{
 									"id": "",
@@ -99,6 +132,7 @@
 				},
 				{
 					"id": "",
+					"title": "Contact",
 					"path": "contact",
 					"dataId": "contact"
 				}

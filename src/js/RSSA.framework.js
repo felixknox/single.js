@@ -12,7 +12,8 @@ RSSA = {
 	SIGNALS: {
 		newPage: new signals.Signal(), //new page requested signal
 		pageControlReady: new signals.Signal(), //when the data has been loaded
-		pathSameSame: new signals.Signal() // if path is the same, signals gets fired.
+		pathSameSame: new signals.Signal(), // if path is the same, signals gets fired.
+		pageStatus: new signals.Signal() //with a value [String] of "in" or "out".
 	},
 
 	initOptions: null,
@@ -22,7 +23,8 @@ RSSA = {
 	init: function(options, data)
 	{
 		this.pages.init(data.pages);
-		this.paths.setup(data.sitetree);
+		this.paths.setup(data.sitetree, options.title);
+
 		if(options.enabledDebug)
 		{
 			RSSA.debug.init(this.paths.rootNode);
@@ -46,10 +48,13 @@ RSSA = {
 
 		currentPage: null,
 		currentOverlayPage: null,
+		currentNestedPage: null,
+
 		_pagesData: null,
 
 		init: function(pages)
 		{
+			RSSA.SIGNALS.pageStatus.add(this.onPageStatusChange, this);
 			this._pagesData = [];
 			for (var i = 0; i < pages.length; i++) {
 				this._pagesData[pages[i].dataId] = pages[i];
@@ -64,38 +69,95 @@ RSSA = {
 		onNewPageRequested: function(path)
 		{
 			var newNode = RSSA.paths.getNode(path);
-			if(!newNode.overlay)
+			if(!newNode.overlay && !newNode.nested)
 			{
 				this.removeOldPage();
 			}
 
+			//always remove overlay page when changing page.
 			this.removeOldOverlayPage();
 
+			this.removeOldNestedPage();
+
+			//set new node.
 			this.currentNode = newNode;
 
+			//debug.
 			if(RSSA.debug.enabled) log("pageControl > onNewPageRequested:", path, this.currentNode);
 
-			// this.currentNode.page = this.currentPage;
-			RSSA.SIGNALS.newPage.dispatch(this.currentNode, this.previousNode);
+			//set the page of the currentNode (for deepbinding reference)
+			this.currentNode.page = this.currentPage;
 
+			//build the data and class.
 			var data = this.getPageData(this.currentNode.dataId);
 			var _class = RSSA.tools.stringToFunction(data.page);
 
+			//check the type of page, and setup accordingly.
 			if(this.currentNode.overlay)
 			{
-				this.currentOverlayPage = new _class(this.currentNode);
-				this.currentOverlayPage.start();
+				this.setupOverlayPage(_class, this.currentNode);
 			}
-			else
+			else if(this.currentNode.nested)
 			{
-				this.currentPage = new _class(this.currentNode);
-				this.currentPage.start();
+				this.setupNestedPage(_class, this.currentNode);
+
+				if(this.currentPage && this.currentPage.dataNode.dataId !== this.currentNode.parent.dataId)
+				{
+					//there is a current page, but it is not the parent of the nested page, therefore remove it.
+					this.removeOldPage();
+
+					data = this.getPageData(this.currentNode.parent.dataId);
+					_class = RSSA.tools.stringToFunction(data.page);
+					this.previousNode = this.currentNode.parent;
+					this.setupPage(_class, this.currentNode.parent);
+				}else if(this.currentPage && this.currentPage.dataNode.dataId === this.currentNode.parent.dataId)
+				{
+					//current page is parent of nested page, therefore animate nestedpage in
+					this.currentNestedPage.animateIn();
+				}else if(!this.currentPage)
+				{
+					//no current page, therefore set it up.
+					data = this.getPageData(this.currentNode.parent.dataId);
+					_class = RSSA.tools.stringToFunction(data.page);
+					this.previousNode = this.currentNode.parent;
+					this.setupPage(_class, this.currentNode.parent);
+				}
+			}else
+			{
+				//just setup the page.
+				this.setupPage(_class, this.currentNode);
+			}
+
+			//dispatch a signal about the new page for all the listeners.
+			RSSA.SIGNALS.newPage.dispatch(this.currentNode, this.previousNode);
+		},
+
+		//Page setup
+		setupOverlayPage: function(c, node)
+		{
+			this.currentOverlayPage = new c(node);
+			this.currentOverlayPage.setup();
+			this.currentOverlayPage.animateIn();
+		},
+		setupNestedPage: function(c, node)
+		{
+			this.currentNestedPage = new c(node);
+		},
+		setupPage: function(c, node)
+		{
+			this.currentPage = new c(node);
+			this.currentPage.setup();
+			this.currentPage.animateIn();
+
+			//setup and animate nested page in as well.
+			if(this.currentNestedPage)
+			{
+				this.currentNestedPage.setup();
+				this.currentNestedPage.animateIn();
 			}
 		},
-		getPageData: function(dataId)
-		{
-			return this._pagesData[dataId];
-		},
+
+		//removal of the pages.
 		removeOldPage: function()
 		{
 			if(this.currentNode)
@@ -105,7 +167,7 @@ RSSA = {
 			}
 
 			if(this.currentPage)
-				this.currentPage.remove();
+				this.currentPage.animateOut();
 
 			this.currentPage = null;
 			// log("pageControl > remove old page");
@@ -119,10 +181,31 @@ RSSA = {
 			}
 
 			if(this.currentOverlayPage)
-				this.currentOverlayPage.remove();
+				this.currentOverlayPage.animateOut();
 
 			this.currentOverlayPage = null;
-			// log("pageControl > remove old page");
+		},
+		removeOldNestedPage: function()
+		{
+			if(this.currentNestedPage)
+				this.currentNestedPage.animateOut();
+
+			this.currentNestedPage = null;
+		},
+		//
+		//
+
+		onPageStatusChange: function(type /* "in" or "out"*/, page)
+		{
+			if(type === "out")
+			{
+				page.dealoc();
+			}
+		},
+
+		getPageData: function(dataId)
+		{
+			return this._pagesData[dataId];
 		}
 	},
 
@@ -148,10 +231,11 @@ RSSA = {
 
 		randomId: 666,
 
-		DEFAULT_TITLE: "<insert random title>",
+		DEFAULT_TITLE: "",
 
-		setup: function(data)
+		setup: function(data, defaultTitle)
 		{
+			this.DEFAULT_TITLE = defaultTitle;
 			this.data = data;
 			this.nodes = [];
 
@@ -269,14 +353,8 @@ RSSA = {
 		{
 			document.title = title;
 		},
-		onPathChange: function(currentPath)
+		updateTitle: function()
 		{
-			this.currentPath = currentPath;
-
-			this.currentPathNoHash = currentPath.split("#").join("");
-			
-			RSSA.pages.onNewPageRequested(this.currentPathNoHash);
-
 			if(this.getNode(this.currentPathNoHash).title === undefined)
 			{
 				if(this.getNode(this.currentPathNoHash).data.name !== undefined)
@@ -288,6 +366,16 @@ RSSA = {
 			}
 			else
 				this.setTitle(this.getNode(this.currentPathNoHash).title);
+		},
+		onPathChange: function(currentPath)
+		{
+			this.currentPath = currentPath;
+
+			this.currentPathNoHash = currentPath.split("#").join("");
+			
+			RSSA.pages.onNewPageRequested(this.currentPathNoHash);
+
+			this.updateTitle();
 		},
 		getCurrentNode: function()
 		{
@@ -337,6 +425,7 @@ PathNode = Class.extend({
 	childNodes: [], /* gets dedined in the model */
 
 	overlay: false,
+	nested: false,
 
 	_isRooNode: false,
 	
@@ -350,6 +439,9 @@ PathNode = Class.extend({
 		this.index = index;
 		this.title = data.title;
 		this.overlay = data.overlay === "true";
+		if(!this.overlay && data.nested === "true")
+			this.nested = true;
+
 		this.id = data.id === undefined || data.id === "" ? model.getUniqueId() : data.id;
 		this.dataId = data.dataId;
 		this.data = data;
@@ -416,7 +508,7 @@ PathNode = Class.extend({
 		str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
 		}
 
-		str = str.replace(/[^a-z0-9-\/ -]/g, '') // remove invalid chars
+		str = str.replace(/[^a-z0-9-\/ -\/ _\/ +]/g, '') // remove invalid chars
 		.replace(/\s+/g, '-') // collapse whitespace and replace by -
 		.replace(/-+/g, '-'); // collapse dashes
 

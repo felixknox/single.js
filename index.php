@@ -23,9 +23,13 @@
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 		<![endif]-->
 
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-		<script src="src/js/libs/libraries.js"></script>
+		<script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script>window.jQuery || document.write('<script src="assets/js/libs/jquery-1.7.1.min.js"><\/script>')</script>
+
 		<script src="https://raw.github.com/millermedeiros/js-signals/master/dist/signals.min.js"></script>
+		<script>window.signals || document.write('<script src="assets/js/libs/signals.min.js"><\/script>')</script>
+
+		<script src="src/js/libs/libraries.js"></script>
 		<script src="src/js/libs/path.js"></script>
 
 		<!-- LOGIC -->
@@ -34,7 +38,7 @@
 		<script src="src/js/RSSA.default.js<?php print $cacheBuster; ?>"></script>
 
 
-		<script src="src/js/Test.js<?php print $cacheBuster; ?>"></script>
+		<script src="examples/SimpleExample.js<?php print $cacheBuster; ?>"></script>
 	</head>
 	<body>
 		<script>

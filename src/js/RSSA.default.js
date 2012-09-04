@@ -3,33 +3,42 @@ RSSA.default =
 	/* Basic page */
 	BasicPage: Class.extend({
 		_el: null,
-		_dataNode: null,
+		dataNode: null,
 
 		init: function(node)
 		{
+			//constructor
 			if(!node) throw new Error("Page (RSSA.default.BasicPage) error: missing data node.");
 
 			log("new BasicPage", node);
 
-			this._dataNode = node;
-			this._el = $("body").append("<div id='"+this._dataNode.id+"'>"+this._dataNode.id+"</div>").find("#"+this._dataNode.id);
+			this.dataNode = node;
+
+			RSSA.SIGNALS.pageStatus.dispatch("init", this);
+		},
+		setup: function()
+		{
+			//DOM manipulation.
+			this._el = $("body").append("<div id='"+this.dataNode.id+"'>id: "+this.dataNode.id+" >> title: "+this.dataNode.title+"</div>").find("#"+this.dataNode.id);
 			this.resize();
 		},
-		start: function()
+		animateIn: function()
 		{
 			//method will be called from model just after instantiation.
-			this.resize();
+			RSSA.SIGNALS.pageStatus.dispatch("in", this);
 		},
-		remove: function()
+		animateOut: function()
 		{
 			//overwrite if the need for a page out animation, but for god sake, remember to call dealoc!
-			this.dealoc();
+			RSSA.SIGNALS.pageStatus.dispatch("out", this);
 		},
 		dealoc: function()
 		{
 			this._el.remove();
 			this._el = null;
-			this._dataNode = null;
+			this.dataNode = null;
+
+			RSSA.SIGNALS.pageStatus.dispatch("dealoc", this);
 		},
 		resize: function()
 		{

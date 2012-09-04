@@ -15,30 +15,14 @@ RSSA.debug =
 
 		this.addStyle();
 
+		$("#rssa-debug").addClass("open");
+
 		this.onPageChange(RSSA.pages.currentNode);
 	},
 	addStyle: function()
 	{
-		var css =
-					"#rssa-debug {"+
-						"background: black;"+
-						"width: 0px;"+
-						"height: 100%;"+
-						"overflow: hidden;"+
-						"float: left;"+
-					"}"+
-					"#rssa-debug.open {"+
-						"width: 200px"+
-					"}"+
-					"li {"+
-						"background: white;"+
-					"}"+
-					"li.selected {"+
-						"background: green;"+
-					"}"+
-					"li.prev-selected {"+
-						"background: red;"+
-					"}",
+		var css = "";
+
 		head = document.getElementsByTagName('head')[0],
 		style = document.createElement('style');
 
@@ -58,7 +42,7 @@ RSSA.debug =
 	onMouseMove: function(event)
 	{
 		var cur = this._open;
-		this._open = event.pageX <= 200;
+		this._open = event.pageX <= 900;
 		if(cur != this._open)
 		{
 			if(this._open)
@@ -83,10 +67,10 @@ RSSA.debug =
 	onPageChange: function(currentNode, previousNode)
 	{
 		this._el.find("li").removeClass("prev-selected");
+		this._el.find("li").removeClass("selected");
 
 		if(previousNode)
 		{
-			this._el.find("li#"+previousNode.id+"-btn").removeClass("selected");
 			this._el.find("li#"+previousNode.id+"-btn").addClass("prev-selected");
 		}
 
