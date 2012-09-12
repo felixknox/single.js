@@ -147,12 +147,12 @@
 		},
 		{
 			"dataId": "about",
-			"page": "RSSA.default.BasicPage",
+			"page": "AnimationPage",
 			"title": "About us"
 		},
 		{
 			"dataId": "work",
-			"page": "RSSA.default.BasicPage",
+			"page": "AnimationPage",
 			"title": "Overview of all work"
 		},
 		{

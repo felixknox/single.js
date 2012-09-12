@@ -7,8 +7,11 @@ RSSA.debug =
 
 	init: function(rootNode)
 	{
+		if(!window.jQuery)
+			throw new Error("RSSA debug requires jQuery to work");
 		this.enabled = true;
-		//requires jQuery to work.
+
+		//requires jQuery to work, throw error if jQuery is not present.
 		RSSA.SIGNALS.newPage.add(this.onPageChange, this);
 		this._el = $("body").prepend("<div id='rssa-debug'></div>").find("#rssa-debug");
 		this.buildTree(rootNode, this._el);
@@ -17,15 +20,15 @@ RSSA.debug =
 
 		$("#rssa-debug").addClass("open");
 
-		this.onPageChange(RSSA.pages.currentNode);
+		this.onPageChange(RSSA.currentNode);
 	},
 	addStyle: function()
 	{
 		var css = "";
+		//var css = "body{background: #00ff00;}";
 
 		head = document.getElementsByTagName('head')[0],
 		style = document.createElement('style');
-
 		style.type = 'text/css';
 		if(style.styleSheet){
 			style.styleSheet.cssText = css;
@@ -42,7 +45,7 @@ RSSA.debug =
 	onMouseMove: function(event)
 	{
 		var cur = this._open;
-		this._open = event.pageX <= 900;
+		this._open = event.pageX <= 250;
 		if(cur != this._open)
 		{
 			if(this._open)
@@ -59,9 +62,12 @@ RSSA.debug =
 
 		for (var i = 0; i < cn.length; i++)
 		{
-			btn = new RSSA.debugBtn(cn[i], container.append("<li id='"+cn[i].id+"-btn'>"+cn[i].path+"</li>").find("#"+cn[i].id+"-btn"));
+			btn = new RSSA.DebugBtn(cn[i], container.append("<li id='"+cn[i].id+"-btn'><span>"+cn[i].path+"</span></li>").find("#"+cn[i].id+"-btn"));
+
 			if(cn[i].childNodes.length > 0)
+			{
 				this.buildTree(cn[i], container);
+			}
 		}
 	},
 	onPageChange: function(currentNode, previousNode)
@@ -77,15 +83,25 @@ RSSA.debug =
 		this._el.find("li#"+currentNode.id+"-btn").addClass("selected");
 	}
 },
-RSSA.debugBtn = Class.extend({
+RSSA.DebugBtn = Class.extend({
 	_node: "",
+	_el: null,
+
 	init: function(node, el)
 	{
+		this._el = el;
 		this._node = node;
-		el.click(bind(this, this.onClick));
+		this._el.click(bind(this, this.onClick));
+		this._el.height(this._el.find("> span").height());
 	},
 	onClick: function(event)
 	{
+		if($(event.target).hasClass(".collapse-icon")) return;
+
 		this._node.requestNodeLaunch();
+
+		var that = this;
+		setTimeout(function() { log("isSiblingOf previous node:", that._node.isSiblingOf(RSSA.previousNode)); }, 10);
 	}
 });
+

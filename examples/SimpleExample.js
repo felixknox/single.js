@@ -7,23 +7,32 @@ function onLoaded(data)
 {
 	RSSA.init(	{
 					enabledDebug: true,
-					title: "Title when node has no Title",
-					connectPagesWithAnimation: false
-				}, data);
+					title: "Title when node has no Title"
+				}, data, $("body"));
 }
 
 var AnimationPage = RSSA.default.BasicPage.extend(
 {
-	animateIn: function()
+	animate: function()
 	{
-		$(this._el).css("opacity", 0);
-		$(this._el).animate({"opacity": 1}, 800);
-	},
-	animateOut: function()
-	{
-		$(this._el).animate({"opacity": 0}, {
-			duration: 800,
-			complete: bind(this, this._super)
-		});
+		//don't call this._super if you wanna animate.
+		$(this._el).stop(true);
+
+		if(this._state === "ANIMATING_IN")
+		{
+			$(this._el).css("opacity", 0).animate({"opacity": 1},
+			{
+				duration: 800,
+				complete: bind(this, this.onAnimatedIn)
+			});
+		}
+		else if(this._state === "ANIMATING_OUT")
+		{
+			$(this._el).css("opacity", 1).animate({"opacity": 0},
+			{
+				duration: 800,
+				complete: bind(this, this.onAnimatedOut)
+			});
+		}
 	}
 });
