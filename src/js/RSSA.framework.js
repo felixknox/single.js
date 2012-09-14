@@ -13,7 +13,8 @@ RSSA =
 		newPage: new signals.Signal(), //new page requested signal
 		pageControlReady: new signals.Signal(), //when the data has been loaded
 		pathSameSame: new signals.Signal(), // if path is the same, signals gets fired.
-		pageStatus: new signals.Signal() //with a value [String] of "in" or "out".
+		pageStatus: new signals.Signal(), //with a value [String] of "in" or "out".
+		paths: new signals.Signal() //dispatches a signal containing the current path [String]
 	},
 
 	//options
@@ -31,6 +32,9 @@ RSSA.init = function(options, data, pageContainer)
 {
 	this.pages.init(data.pages, pageContainer);
 	this.paths.setup(data.sitetree, options.title);
+
+	if(options.enableTracking)
+		RSSA.tracker.init();
 
 	if(options.enabledDebug)
 	{
@@ -251,6 +255,10 @@ RSSA.paths =
 		forceToHashtag = true;
 		Path.history.listen(true);
 	},
+	enabledGA: function(ID)
+	{
+
+	},
 	bindable: function()
 	{
 		//scope of Path (this).
@@ -374,6 +382,8 @@ RSSA.paths =
 		RSSA.previousNode = RSSA.currentNode;
 		RSSA.currentNode = this.getCurrentNode();
 
+		RSSA.SIGNALS.paths.dispatch(this.currentPathNoHash);
+
 		RSSA.pages.onNewPageRequested(RSSA.currentNode, this.currentPathNoHash);
 
 		this.updateTitle();
@@ -408,6 +418,29 @@ RSSA.tools =
 			throw new Error("function not found");
 		}
 		return  fn;
+	}
+};
+
+RSSA.tracker =
+{
+	init: function()
+	{
+		RSSA.SIGNALS.paths.add(this.onPathChange, this);
+	},
+	onPathChange: function(path)
+	{
+		this.track(path);
+	},
+	track: function(path)
+	{
+		//page -->
+		_gaq.push(['_trackPageview', path]);
+		log("track page", path);
+	},
+	event: function(type, action)
+	{
+		//event -->
+		_gaq.push(['_trackEvent', type, action]);
 	}
 };
 

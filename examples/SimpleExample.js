@@ -7,7 +7,9 @@ function onLoaded(data)
 {
 	RSSA.init(	{
 					enabledDebug: true,
-					title: "Title when node has no Title"
+					title: "Title when node has no Title",
+					//enabled google analytics.
+					enableTracking: true //https://developers.google.com/analytics/devguides/collection/gajs/
 				}, data, $("body"));
 }
 
