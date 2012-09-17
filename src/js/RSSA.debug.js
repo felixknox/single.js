@@ -3,7 +3,7 @@ RSSA.debug =
 	enabled: false,
 
 	_el: null,
-	_open: false,
+	_open: true,
 
 	init: function(rootNode)
 	{
@@ -45,7 +45,8 @@ RSSA.debug =
 	onMouseMove: function(event)
 	{
 		var cur = this._open;
-		this._open = event.pageX <= 250;
+		this._open = event.pageX <= (this._open ? 250 : 40);
+		
 		if(cur != this._open)
 		{
 			if(this._open)
@@ -62,7 +63,7 @@ RSSA.debug =
 
 		for (var i = 0; i < cn.length; i++)
 		{
-			btn = new RSSA.DebugBtn(cn[i], container.append("<li id='"+cn[i].id+"-btn'><span>"+cn[i].path+"</span></li>").find("#"+cn[i].id+"-btn"));
+			btn = new RSSA.DebugBtn(cn[i], container.append("<li id='"+cn[i].id+"-btn'><span>"+cn[i].title+"</span></li>").find("#"+cn[i].id+"-btn"));
 
 			if(cn[i].childNodes.length > 0)
 			{

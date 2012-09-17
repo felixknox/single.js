@@ -14,6 +14,45 @@
 
 		<meta name="viewport" content="user-scalable=no, initial-scale=1">
 
+		<style>
+			#site .gallery-image
+			{
+				position: absolute;
+				z-index: 2;
+				width: 100%;
+				height: 100%;
+				background: rgba(255, 255, 255, .8);
+				top: 0px;
+				left: 0px;
+			}
+
+			#site .gallery-image img
+			{
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				visibility: hidden;
+			}
+			#site ul > li
+			{
+				float: left;
+				padding: 20px;
+				cursor: pointer;
+				display: inline-block;
+				height: 200px;
+			}
+			#site ul > li img
+			{
+				width: 150px;
+			}
+
+			#site .gallery-text
+			{
+				width: 40%;
+				margin-left: 50px;
+				margin-top: 50px;
+			}
+		</style>
 		<!-- STYLES + RESET -->
 		<link rel="stylesheet" href="src/css/style.css<?php print $cacheBuster; ?>">
 		<link rel="stylesheet" href="src/css/demo.style.css<?php print $cacheBuster; ?>">
@@ -39,7 +78,7 @@
 		<script src="src/js/RSSA.debug.js<?php print $cacheBuster; ?>"></script>
 		<script src="src/js/RSSA.default.js<?php print $cacheBuster; ?>"></script>
 
-		<script src="examples/SimpleExample.js<?php print $cacheBuster; ?>"></script>
+		<script src="examples/Gallery.js<?php print $cacheBuster; ?>"></script>
 
 		<script>
 			var _gaq = _gaq || [];
@@ -60,9 +99,6 @@
 
 		<section id="site">
 			<!-- dynamic content -->
-			<div id="pages">
-				Non debug view
-			</div>
 		</section>
 	</body>
 </html>

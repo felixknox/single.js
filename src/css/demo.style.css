@@ -13,8 +13,11 @@ html, body {
 	overflow: auto;
 	width: 0px;
 	height: 100%;
-	float: left;
+	position: fixed;
+	z-index: 9999999999999999;
 	margin: 0px;
+	top: 0px;
+	left: 0px;
 
 	transition: width 0.5s cubic-bezier(0.190, 1.000, 0.220, 1.000);
 	-moz-transition: width 0.5s cubic-bezier(0.190, 1.000, 0.220, 1.000);

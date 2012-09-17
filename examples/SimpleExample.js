@@ -9,7 +9,7 @@ function onLoaded(data)
 					enabledDebug: true,
 					title: "Title when node has no Title",
 					//enabled google analytics.
-					enableTracking: true //https://developers.google.com/analytics/devguides/collection/gajs/
+					enableTracking: true
 				}, data, $("body"));
 }
 

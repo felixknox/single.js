@@ -1,0 +1,206 @@
+{
+	"sitetree": [
+		{
+			"id": "",
+			"title": "Gallery home",
+			"path": "/",
+			"dataId": "home",
+			"childNodes": [
+				{
+					"id": "",
+					"title": "About this gallery",
+					"path": "about",
+					"dataId": "about"
+				},
+				{
+					"id": "",
+					"title": "Gallery 1",
+					"path": "gallery 1",
+					"dataId": "gallery_grid",
+					"childNodes": [
+						{
+							"id": "",
+							"title": "Work piece 1",
+							"path": "image 1",
+							"nested": "true",
+							"dataId": "work_0"
+						},
+						{
+							"id": "",
+							"title": "Overlay",
+							"path": "image 2",
+							"nested": "true",
+							"dataId": "work_2"
+						},
+						{
+							"id": "",
+							"title": "Overlay",
+							"path": "image 3",
+							"nested": "true",
+							"dataId": "work_3"
+						},
+						{
+							"id": "",
+							"title": "Overlay",
+							"path": "image 4",
+							"nested": "true",
+							"dataId": "work_4"
+						},
+						{
+							"id": "",
+							"title": "Overlay",
+							"path": "image 5",
+							"nested": "true",
+							"dataId": "work_5"
+						},
+						{
+							"id": "",
+							"title": "Overlay",
+							"path": "image 6",
+							"nested": "true",
+							"dataId": "work_6"
+						},
+						{
+							"id": "",
+							"title": "Overlay",
+							"path": "image 7",
+							"nested": "true",
+							"dataId": "work_7"
+						},
+						{
+							"id": "",
+							"title": "Overlay",
+							"path": "image 8",
+							"nested": "true",
+							"dataId": "work_8"
+						},
+						{
+							"id": "",
+							"title": "Overlay",
+							"path": "image 9",
+							"nested": "true",
+							"dataId": "work_9"
+						},
+						{
+							"id": "",
+							"title": "Overlay",
+							"path": "image 10",
+							"nested": "true",
+							"dataId": "work_10"
+						}
+					]
+				},
+				{
+					"id": "",
+					"title": "Contact",
+					"path": "contact",
+					"dataId": "contact"
+				}
+			]
+		}
+	],
+	"pages": [
+		{
+			"dataId": "home",
+			"page": "GalleryExample.pages.GalleryBasic",
+			"title": "Home",
+			"body":  "Lorem ipsum"
+		},
+		{
+			"dataId": "gallery_grid",
+			"page": "GalleryExample.pages.GalleryGrid",
+			"title": "Gallery 1"
+		},
+			{
+				"dataId": "work_0",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img0.jpg",
+				"big_picture": "examples/assets/img/img0.jpg"
+			},
+			{
+				"dataId": "work_1",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img1.jpg",
+				"big_picture": "examples/assets/img/img1.jpg"
+			},
+			{
+				"dataId": "work_2",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img2.jpg",
+				"big_picture": "examples/assets/img/img2.jpg"
+			},
+			{
+				"dataId": "work_3",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img3.jpg",
+				"big_picture": "examples/assets/img/img3.jpg"
+			},
+			{
+				"dataId": "work_4",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img4.jpg",
+				"big_picture": "examples/assets/img/img4.jpg"
+			},
+			{
+				"dataId": "work_5",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img5.jpg",
+				"big_picture": "examples/assets/img/img5.jpg"
+			},
+			{
+				"dataId": "work_6",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img6.jpg",
+				"big_picture": "examples/assets/img/img6.jpg"
+			},
+			{
+				"dataId": "work_7",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img7.jpg",
+				"big_picture": "examples/assets/img/img7.jpg"
+			},
+			{
+				"dataId": "work_8",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img8.jpg",
+				"big_picture": "examples/assets/img/img8.jpg"
+			},
+			{
+				"dataId": "work_9",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img9.jpg",
+				"big_picture": "examples/assets/img/img9.jpg"
+			},
+			{
+				"dataId": "work_10",
+				"page": "GalleryExample.pages.GalleryImage",
+				"title": "Work #1",
+				"picture": "examples/assets/img/img10.jpg",
+				"big_picture": "examples/assets/img/img10.jpg"
+			},
+		{
+			"dataId": "about",
+			"page": "GalleryExample.pages.GalleryBasic",
+			"title": "About this gallery example",
+			"body": "This example shows how easy it would be to setup a simple gallery - using nested pages - with the use of a straight forward JSON structure.",
+			"link": "/gallery 1",
+			"link-description": "Check out the gallery"
+		},
+		{
+			"dataId": "contact",
+			"page": "GalleryExample.pages.GalleryBasic",
+			"title": "Github",
+			"body": "Check out the github page for more info."
+		}
+	]
+}

@@ -22,8 +22,6 @@ RSSA.default =
 			//constructor
 			if(!node) throw new Error("Page (RSSA.default.BasicPage) error: missing data node.");
 
-			//log("new BasicPage", node);
-
 			this.dataNode = node;
 
 			RSSA.SIGNALS.pageStatus.dispatch("init", this);
@@ -31,15 +29,17 @@ RSSA.default =
 		setup: function(container)
 		{
 			this._state = "SETUP";
+
 			//DOM manipulation.
 			this._container = container;
+			this._el = this._container.append("<div id='"+this._buildId+"'></div>").find("#"+this._buildId);
 
 			this.print();
 			this.resize();
 		},
 		print: function()
 		{
-			this._el = this._container.append("<div id='"+this._buildId+"'>id: "+this.dataNode.id+" >> path: "+this.dataNode.data.path+"</div>").find("#"+this._buildId);
+			this._el.text("id: "+this.dataNode.id+" >> path: "+this.dataNode.data.path);
 		},
 		animateIn: function()
 		{

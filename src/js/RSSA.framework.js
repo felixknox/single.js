@@ -83,7 +83,8 @@ RSSA.pages =
 		//var newNode = RSSA.paths.getNode(path);
 		if(!currentNode.overlay && !currentNode.nested)
 		{
-			this.removeOldPage();
+			if(!RSSA.previousNode || ((RSSA.previousNode.overlay || RSSA.previousNode.nested) && RSSA.previousNode.parent !== currentNode) || RSSA.previousNode.parent !== currentNode)
+				this.removeOldPage();
 		}
 
 		//always remove overlay page when changing page.
@@ -95,8 +96,7 @@ RSSA.pages =
 		if(RSSA.debug.enabled) log("pageControl > onNewPageRequested:", path, currentNode);
 
 		//build the data and class.
-		var data = this.getPageData(currentNode.dataId);
-		var _class = RSSA.tools.stringToFunction(data.page);
+		var _class = RSSA.tools.stringToFunction(currentNode.pageData.page);
 
 		//check the type of page, and setup accordingly.
 		if(currentNode.overlay)
@@ -112,9 +112,7 @@ RSSA.pages =
 				//there is a current page, but it is not the parent of the nested page, therefore remove it and setup parent.
 				this.removeOldPage();
 
-				data = this.getPageData(currentNode.parent.dataId);
-				_class = RSSA.tools.stringToFunction(data.page);
-				this.previousNode = currentNode.parent;
+				_class = RSSA.tools.stringToFunction(currentNode.parent.pageData.page);
 				this.setupPage(_class, currentNode.parent);
 			}else if(this.currentPage && this.currentPage.dataNode.dataId === currentNode.parent.dataId)
 			{
@@ -123,30 +121,28 @@ RSSA.pages =
 			}else if(!this.currentPage)
 			{
 				//no current page, therefore set it up.
-				data = this.getPageData(currentNode.parent.dataId);
-				_class = RSSA.tools.stringToFunction(data.page);
-				this.previousNode = currentNode.parent;
+				_class = RSSA.tools.stringToFunction(currentNode.parent.pageData.page);
 				this.setupPage(_class, currentNode.parent);
 			}
 		}else
 		{
 			//just setup the page.
-			this.setupPage(_class, currentNode);
+			if(!RSSA.previousNode || ((RSSA.previousNode.overlay || RSSA.previousNode.nested) && RSSA.previousNode.parent !== currentNode) || RSSA.previousNode.parent !== currentNode)
+				this.setupPage(_class, currentNode);
 		}
-
-		//set the page of the currentNode (for deepbinding reference)
-		RSSA.currentNode.page = this.currentPage;
 
 		//dispatch a signal about the new page for all the listeners.
 		RSSA.SIGNALS.newPage.dispatch(RSSA.currentNode, RSSA.previousNode);
 	},
-
 	//Page setup
 	setupOverlayPage: function(c, node)
 	{
 		this.currentOverlayPage = new c(node);
 		this.currentOverlayPage.setup(this.pageContainer);
 		this.currentOverlayPage.animateIn();
+
+		//set the page of the currentNode (for deepbinding reference)
+		RSSA.currentNode.page = this.currentOverlayPage;
 	},
 	setupNestedPage: function(c, node)
 	{
@@ -154,6 +150,9 @@ RSSA.pages =
 		//only setup the nested page if there is a current page, else the nested page have to wait.
 		if(this.currentPage && this.currentPage.dataNode === node.parent)
 			this.currentNestedPage.setup(this.pageContainer);
+
+		//set the page of the currentNode (for deepbinding reference)
+		RSSA.currentNode.page = this.currentNestedPage;
 	},
 	setupPage: function(c, node)
 	{
@@ -166,6 +165,9 @@ RSSA.pages =
 		{
 			this.currentNestedPage.setup(this.pageContainer);
 		}
+
+		//set the page of the currentNode (for deepbinding reference)
+		RSSA.currentNode.page = this.currentPage;
 	},
 
 	//removal of the pages.
@@ -205,9 +207,10 @@ RSSA.pages =
 	{
 		
 	},
-	getPageData: function(dataId)
+	getPageData: function(node)
 	{
-		return this._pagesData[dataId];
+		node.pageData = this._pagesData[node.dataId];
+		return node.pageData;
 	}
 };
 
@@ -272,6 +275,8 @@ RSSA.paths =
 	},
 	getNode: function(path)
 	{
+		path = RSSA.tools.cleanPath(path);
+
 		for (var i = 0; i < this.nodes.length; i++) {
 			if(this.nodes[i].fullPath == path)
 			{
@@ -344,7 +349,7 @@ RSSA.paths =
 	},
 	set: function(name, path)
 	{
-		if(pages.currentNode && pages.currentNode.fullPath === path)
+		if(RSSA.pages.currentNode && RSSA.pages.currentNode.fullPath === path)
 		{
 			// if path is the same, then it means a user has clicked an already active menu item, therefore we should reset the list.
 			RSSA.SIGNALS.pathSameSame.dispatch(RSSA.currentNode);
@@ -418,6 +423,29 @@ RSSA.tools =
 			throw new Error("function not found");
 		}
 		return  fn;
+	},
+	cleanPath: function(str)
+	{
+		//make sure we have a forward slash in the start and end.
+		if(str.substr(str.length-1, 1) !== "/")
+			str = str+"/";
+
+		str = str.replace(/^\s+|\s+$/g, ''); // trim
+		str = str.toLowerCase();
+
+		// remove accents, swap ñ for n, etc
+		var from = "àáäâèéëêìíïîòóöôùúüûñç";
+		var to   = "aaaaeeeeiiiioooouuuunc";
+
+		for (var i=0, l=from.length ; i<l ; i++) {
+		str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+		}
+
+		str = str.replace(/[^a-z0-9-\/ -\/ _\/ +]/g, '') // remove invalid chars
+		.replace(/\s+/g, '+') // collapse whitespace and replace by -
+		.replace(/-+/g, '+'); // collapse dashes
+
+		return str;
 	}
 };
 
@@ -425,6 +453,8 @@ RSSA.tracker =
 {
 	init: function()
 	{
+		//GA implementation should be done in the DOM.
+		//https://developers.google.com/analytics/devguides/collection/gajs/
 		RSSA.SIGNALS.paths.add(this.onPathChange, this);
 	},
 	onPathChange: function(path)
@@ -434,12 +464,14 @@ RSSA.tracker =
 	track: function(path)
 	{
 		//page -->
+		//make you own implamentation of this if _gaq is not surfficient.
 		_gaq.push(['_trackPageview', path]);
 		log("track page", path);
 	},
 	event: function(type, action)
 	{
-		//event -->
+		//event --> call RSSA.tracker.event({type}, {action});
+		//make you own implamentation of this if _gaq is not surfficient.
 		_gaq.push(['_trackEvent', type, action]);
 	}
 };
@@ -462,6 +494,7 @@ var PathNode = Class.extend({
 	fullPath: "",
 	data: null,
 	parent: null, /*other PathNode*/
+	pageData: null, /*data of the page*/
 	title: "",
 	type: "",
 	childNodes: [], /* gets dedined in the model */
@@ -487,6 +520,7 @@ var PathNode = Class.extend({
 		this.id = data.id === undefined || data.id === "" ? model.getUniqueId() : data.id;
 		
 		this.dataId = data.dataId;
+		this.pageData = RSSA.pages.getPageData(this);
 		this.data = data;
 
 		//path handeling.
@@ -541,7 +575,7 @@ var PathNode = Class.extend({
 		if(splt[splt.length-1] !== undefined)
 			this.path = splt[splt.length-1];
 
-		this.path = this.cleanPath(this.path);
+		this.path = RSSA.tools.cleanPath(this.path);
 
 		if(!this._isRooNode)
 		{
@@ -553,25 +587,6 @@ var PathNode = Class.extend({
 		this.fullPath = trailingPath;
 
 		return this.fullPath;
-	},
-	cleanPath: function(str)
-	{
-		str = str.replace(/^\s+|\s+$/g, ''); // trim
-		str = str.toLowerCase();
-
-		// remove accents, swap ñ for n, etc
-		var from = "àáäâèéëêìíïîòóöôùúüûñç";
-		var to   = "aaaaeeeeiiiioooouuuunc";
-
-		for (var i=0, l=from.length ; i<l ; i++) {
-		str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
-		}
-
-		str = str.replace(/[^a-z0-9-\/ -\/ _\/ +]/g, '') // remove invalid chars
-		.replace(/\s+/g, '-') // collapse whitespace and replace by -
-		.replace(/-+/g, '-'); // collapse dashes
-
-		return str;
 	},
 	setNextAndPreviousNode: function(prev, next)
 	{
