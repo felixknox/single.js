@@ -3,7 +3,7 @@
 		{
 			"id": "",
 			"title": "Gallery home",
-			"path": "/",
+			"path": "",
 			"dataId": "home",
 			"childNodes": [
 				{
@@ -20,70 +20,78 @@
 					"childNodes": [
 						{
 							"id": "",
-							"title": "Work piece 1",
-							"path": "image 1",
+							"title": "Abstract 0",
+							"path": "image 0",
 							"nested": "true",
+							"overlay": "true",
 							"dataId": "work_0"
 						},
 						{
 							"id": "",
-							"title": "Overlay",
+							"title": "Abstract 1",
+							"path": "image 1",
+							"nested": "true",
+							"dataId": "work_1"
+						},
+						{
+							"id": "",
+							"title": "Abstract 2",
 							"path": "image 2",
 							"nested": "true",
 							"dataId": "work_2"
 						},
 						{
 							"id": "",
-							"title": "Overlay",
+							"title": "Abstract 3",
 							"path": "image 3",
 							"nested": "true",
 							"dataId": "work_3"
 						},
 						{
 							"id": "",
-							"title": "Overlay",
+							"title": "Abstract 4",
 							"path": "image 4",
 							"nested": "true",
 							"dataId": "work_4"
 						},
 						{
 							"id": "",
-							"title": "Overlay",
+							"title": "Abstract 5",
 							"path": "image 5",
 							"nested": "true",
 							"dataId": "work_5"
 						},
 						{
 							"id": "",
-							"title": "Overlay",
+							"title": "Abstract 6",
 							"path": "image 6",
 							"nested": "true",
 							"dataId": "work_6"
 						},
 						{
 							"id": "",
-							"title": "Overlay",
+							"title": "Abstract 7",
 							"path": "image 7",
 							"nested": "true",
 							"dataId": "work_7"
 						},
 						{
 							"id": "",
-							"title": "Overlay",
+							"title": "Abstract 8",
 							"path": "image 8",
 							"nested": "true",
 							"dataId": "work_8"
 						},
 						{
 							"id": "",
-							"title": "Overlay",
+							"title": "Abstract 9",
 							"path": "image 9",
 							"nested": "true",
 							"dataId": "work_9"
 						},
 						{
 							"id": "",
-							"title": "Overlay",
+							"title": "Abstract 10",
 							"path": "image 10",
 							"nested": "true",
 							"dataId": "work_10"
@@ -104,7 +112,9 @@
 			"dataId": "home",
 			"page": "GalleryExample.pages.GalleryBasic",
 			"title": "Home",
-			"body":  "Lorem ipsum"
+			"body": "A gallery example",
+			"link": "/about",
+			"link-description": "Check out the about page"
 		},
 		{
 			"dataId": "gallery_grid",
@@ -192,7 +202,7 @@
 			"dataId": "about",
 			"page": "GalleryExample.pages.GalleryBasic",
 			"title": "About this gallery example",
-			"body": "This example shows how easy it would be to setup a simple gallery - using nested pages - with the use of a straight forward JSON structure.",
+			"body": "This example shows how easy it would be to setup a simple gallery - using nested pages - with the use of a straight forward JSON structure.<br><br>Images taken from <a href='http://gmunk.tumblr.com/'>gmunk.tumblr.com</a>",
 			"link": "/gallery 1",
 			"link-description": "Check out the gallery"
 		},

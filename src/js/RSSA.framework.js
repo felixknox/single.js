@@ -24,6 +24,11 @@ RSSA =
 	//variables
 	currentNode: null,
 	previousNode: null
+	// addNode: function(path, pageData)
+	// {
+	// 	this.pages.init(data.pages, pageContainer);
+	// 	this.paths.setup(data.sitetree, options.title);
+	// }
 };
 	
 		
@@ -81,9 +86,12 @@ RSSA.pages =
 	onNewPageRequested: function(currentNode, path)
 	{
 		//var newNode = RSSA.paths.getNode(path);
+
+		var isReadyForPageChange = !RSSA.previousNode || ((RSSA.previousNode.overlay || RSSA.previousNode.nested) && RSSA.previousNode.parent !== currentNode) || (RSSA.previousNode !== currentNode && (!RSSA.previousNode.nested && !RSSA.previousNode.overlay));
+
 		if(!currentNode.overlay && !currentNode.nested)
 		{
-			if(!RSSA.previousNode || ((RSSA.previousNode.overlay || RSSA.previousNode.nested) && RSSA.previousNode.parent !== currentNode) || RSSA.previousNode.parent !== currentNode)
+			if(isReadyForPageChange)
 				this.removeOldPage();
 		}
 
@@ -127,7 +135,7 @@ RSSA.pages =
 		}else
 		{
 			//just setup the page.
-			if(!RSSA.previousNode || ((RSSA.previousNode.overlay || RSSA.previousNode.nested) && RSSA.previousNode.parent !== currentNode) || RSSA.previousNode.parent !== currentNode)
+			if(isReadyForPageChange)
 				this.setupPage(_class, currentNode);
 		}
 
@@ -159,6 +167,7 @@ RSSA.pages =
 		this.currentPage = new c(node);
 		this.currentPage.setup(this.pageContainer);
 		this.currentPage.animateIn();
+		log(this.currentPage );
 
 		//setup and animate nested page in as well.
 		if(this.currentNestedPage)
@@ -502,20 +511,17 @@ var PathNode = Class.extend({
 	overlay: false,
 	nested: false,
 
-	_isRooNode: false,
+	isRootNode: false,
 	
 	prevNode: null, /* usefull reference to the previous node in line (if there is one) */
 	nextNode: null, /* usefull reference to the next node in line (if there is one) */
 
 	init: function(data, trailingPath, parentNode, model, index, rootNode)
 	{
-		this._isRooNode = rootNode;
+		this.isRootNode = rootNode;
 		this.model = model;
 		this.index = index;
 		this.title = data.title;
-		this.overlay = data.overlay === "true";
-		if(!this.overlay && data.nested === "true")
-			this.nested = true;
 
 		this.id = data.id === undefined || data.id === "" ? model.getUniqueId() : data.id;
 		
@@ -528,6 +534,12 @@ var PathNode = Class.extend({
 
 		//link to parent.
 		this.parent = parentNode;
+
+		this.overlay = data.overlay === "true";
+		this.nested = data.nested === "true";
+
+		if(this.nested && this.overlay)
+			throw new Error("Choose your weapon, overlay or nested and not both. path in question: "+ this.fullPath);
 		
 		//set type.
 		//this.setType(this.data.type);
@@ -569,7 +581,7 @@ var PathNode = Class.extend({
 	},
 	createPaths: function(trailingPath)
 	{
-		this.path = this._isRooNode ? String(this.data.path) : trailingPath + String(this.data.path);
+		this.path = this._isRootNode ? String(this.data.path) : trailingPath + String(this.data.path);
 
 		var splt = this.path.split("/");
 		if(splt[splt.length-1] !== undefined)
@@ -577,7 +589,7 @@ var PathNode = Class.extend({
 
 		this.path = RSSA.tools.cleanPath(this.path);
 
-		if(!this._isRooNode)
+		if(!this._isRootNode)
 		{
 			trailingPath += this.path;
 			if(trailingPath.substr(trailingPath.length-1) !== "/")

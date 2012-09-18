@@ -26,7 +26,24 @@
 				left: 0px;
 			}
 
-			#site .gallery-image img
+			#site, #site a, #site h2, #site h1, #site h3
+			{
+				font-size: 18px;
+				font-family: Georgia;
+				font-weight: normal;
+			}
+
+			#site a
+			{
+				color: #000000;
+			}
+
+			#site a:hover
+			{
+				text-decoration: none;
+			}
+			
+			#site .gallery-image .gallery-image-wrapper
 			{
 				position: absolute;
 				left: 50%;

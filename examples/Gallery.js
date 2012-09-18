@@ -19,7 +19,7 @@ var GalleryExample = {
 		GalleryBasic: RSSA.default.BasicPage.extend({
 			print: function()
 			{
-				var output = Mustache.render("<h1>{{title}}</h1><h2>{{body}}</h2><a href='{{link}}'>{{link-description}}</a></section>", this.dataNode.pageData);
+				var output = Mustache.render("<h1>{{title}}</h1><h2>{{& body}}</h2><a href='{{& link}}'>{{link-description}}</a></section>", this.dataNode.pageData);
 				this._el.append(output);
 				this._el.addClass("gallery-text");
 
@@ -38,13 +38,19 @@ var GalleryExample = {
 			print: function()
 			{
 				var output = Mustache.render(
+					"<a>Home</a>"+
 					"<ul>{{#childNodes}}"+
-						"<li>{{pageData.title}}<br>"+
+						"<li>"+
 						"<img src='{{pageData.picture}}' />"+
 						"</li>"+
 					"{{/childNodes}}</ul>", this.dataNode);
 
 				this._el.append(output);
+
+				this._el.find("a").click(function()
+				{
+					RSSA.paths.rootNode.requestNodeLaunch();
+				});
 				
 				var that = this;
 				this._el.find("li").each(function(i, el)
@@ -61,8 +67,10 @@ var GalleryExample = {
 			{
 				var output = Mustache.render(
 					"<div class='gallery-image'>"+
-						"<h2>'{{data.path}}'</h2>"+
-						"<img src='{{pageData.big_picture}}' />"+
+						"<div class='gallery-image-wrapper'>"+
+							"<img src='{{pageData.big_picture}}' />"+
+							"<h2>{{data.title}}</h2>"+
+						"</div>"+
 					"</div>", this.dataNode);
 				this._el.append(output);
 				this._el.find("img").load(bind(this, this.onLoaded));
@@ -77,14 +85,17 @@ var GalleryExample = {
 			onLoaded: function()
 			{
 				var img = $(this._el.find("img"));
+				var newHeight = $(window).height()-150;
+				img.height(newHeight);
+
 				var w = img.width() * 0.5;
-				var h = img.height() * 0.5;
-				img.css({
+				var h = (img.height() * 0.5) + 50;
+				this._el.find(".gallery-image-wrapper").css({
 					"visibility": "visible",
 					"opacity": 0,
 					"margin-left": -w,
 					"margin-top": -h});
-				img.animate({"opacity": 1}, 400);
+				this._el.find(".gallery-image-wrapper").animate({"opacity": 1}, 400);
 			}
 		})
 	}

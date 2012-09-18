@@ -54,6 +54,8 @@ html, body {
 	list-style: none;
 	background: white;
 
+	width: 300px;
+
 	transition: margin 0.25s cubic-bezier(0.190, 1.000, 0.220, 1.000);
 	-moz-transition: margin 0.25s cubic-bezier(0.190, 1.000, 0.220, 1.000);
 	-webkit-transition: margin 0.25s cubic-bezier(0.190, 1.000, 0.220, 1.000);

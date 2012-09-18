@@ -58,8 +58,19 @@ RSSA.debug =
 	buildTree: function(node, el)
 	{
 		var cn = node.childNodes,
-			container = el.append("<ul id='"+node.id+"-wrapper'></ul>").find("ul#"+node.id+"-wrapper"),
+			container,
 			btn = null;
+
+		if(node.isRootNode)
+		{
+			container = el.append("<ul id='rootnode-wrapper'></ul>").find("ul#rootnode-wrapper");
+			btn = new RSSA.DebugBtn(node, container.append("<li id='"+node.id+"-btn'><span>"+node.title+"</span></li>").find("#"+node.id+"-btn"));
+			
+			container = container.append("<ul id='"+node.id+"-wrapper'></ul>").find("ul#"+node.id+"-wrapper");
+		}else
+		{
+			container = el.append("<ul id='"+node.id+"-wrapper'></ul>").find("ul#"+node.id+"-wrapper");
+		}
 
 		for (var i = 0; i < cn.length; i++)
 		{
@@ -93,7 +104,6 @@ RSSA.DebugBtn = Class.extend({
 		this._el = el;
 		this._node = node;
 		this._el.click(bind(this, this.onClick));
-		this._el.height(this._el.find("> span").height());
 	},
 	onClick: function(event)
 	{
