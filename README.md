@@ -5,16 +5,16 @@ A ultra simple framework for single page applications - inspired by the work of 
 
 the JSON relies on this structure:
 
-{
-	sitetree
-	{
-		...
-	},
-	pages
-	{
-		...
-	}
-}
+    {
+    	sitetree
+    	{
+    		...
+    	},
+    	pages
+    	{
+    		...
+    	}
+    }
 
 Where sitetree contains the structure of the actual site.
 
@@ -55,7 +55,7 @@ title: "Title when node has no Title"
 enableTracking: true
 
 
-
+[Link to examples](http://rwatgg.dk/labs/rssa).
 
 
 
