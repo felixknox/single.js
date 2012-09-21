@@ -3,7 +3,7 @@ ReadySetSingleApplication
 
 A ultra simple framework for single page applications - inspired by the work of Josef Kjærgaard and his amazing Flash framework.
 
-the JSON relies on this structure.
+the JSON relies on this structure:
 
 {
 	sitetree
