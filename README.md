@@ -1,7 +1,7 @@
 ReadySetSingleApplication
 =========================
 
-A ultra simple framework for single page applications - inspired by the work of Josef Kjærgaard and his amazing Flash framework.
+A simple wrapper framework for single page applications that relies on a tree structure.
 
 the JSON relies on this structure:
 
@@ -16,42 +16,42 @@ the JSON relies on this structure:
     	}
     }
 
-Where sitetree contains the structure of the actual site.
+"sitetree" contains the structure of the actual site.
 
-pages contains the page data.
+"pages" contains the page data.
 
-sitetree:
-Mandatory
-path (path name of the element, ex. work)
+<br>
 
-Optional
-id (used for uniquly seperating the elements - will get created if not defined)
-dataId (reference to an element in pages - if not defined a page change event will get called, but no page manipulation will get handled. Great for slideshow deeplinking, where parent page is the slideshow)
-title (will fall back to the default title)
-nested (defines if a page is nested)
-overlay (defines if a page is nested)
-OBS. if an element is both defined as nested and overlay, an error will be thrown. 
+# sitetree:
+<strong>Mandatory:</strong><br>
+* path (path name of the element, ex. work)
 
+<strong>optional parameters:</strong><br>
+* id (used for uniquly seperating the elements - will get created if not defined)<br>
+* dataId (reference to an element in pages - if not defined a page change event will get called, but no page manipulation will get handled. Great for slideshow deeplinking, where parent page is the slideshow)<br>
+* title (will fall back to the default title)<br>
+* nested (defines if a page is nested)<br>
+* overlay (defines if a page is nested)<br>
+* OBS. if an element is both defined as nested and overlay, an error will be thrown.
 
+<br>
 
-pages:
-Mandatory
-dataId (reference id to an element in sitetree)
-page (reference to a page type - page is optimized for a namespace structure ex. GalleryExample.pages.GalleryImage)
+# pages:
+<strong>Mandatory:</strong><br>
+* dataId (reference id to an element in sitetree)<br>
+* page (reference to a page type - page is optimized for a namespace structure ex. GalleryExample.pages.GalleryImage)<br>
 
-Optional
-Add fields that your page requires.
-
-
+<strong>optional parameters:</strong><br>
+* Add fields that your page requires.
 
 Check out the examples for a complete JSON structure reference.
 
+<br><br>
 
-
-RSSA.init -->
-Option: element
-enabledDebug: true
-title: "Title when node has no Title"
+RSSA.init --><br>
+Option: element<br>
+enabledDebug: true<br>
+title: "Title when node has no Title"<br>
 enableTracking: true
 
 
@@ -76,3 +76,8 @@ enableTracking: true
 
 # Auto features:
 * automatically inits rootNode if no deeplink is choosen.
+* 
+
+# Thanks
+
+- Inspired by the work of Josef Kjærgaard and his amazing Flash framework.
