@@ -3,7 +3,7 @@ ReadySetSingleApplication
 
 A simple framework for single page applications.
 
-The Framework relies on certain Object structure.
+The framework relies on certain DATA-Object structure, which can be created via a JSON file or via JS {} (Object).
 
     {
     	sitetree
@@ -53,7 +53,7 @@ OBS. if an element is both defined as nested and overlay, an error will be throw
 <strong>optional parameters:</strong><br>
 * Add fields that your page requires.
 
-Check out the examples for a complete JSON structure reference.
+Check out the examples for a complete Object structure reference.
 
 <br><br>
 
@@ -69,17 +69,17 @@ enableTracking: true
 
 
 # Todo:
-* add pages dynamicly via JS, and not just via JSON.
+* add pages dynamicly via JS, and not just via DATA-Object.
 * make some good practice examples.
-* a pageless implementation (check if pages in the JSON is present)
+* a pageless implementation (check if pages in the DATA-Object is present)
 
 
 # Features:
-* title, include title in the JSON
-* Classes with a namespace structure.
-* Overlay page, ignores the current page and just displays a page "on top".
-* Nested pages, fires the page underneath, and opens that page. Opens nested page after parent page is opened (it's dependent on it's parent).
-* is sibling of
+* title, include fallback title or/and set title in the DATA-Object
+* Classes with a namespace structure (ex.: com.xxx.views.ContactPage).
+* Overlay pages (see explanation)
+* Nested pages (see explanation)
+* is sibling of method, way to check if a node-a is a child of node-b
 * next/forward (history)
 
 # Auto features:
@@ -90,6 +90,6 @@ enableTracking: true
 * Using [Signals](http://millermedeiros.github.com/js-signals/) as an event framework.
 * Using a forked version of [Path.js](https://github.com/mtrpcic/pathjs) for path management.
 
-# Thanks
+# Thanks to
 
 - Inspired by the work of Josef Kjærgaard and his amazing Flash framework.
