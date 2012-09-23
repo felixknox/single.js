@@ -12,7 +12,7 @@ RSSA.debug =
 		this.enabled = true;
 
 		//requires jQuery to work, throw error if jQuery is not present.
-		RSSA.SIGNALS.newPage.add(this.onPageChange, this);
+		RSSA.SIGNALS.pageCreated.add(this.onPageChange, this);
 		this._el = $("body").prepend("<div id='rssa-debug'></div>").find("#rssa-debug");
 		this.buildTree(rootNode, this._el);
 

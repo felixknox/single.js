@@ -25,7 +25,7 @@ var GalleryExample = {
 
 				if(this.dataNode.pageData.link)
 				{
-					var linkNode = RSSA.paths.getNode(this.dataNode.pageData.link);
+					var linkNode = RSSA.core.pathModel.getNode(this.dataNode.pageData.link);
 					this._el.find("a").click(function(event)
 					{
 						event.preventDefault();
@@ -49,7 +49,7 @@ var GalleryExample = {
 
 				this._el.find("a").click(function()
 				{
-					RSSA.paths.rootNode.requestNodeLaunch();
+					RSSA.core.pathModel.rootNode.requestNodeLaunch();
 				});
 				
 				var that = this;

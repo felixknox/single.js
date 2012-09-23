@@ -10,12 +10,14 @@ RSSA =
 	PAGE_TYPES: [],
 	SIGNALS:
 	{
-		newPage: new signals.Signal(), //new page requested signal
+		pageCreated: new signals.Signal(), //new page requested signal
 		pageControlReady: new signals.Signal(), //when the data has been loaded
 		pathSameSame: new signals.Signal(), // if path is the same, signals gets fired.
 		pageStatus: new signals.Signal(), //with a value [String] of "in" or "out".
-		paths: new signals.Signal() //dispatches a signal containing the current path [String]
+		pathChange: new signals.Signal() //dispatches a signal containing the current path [String]
 	},
+
+	core: {},
 
 	//options
 		//enabledDebug (default: false) - true/false.
@@ -26,8 +28,8 @@ RSSA =
 	previousNode: null
 	// addNode: function(path, pageData)
 	// {
-	// 	this.pages.init(data.pages, pageContainer);
-	// 	this.paths.setup(data.sitetree, options.title);
+	// 	this.core.pages.init(data.pages, pageContainer);
+	// 	this.core.pathModel.setup(data.sitetree, options.title);
 	// }
 };
 	
@@ -35,16 +37,14 @@ RSSA =
 //
 RSSA.init = function(options, data, pageContainer)
 {
-	this.pages.init(data.pages, pageContainer);
-	this.paths.setup(data.sitetree, options.title);
+	this.core.pages.init(data.pages, pageContainer);
+	this.core.pathModel.setup(data.sitetree, options.title);
 
 	if(options.enableTracking)
 		RSSA.tracker.init();
 
 	if(options.enabledDebug)
-	{
-		RSSA.debug.init(this.paths.rootNode);
-	}
+		RSSA.debug.init(this.core.pathModel.rootNode);
 };
 
 /***
@@ -57,7 +57,7 @@ RSSA.init = function(options, data, pageContainer)
 */
 //Controls the pages of the app. When a new page gets requested via the pageControl (calls a HTTP receiver)
 //It waits for proper feedback from the server, removes old page and shows the new page.
-RSSA.pages =
+RSSA.core.pages =
 {
 	currentPage: null,
 	currentOverlayPage: null,
@@ -80,12 +80,12 @@ RSSA.pages =
 	requestNewPage: function(path)
 	{
 		//request a new page from a specific path, used for when you don't have a reference to a node.
-		var node = RSSA.paths.getNode(path);
+		var node = RSSA.core.pathModel.getNode(path);
 		node.requestNodeLaunch();
 	},
 	onNewPageRequested: function(currentNode, path)
 	{
-		//var newNode = RSSA.paths.getNode(path);
+		//var newNode = RSSA.core.pathModel.getNode(path);
 
 		var isReadyForPageChange = !RSSA.previousNode || ((RSSA.previousNode.overlay || RSSA.previousNode.nested) && RSSA.previousNode.parent !== currentNode) || (RSSA.previousNode !== currentNode && (!RSSA.previousNode.nested && !RSSA.previousNode.overlay));
 
@@ -140,7 +140,7 @@ RSSA.pages =
 		}
 
 		//dispatch a signal about the new page for all the listeners.
-		RSSA.SIGNALS.newPage.dispatch(RSSA.currentNode, RSSA.previousNode);
+		RSSA.SIGNALS.pageCreated.dispatch(RSSA.currentNode, RSSA.previousNode);
 	},
 	//Page setup
 	setupOverlayPage: function(c, node)
@@ -232,7 +232,7 @@ RSSA.pages =
 *    | _|    /__/     \__\  |__|     |__|  |__| |__|  |__|  \______/  |_______/ |_______||_______|
 */
 //Controls the path of the application. Uses Path.js to handle crossbrowser issues.
-RSSA.paths =
+RSSA.core.pathModel =
 {
 	//consts
 	DEBUG_MODE: false, //ligesom jeppes UX framework.
@@ -298,7 +298,7 @@ RSSA.paths =
 	onEnter: function (fns)
 	{
 		//scope of Path (this).
-		RSSA.paths.onPathChange(this.path);
+		RSSA.core.pathModel.onPathChange(this.path);
 	},
 	createNode: function(data, trailingPath, parentNode, index)
 	{
@@ -358,10 +358,10 @@ RSSA.paths =
 	},
 	set: function(name, path)
 	{
-		if(RSSA.pages.currentNode && RSSA.pages.currentNode.fullPath === path)
+		if(RSSA.core.pages.currentNode && RSSA.core.pages.currentNode.fullPath === path)
 		{
 			// if path is the same, then it means a user has clicked an already active menu item, therefore we should reset the list.
-			RSSA.SIGNALS.pathSameSame.dispatch(RSSA.currentNode);
+			RSSA.SIGNALS.core.pathModelameSame.dispatch(RSSA.currentNode);
 		}else
 		{
 			/* falls back to hash tag if HTML5 history is not supported */
@@ -396,9 +396,12 @@ RSSA.paths =
 		RSSA.previousNode = RSSA.currentNode;
 		RSSA.currentNode = this.getCurrentNode();
 
-		RSSA.SIGNALS.paths.dispatch(this.currentPathNoHash);
+		RSSA.SIGNALS.pathChange.dispatch(this.currentPathNoHash);
 
-		RSSA.pages.onNewPageRequested(RSSA.currentNode, this.currentPathNoHash);
+		// only update the page if an dataId is set.
+		// undefined dataId can be used if no HTML output is wanted (ex. a deeplinkable slideshow)
+		if(RSSA.currentNode.dataId)
+			RSSA.core.pages.onNewPageRequested(RSSA.currentNode, this.currentPathNoHash);
 
 		this.updateTitle();
 	},
@@ -464,7 +467,7 @@ RSSA.tracker =
 	{
 		//GA implementation should be done in the DOM.
 		//https://developers.google.com/analytics/devguides/collection/gajs/
-		RSSA.SIGNALS.paths.add(this.onPathChange, this);
+		RSSA.SIGNALS.pathChange.add(this.onPathChange, this);
 	},
 	onPathChange: function(path)
 	{
@@ -526,7 +529,7 @@ var PathNode = Class.extend({
 		this.id = data.id === undefined || data.id === "" ? model.getUniqueId() : data.id;
 		
 		this.dataId = data.dataId;
-		this.pageData = RSSA.pages.getPageData(this);
+		this.pageData = RSSA.core.pages.getPageData(this);
 		this.data = data;
 
 		//path handeling.
@@ -613,7 +616,7 @@ var PathNode = Class.extend({
 	requestNodeLaunch: function()
 	{
 		// log("requestNodeLaunch:", this.fullPath);
-		RSSA.paths.set(this.name, this.fullPath);
+		RSSA.core.pathModel.set(this.name, this.fullPath);
 	}
 });
 
