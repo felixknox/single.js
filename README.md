@@ -1,9 +1,9 @@
 ReadySetSingleApplication
 =========================
 
-A ultra simple framework for single page applications - inspired by the work of Josef Kjærgaard and his amazing Flash framework.
+A simple framework for single page applications.
 
-the JSON relies on this structure:
+The framework relies on certain DATA-Object structure, which can be created via a JSON file or via JS {} (Object).
 
     {
     	sitetree
@@ -16,63 +16,80 @@ the JSON relies on this structure:
     	}
     }
 
-Where sitetree contains the structure of the actual site.
+"<strong>sitetree</strong>" contains the structure of the actual site (the name says it all).
 
-pages contains the page data.
+"<strong>pages</strong>" contains the individual pages data.
 
-sitetree:
-Mandatory
-path (path name of the element, ex. work)
+<br>
 
-Optional
-id (used for uniquly seperating the elements - will get created if not defined)
-dataId (reference to an element in pages - if not defined a page change event will get called, but no page manipulation will get handled. Great for slideshow deeplinking, where parent page is the slideshow)
-title (will fall back to the default title)
-nested (defines if a page is nested)
-overlay (defines if a page is nested)
-OBS. if an element is both defined as nested and overlay, an error will be thrown. 
+# sitetree:
+<strong>Mandatory:</strong><br>
+* path (String)
+ * path name of the element, ex. "work", "about", "contact" etc.
 
+<strong>optional parameters:</strong><br>
+* id (String)
+ * Used for uniquly seperating the elements - will get created if not defined
+* dataId (String)
+ * Reference to an element in pages - if not defined a page change event will get called, but no page manipulation will get handled. Can be used for slideshow deeplinking, where the parent page is the slideshow.
+* title (String)
+ * Will fall back to the default title
+* nested (Boolean)
+ * If a page is set to nested, the page is reliant on it's parent, and will force parent to open before itself (if parent is not open).
+* overlay (Boolean)
+ * If a page is set to overlay, it keeps the current page open and opens the page on top of it (if no current page, rootNode will be opened).
 
+OBS. if an element is both defined as nested and overlay, an error will be thrown.
 
-pages:
-Mandatory
-dataId (reference id to an element in sitetree)
-page (reference to a page type - page is optimized for a namespace structure ex. GalleryExample.pages.GalleryImage)
+<br>
 
-Optional
-Add fields that your page requires.
+# pages:
+<strong>Mandatory:</strong><br>
+* dataId (String)
+ * Reference id to an element in sitetree
+* page (String)
+ * Reference to a page type created by extending RSSA.default.BasicPage - support for namespace structure ex. GalleryExample.pages.GalleryImage
 
+<strong>optional parameters:</strong><br>
+* Add fields that your page requires.
 
+Check out the examples for a complete Object structure reference.
 
-Check out the examples for a complete JSON structure reference.
+<br><br>
 
-
-
-RSSA.init -->
-Option: element
-enabledDebug: true
-title: "Title when node has no Title"
+RSSA.init --><br>
+Option: element<br>
+enabledDebug: true<br>
+title: "Title when node has no Title"<br>
 enableTracking: true
 
 
 [Link to examples](http://rwatgg.dk/labs/rssa).
-
-
+* [Using Mustache](https://github.com/janl/mustache.js)
 
 
 # Todo:
-* add pages dynamicly via JS, and not just via JSON.
+* add pages dynamicly via JS, and not just via DATA-Object.
 * make some good practice examples.
-* a pageless implementation (check if pages in the JSON is present)
+* a pageless implementation (check if pages in the DATA-Object is present)
 
 
 # Features:
-* title, include title in the JSON
-* Classes with a namespace structure.
-* Overlay page, ignores the current page and just displays a page "on top".
-* Nested pages, fires the page underneath, and opens that page. Opens nested page after parent page is opened (it's dependent on it's parent).
-* is sibling of
+* title, include fallback title or/and set title in the DATA-Object
+* Classes with a namespace structure (ex.: com.xxx.views.ContactPage).
+* Overlay pages (see explanation)
+* Nested pages (see explanation)
+* is sibling of method, way to check if a node-a is a child of node-b
 * next/forward (history)
 
 # Auto features:
 * automatically inits rootNode if no deeplink is choosen.
+
+
+# Libraries
+* Using [Signals](http://millermedeiros.github.com/js-signals/) as an event framework.
+* Using a forked version of [Path.js](https://github.com/mtrpcic/pathjs) for path management.
+
+# Thanks to
+
+- Inspired by the work of Josef Kjærgaard and his amazing Flash framework.
