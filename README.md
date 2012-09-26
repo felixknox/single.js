@@ -75,6 +75,7 @@ Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) framew
 * Nested pages (see explanation)
 * is sibling of method, way to check if a node-a is a child of node-b
 * next/forward (history)
+* Uses a forked version of [Path.js](https://github.com/mtrpcic/pathjs) to handle hashtags/history.
 
 # Auto features:
 * automatically inits rootNode if no deeplink is choosen.
