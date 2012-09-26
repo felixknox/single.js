@@ -66,7 +66,7 @@ enableTracking: true
 
 Examples:
 * [Gallery example](http://rwatgg.dk/labs/rssa/gallery.php)
-* [Using Mustache](https://github.com/janl/mustache.js)
+Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) framework for easy implementation.
 
 
 # Todo:
