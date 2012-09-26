@@ -64,7 +64,8 @@ title: "Title when node has no Title"<br>
 enableTracking: true
 
 
-[Link to examples](http://rwatgg.dk/labs/rssa).
+Examples:
+* [Gallery example](http://rwatgg.dk/labs/rssa/gallery.php)
 * [Using Mustache](https://github.com/janl/mustache.js)
 
 
