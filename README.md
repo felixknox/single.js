@@ -57,14 +57,7 @@ Check out the examples for a complete Object structure reference.
 
 <br><br>
 
-RSSA.init --><br>
-Option: element<br>
-enabledDebug: true<br>
-title: "Title when node has no Title"<br>
-enableTracking: true
-
-
-Examples:
+# Examples:
 * [Gallery example](http://rwatgg.dk/labs/rssa/gallery.php)
 Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) framework for easy implementation.
 
