@@ -60,6 +60,7 @@ Check out the examples for a complete Object structure reference.
 # Examples:
 * [Gallery example](http://rwatgg.dk/labs/rssa/gallery.php)
 Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) framework for easy implementation.
+Debug-menu is on the left.
 
 
 # Todo:
