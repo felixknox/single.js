@@ -187,7 +187,7 @@ RSSA.core.pages =
 			RSSA.currentNode.page = null;
 		}
 
-		if(this.currentPage) log("this.currentPage:", this.currentPage._buildId)
+		if(this.currentPage) log("this.currentPage:", this.currentPage._buildId);
 		if(this.currentPage)
 			this.currentPage.animateOut();
 
@@ -235,7 +235,7 @@ RSSA.core.pages =
 RSSA.core.pathModel =
 {
 	//consts
-	DEBUG_MODE: false, //ligesom jeppes UX framework.
+	DEBUG_MODE: false,
 
 	//vars
 	currentPath: "",
@@ -258,9 +258,7 @@ RSSA.core.pathModel =
 		this.map(this.data, this.data[0].path);
 
 		var that = this;
-		Path.rescue(function(){
-			that.on404();
-		});
+		Path.rescue(function(){ that.on404(); });
 
 		RSSA.SIGNALS.pageControlReady.dispatch();
 		
@@ -286,7 +284,8 @@ RSSA.core.pathModel =
 	{
 		path = RSSA.tools.cleanPath(path);
 
-		for (var i = 0; i < this.nodes.length; i++) {
+		for (var i = 0; i < this.nodes.length; i++)
+		{
 			if(this.nodes[i].fullPath == path)
 			{
 				return this.nodes[i];
@@ -346,7 +345,8 @@ RSSA.core.pathModel =
 	{
 		var prev = childNodes[childNodes.length - 1],
 			next;
-		for (var i = 0; i < childNodes.length; i++) {
+		for (var i = 0; i < childNodes.length; i++)
+		{
 			next = i === childNodes.length - 1 ? childNodes[0] : childNodes[i+1];
 			childNodes[i].setNextAndPreviousNode(prev, next);
 			prev = childNodes[i];
@@ -423,7 +423,8 @@ RSSA.core.pathModel =
 
 RSSA.tools =
 {
-	stringToFunction: function(str) {
+	stringToFunction: function(str)
+	{
 		var arr = str.split(".");
 
 		var fn = (window || this);
@@ -449,13 +450,14 @@ RSSA.tools =
 		var from = "àáäâèéëêìíïîòóöôùúüûñç";
 		var to   = "aaaaeeeeiiiioooouuuunc";
 
-		for (var i=0, l=from.length ; i<l ; i++) {
-		str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+		for (var i=0, l=from.length ; i<l ; i++)
+		{
+			str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
 		}
 
-		str = str.replace(/[^a-z0-9-\/ -\/ _\/ +]/g, '') // remove invalid chars
-		.replace(/\s+/g, '+') // collapse whitespace and replace by -
-		.replace(/-+/g, '+'); // collapse dashes
+		str = str.replace(/[^a-z0-9-\/ -\/ _\/ +]/g, ''); // remove invalid chars
+		str = str.replace(/\s+/g, '+'); // collapse whitespace and replace by -
+		str = str.replace(/-+/g, '+'); // collapse dashes
 
 		return str;
 	}
@@ -465,7 +467,7 @@ RSSA.tracker =
 {
 	init: function()
 	{
-		//GA implementation should be done in the DOM.
+		//GA implementation should be done after googles guidelines -->
 		//https://developers.google.com/analytics/devguides/collection/gajs/
 		RSSA.SIGNALS.pathChange.add(this.onPathChange, this);
 	},
@@ -476,14 +478,14 @@ RSSA.tracker =
 	track: function(path)
 	{
 		//page -->
-		//make you own implamentation of this if _gaq is not surfficient.
+		//make your own implamentation of this if _gaq is not surfficient.
 		_gaq.push(['_trackPageview', path]);
 		log("track page", path);
 	},
 	event: function(type, action)
 	{
 		//event --> call RSSA.tracker.event({type}, {action});
-		//make you own implamentation of this if _gaq is not surfficient.
+		//make your own implamentation of this if _gaq is not surfficient.
 		_gaq.push(['_trackEvent', type, action]);
 	}
 };
@@ -501,27 +503,34 @@ RSSA.tracker =
 var PathNode = Class.extend({
 
 	id: "",
-	dataId: "",//reference to the page ID.
-	path: "", /*Same as id but with blank spaces removed*/
+	dataId: "",// reference to the page ID.
+	path: "", // same as id but with blank spaces removed
 	fullPath: "",
 	data: null,
-	parent: null, /*other PathNode*/
-	pageData: null, /*data of the page*/
+	parent: null, // other PathNode
+	pageData: null, // data of the page
 	title: "",
 	type: "",
-	childNodes: [], /* gets dedined in the model */
+	childNodes: [], // gets dedined in the model
 
 	overlay: false,
 	nested: false,
 
 	isRootNode: false,
 	
-	prevNode: null, /* usefull reference to the previous node in line (if there is one) */
-	nextNode: null, /* usefull reference to the next node in line (if there is one) */
+	prevNode: null, // usefull reference to the previous node in line (if there is one)
+	nextNode: null, // usefull reference to the next node in line (if there is one)
 
-	init: function(data, trailingPath, parentNode, model, index, rootNode)
+	/**
+		* @param {Object} data
+		* @param {String} trailingPath
+		* @param {PathNode} parentNode
+		* @param {uint} index
+		* @param {Boolean} isRootNode
+	*/
+	init: function(data, trailingPath, parentNode, model, index, isRootNode)
 	{
-		this.isRootNode = rootNode;
+		this.isRootNode = isRootNode;
 		this.model = model;
 		this.index = index;
 		this.title = data.title;
@@ -542,7 +551,7 @@ var PathNode = Class.extend({
 		this.nested = data.nested === "true";
 
 		if(this.nested && this.overlay)
-			throw new Error("Choose your weapon, overlay or nested and not both. path in question: "+ this.fullPath);
+			throw new Error("Choose your weapon, overlay or nested and not both. path in trouble: "+ this.fullPath);
 		
 		//set type.
 		//this.setType(this.data.type);
@@ -566,7 +575,11 @@ var PathNode = Class.extend({
 		// if(parentNode) log("	PathNode: parentNode type:", parentNode.type);
 		// log("---------------------");
 	},
-	//DOC: returns if this node is a subling of parameter defined node?
+	/**
+		DOC: returns if this node is a subling of parameter defined node?
+		* @param {PathNode} siblingOf
+		* @returns {Boolean}
+	*/
 	isSiblingOf: function(siblingOf)
 	{
 		if(!this.parent) return false;

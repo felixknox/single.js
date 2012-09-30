@@ -72,6 +72,10 @@ enableTracking: true
 * add pages dynamicly via JS, and not just via DATA-Object.
 * make some good practice examples.
 * a pageless implementation (check if pages in the DATA-Object is present)
+* parameters, tilføj & parametre, det er awesome sauce.
+* test i ældre browsere, smartphones etc.
+* lav et debug view til telefoner? Mange kan komme til at bruge et framework som dette ;-)
+* skal jeg lave min egen implementering af Path.js? Så vi eliminere frameworks totalt...
 
 
 # Features:

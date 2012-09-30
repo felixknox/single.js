@@ -16,6 +16,10 @@ RSSA.default =
 		_state: "",
 		dataNode: null,
 
+		/**
+			* @param {Pathnode} node
+		*/
+
 		init: function(node)
 		{
 			this._buildId = RSSA.default.getUniqueId();
