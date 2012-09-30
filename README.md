@@ -57,15 +57,10 @@ Check out the examples for a complete Object structure reference.
 
 <br><br>
 
-RSSA.init --><br>
-Option: element<br>
-enabledDebug: true<br>
-title: "Title when node has no Title"<br>
-enableTracking: true
-
-
-[Link to examples](http://rwatgg.dk/labs/rssa).
-* [Using Mustache](https://github.com/janl/mustache.js)
+# Examples:
+* [Gallery example](http://rwatgg.dk/labs/rssa/gallery.php)
+Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) framework for easy implementation.
+Debug-menu is on the left.
 
 
 # Todo:
@@ -85,6 +80,7 @@ enableTracking: true
 * Nested pages (see explanation)
 * is sibling of method, way to check if a node-a is a child of node-b
 * next/forward (history)
+* Uses a forked version of [Path.js](https://github.com/mtrpcic/pathjs) to handle hashtags/history.
 
 # Auto features:
 * automatically inits rootNode if no deeplink is choosen.
