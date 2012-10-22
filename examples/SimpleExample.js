@@ -1,6 +1,6 @@
 $(window).ready(function()
 {
-	$.getJSON("examples/assets/json/data.json", bind(window, window.onLoaded));
+	$.getJSON("assets/json/data.json", bind(window, window.onLoaded));
 });
 
 function onLoaded(data)
