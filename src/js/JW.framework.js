@@ -5,7 +5,7 @@
   /     \
  /      _\
 `"""""`` author: felix nielsen - felix . nielsen [ a ] rwatgg . dk */
-RSSA =
+JW =
 {
 	PAGE_TYPES: [],
 	SIGNALS:
@@ -35,16 +35,16 @@ RSSA =
 	
 		
 //
-RSSA.init = function(options, data, pageContainer)
+JW.init = function(options, data, pageContainer)
 {
 	this.core.pages.init(data.pages, pageContainer);
 	this.core.pathModel.setup(data.sitetree, options.title);
 
 	if(options.enableTracking)
-		RSSA.tracker.init();
+		JW.tracker.init();
 
 	if(options.enabledDebug)
-		RSSA.debug.init(this.core.pathModel.rootNode);
+		JW.debug.init(this.core.pathModel.rootNode);
 };
 
 /***
@@ -57,7 +57,7 @@ RSSA.init = function(options, data, pageContainer)
 */
 //Controls the pages of the app. When a new page gets requested via the pageControl (calls a HTTP receiver)
 //It waits for proper feedback from the server, removes old page and shows the new page.
-RSSA.core.pages =
+JW.core.pages =
 {
 	currentPage: null,
 	currentOverlayPage: null,
@@ -71,7 +71,7 @@ RSSA.core.pages =
 	{
 		this.pageContainer = container;
 
-		RSSA.SIGNALS.pageStatus.add(this.onPageStatusChange, this);
+		JW.SIGNALS.pageStatus.add(this.onPageStatusChange, this);
 		this._pagesData = [];
 		for (var i = 0; i < data.length; i++) {
 			this._pagesData[data[i].dataId] = data[i];
@@ -80,14 +80,14 @@ RSSA.core.pages =
 	requestNewPage: function(path)
 	{
 		//request a new page from a specific path, used for when you don't have a reference to a node.
-		var node = RSSA.core.pathModel.getNode(path);
+		var node = JW.core.pathModel.getNode(path);
 		node.requestNodeLaunch();
 	},
 	onNewPageRequested: function(currentNode, path)
 	{
-		//var newNode = RSSA.core.pathModel.getNode(path);
+		//var newNode = JW.core.pathModel.getNode(path);
 
-		var isReadyForPageChange = !RSSA.previousNode || ((RSSA.previousNode.overlay || RSSA.previousNode.nested) && RSSA.previousNode.parent !== currentNode) || (RSSA.previousNode !== currentNode && (!RSSA.previousNode.nested && !RSSA.previousNode.overlay));
+		var isReadyForPageChange = !JW.previousNode || ((JW.previousNode.overlay || JW.previousNode.nested) && JW.previousNode.parent !== currentNode) || (JW.previousNode !== currentNode && (!JW.previousNode.nested && !JW.previousNode.overlay));
 
 		if(!currentNode.overlay && !currentNode.nested)
 		{
@@ -101,10 +101,10 @@ RSSA.core.pages =
 		this.removeOldNestedPage();
 
 		//debug.
-		if(RSSA.debug.enabled) log("pageControl > onNewPageRequested:", path, currentNode);
+		if(JW.debug.enabled) log("pageControl > onNewPageRequested:", path, currentNode);
 
 		//build the data and class.
-		var _class = RSSA.tools.stringToFunction(currentNode.pageData.page);
+		var _class = JW.tools.stringToFunction(currentNode.pageData.page);
 
 		//check the type of page, and setup accordingly.
 		if(currentNode.overlay)
@@ -120,7 +120,7 @@ RSSA.core.pages =
 				//there is a current page, but it is not the parent of the nested page, therefore remove it and setup parent.
 				this.removeOldPage();
 
-				_class = RSSA.tools.stringToFunction(currentNode.parent.pageData.page);
+				_class = JW.tools.stringToFunction(currentNode.parent.pageData.page);
 				this.setupPage(_class, currentNode.parent);
 			}else if(this.currentPage && this.currentPage.dataNode.dataId === currentNode.parent.dataId)
 			{
@@ -129,7 +129,7 @@ RSSA.core.pages =
 			}else if(!this.currentPage)
 			{
 				//no current page, therefore set it up.
-				_class = RSSA.tools.stringToFunction(currentNode.parent.pageData.page);
+				_class = JW.tools.stringToFunction(currentNode.parent.pageData.page);
 				this.setupPage(_class, currentNode.parent);
 			}
 		}else
@@ -140,7 +140,7 @@ RSSA.core.pages =
 		}
 
 		//dispatch a signal about the new page for all the listeners.
-		RSSA.SIGNALS.pageCreated.dispatch(RSSA.currentNode, RSSA.previousNode);
+		JW.SIGNALS.pageCreated.dispatch(JW.currentNode, JW.previousNode);
 	},
 	//Page setup
 	setupOverlayPage: function(c, node)
@@ -150,7 +150,7 @@ RSSA.core.pages =
 		this.currentOverlayPage.animateIn();
 
 		//set the page of the currentNode (for deepbinding reference)
-		RSSA.currentNode.page = this.currentOverlayPage;
+		JW.currentNode.page = this.currentOverlayPage;
 	},
 	setupNestedPage: function(c, node)
 	{
@@ -160,7 +160,7 @@ RSSA.core.pages =
 			this.currentNestedPage.setup(this.pageContainer);
 
 		//set the page of the currentNode (for deepbinding reference)
-		RSSA.currentNode.page = this.currentNestedPage;
+		JW.currentNode.page = this.currentNestedPage;
 	},
 	setupPage: function(c, node)
 	{
@@ -176,15 +176,15 @@ RSSA.core.pages =
 		}
 
 		//set the page of the currentNode (for deepbinding reference)
-		RSSA.currentNode.page = this.currentPage;
+		JW.currentNode.page = this.currentPage;
 	},
 
 	//removal of the pages.
 	removeOldPage: function()
 	{
-		if(RSSA.currentNode)
+		if(JW.currentNode)
 		{
-			RSSA.currentNode.page = null;
+			JW.currentNode.page = null;
 		}
 
 		if(this.currentPage) log("this.currentPage:", this.currentPage._buildId);
@@ -195,9 +195,9 @@ RSSA.core.pages =
 	},
 	removeOldOverlayPage: function()
 	{
-		if(RSSA.currentNode)
+		if(JW.currentNode)
 		{
-			RSSA.currentNode.page = null;
+			JW.currentNode.page = null;
 		}
 
 		if(this.currentOverlayPage)
@@ -232,7 +232,7 @@ RSSA.core.pages =
 *    | _|    /__/     \__\  |__|     |__|  |__| |__|  |__|  \______/  |_______/ |_______||_______|
 */
 //Controls the path of the application. Uses Path.js to handle crossbrowser issues.
-RSSA.core.pathModel =
+JW.core.pathModel =
 {
 	//consts
 	DEBUG_MODE: false,
@@ -260,7 +260,7 @@ RSSA.core.pathModel =
 		var that = this;
 		Path.rescue(function(){ that.on404(); });
 
-		RSSA.SIGNALS.pageControlReady.dispatch();
+		JW.SIGNALS.pageControlReady.dispatch();
 		
 		forceToHashtag = true;
 		Path.history.listen(true);
@@ -282,7 +282,7 @@ RSSA.core.pathModel =
 	},
 	getNode: function(path)
 	{
-		path = RSSA.tools.cleanPath(path);
+		path = JW.tools.cleanPath(path);
 
 		for (var i = 0; i < this.nodes.length; i++)
 		{
@@ -297,7 +297,7 @@ RSSA.core.pathModel =
 	onEnter: function (fns)
 	{
 		//scope of Path (this).
-		RSSA.core.pathModel.onPathChange(this.path);
+		JW.core.pathModel.onPathChange(this.path);
 	},
 	createNode: function(data, trailingPath, parentNode, index)
 	{
@@ -358,10 +358,10 @@ RSSA.core.pathModel =
 	},
 	set: function(name, path)
 	{
-		if(RSSA.core.pages.currentNode && RSSA.core.pages.currentNode.fullPath === path)
+		if(JW.core.pages.currentNode && JW.core.pages.currentNode.fullPath === path)
 		{
 			// if path is the same, then it means a user has clicked an already active menu item, therefore we should reset the list.
-			RSSA.SIGNALS.core.pathModelameSame.dispatch(RSSA.currentNode);
+			JW.SIGNALS.core.pathModelameSame.dispatch(JW.currentNode);
 		}else
 		{
 			/* falls back to hash tag if HTML5 history is not supported */
@@ -393,15 +393,15 @@ RSSA.core.pathModel =
 
 		this.currentPathNoHash = currentPath.split("#").join("");
 		
-		RSSA.previousNode = RSSA.currentNode;
-		RSSA.currentNode = this.getCurrentNode();
+		JW.previousNode = JW.currentNode;
+		JW.currentNode = this.getCurrentNode();
 
-		RSSA.SIGNALS.pathChange.dispatch(this.currentPathNoHash);
+		JW.SIGNALS.pathChange.dispatch(this.currentPathNoHash);
 
 		// only update the page if an dataId is set.
 		// undefined dataId can be used if no HTML output is wanted (ex. a deeplinkable slideshow)
-		if(RSSA.currentNode.dataId)
-			RSSA.core.pages.onNewPageRequested(RSSA.currentNode, this.currentPathNoHash);
+		if(JW.currentNode.dataId)
+			JW.core.pages.onNewPageRequested(JW.currentNode, this.currentPathNoHash);
 
 		this.updateTitle();
 	},
@@ -421,7 +421,7 @@ RSSA.core.pathModel =
 	}
 };
 
-RSSA.tools =
+JW.tools =
 {
 	stringToFunction: function(str)
 	{
@@ -463,13 +463,13 @@ RSSA.tools =
 	}
 };
 
-RSSA.tracker =
+JW.tracker =
 {
 	init: function()
 	{
 		//GA implementation should be done after googles guidelines -->
 		//https://developers.google.com/analytics/devguides/collection/gajs/
-		RSSA.SIGNALS.pathChange.add(this.onPathChange, this);
+		JW.SIGNALS.pathChange.add(this.onPathChange, this);
 	},
 	onPathChange: function(path)
 	{
@@ -484,7 +484,7 @@ RSSA.tracker =
 	},
 	event: function(type, action)
 	{
-		//event --> call RSSA.tracker.event({type}, {action});
+		//event --> call JW.tracker.event({type}, {action});
 		//make your own implamentation of this if _gaq is not surfficient.
 		_gaq.push(['_trackEvent', type, action]);
 	}
@@ -538,7 +538,7 @@ var PathNode = Class.extend({
 		this.id = data.id === undefined || data.id === "" ? model.getUniqueId() : data.id;
 		
 		this.dataId = data.dataId;
-		this.pageData = RSSA.core.pages.getPageData(this);
+		this.pageData = JW.core.pages.getPageData(this);
 		this.data = data;
 
 		//path handeling.
@@ -603,7 +603,7 @@ var PathNode = Class.extend({
 		if(splt[splt.length-1] !== undefined)
 			this.path = splt[splt.length-1];
 
-		this.path = RSSA.tools.cleanPath(this.path);
+		this.path = JW.tools.cleanPath(this.path);
 
 		if(!this._isRootNode)
 		{
@@ -629,7 +629,7 @@ var PathNode = Class.extend({
 	requestNodeLaunch: function()
 	{
 		// log("requestNodeLaunch:", this.fullPath);
-		RSSA.core.pathModel.set(this.name, this.fullPath);
+		JW.core.pathModel.set(this.name, this.fullPath);
 	}
 });
 

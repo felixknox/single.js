@@ -5,7 +5,7 @@ $(window).ready(function()
 
 function onLoaded(data)
 {
-	RSSA.init(	{
+	JW.init(	{
 					enabledDebug: true,
 					title: "Title when node has no Title",
 					//enabled google analytics.
@@ -16,7 +16,7 @@ function onLoaded(data)
 var GalleryExample = {
 	pages:
 	{
-		GalleryBasic: RSSA.default.BasicPage.extend({
+		GalleryBasic: JW.default.BasicPage.extend({
 			print: function()
 			{
 				var output = Mustache.render("<h1>{{title}}</h1><h2>{{& body}}</h2><a href='{{& link}}'>{{link-description}}</a></section>", this.dataNode.pageData);
@@ -25,7 +25,7 @@ var GalleryExample = {
 
 				if(this.dataNode.pageData.link)
 				{
-					var linkNode = RSSA.core.pathModel.getNode(this.dataNode.pageData.link);
+					var linkNode = JW.core.pathModel.getNode(this.dataNode.pageData.link);
 					this._el.find("a").click(function(event)
 					{
 						event.preventDefault();
@@ -34,7 +34,7 @@ var GalleryExample = {
 				}
 			}
 		}),
-		GalleryGrid: RSSA.default.BasicPage.extend({
+		GalleryGrid: JW.default.BasicPage.extend({
 			print: function()
 			{
 				var output = Mustache.render(
@@ -49,7 +49,7 @@ var GalleryExample = {
 
 				this._el.find("a").click(function()
 				{
-					RSSA.core.pathModel.rootNode.requestNodeLaunch();
+					JW.core.pathModel.rootNode.requestNodeLaunch();
 				});
 				
 				var that = this;
@@ -62,7 +62,7 @@ var GalleryExample = {
 				});
 			}
 		}),
-		GalleryImage: RSSA.default.BasicPage.extend({
+		GalleryImage: JW.default.BasicPage.extend({
 			print: function()
 			{
 				var output = Mustache.render(
@@ -72,6 +72,7 @@ var GalleryExample = {
 							"<h2>{{data.title}}</h2>"+
 						"</div>"+
 					"</div>", this.dataNode);
+				
 				this._el.append(output);
 				this._el.find("img").load(bind(this, this.onLoaded));
 				this._el.addClass("gallery-overlay");

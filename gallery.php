@@ -92,9 +92,9 @@
 		<script src="src/js/libs/path.js"></script>
 
 		<!-- LOGIC -->
-		<script src="src/js/RSSA.framework.js<?php print $cacheBuster; ?>"></script>
-		<script src="src/js/RSSA.debug.js<?php print $cacheBuster; ?>"></script>
-		<script src="src/js/RSSA.default.js<?php print $cacheBuster; ?>"></script>
+		<script src="src/js/JW.framework.js<?php print $cacheBuster; ?>"></script>
+		<script src="src/js/JW.debug.js<?php print $cacheBuster; ?>"></script>
+		<script src="src/js/JW.default.js<?php print $cacheBuster; ?>"></script>
 
 		<script src="examples/Gallery.js<?php print $cacheBuster; ?>"></script>
 

@@ -1,11 +1,11 @@
-RSSA.default =
+JW.default =
 {
 	randomId: 0,
 	getUniqueId: function()
 	{
 		var id = this.randomId;
 		this.randomId++;
-		return "rssa_p"+id.toString();
+		return "JW_p"+id.toString();
 	},
 	/* Basic page */
 	BasicPage: Class.extend({
@@ -22,13 +22,13 @@ RSSA.default =
 
 		init: function(node)
 		{
-			this._buildId = RSSA.default.getUniqueId();
+			this._buildId = JW.default.getUniqueId();
 			//constructor
-			if(!node) throw new Error("Page (RSSA.default.BasicPage) error: missing data node.");
+			if(!node) throw new Error("Page (JW.default.BasicPage) error: missing data node.");
 
 			this.dataNode = node;
 
-			RSSA.SIGNALS.pageStatus.dispatch("init", this);
+			JW.SIGNALS.pageStatus.dispatch("init", this);
 		},
 		setup: function(container)
 		{
@@ -54,7 +54,7 @@ RSSA.default =
 		onAnimatedIn: function()
 		{
 			this._state = "ANIMATED_IN";
-			RSSA.SIGNALS.pageStatus.dispatch("in", this);
+			JW.SIGNALS.pageStatus.dispatch("in", this);
 		},
 		animateOut: function()
 		{
@@ -65,7 +65,7 @@ RSSA.default =
 		onAnimatedOut: function()
 		{
 			this._state = "ANIMATED_OUT";
-			RSSA.SIGNALS.pageStatus.dispatch("out", this);
+			JW.SIGNALS.pageStatus.dispatch("out", this);
 
 			this.dealoc();
 		},
@@ -84,7 +84,7 @@ RSSA.default =
 			this._el = null;
 			this.dataNode = null;
 
-			RSSA.SIGNALS.pageStatus.dispatch("dealoc", this);
+			JW.SIGNALS.pageStatus.dispatch("dealoc", this);
 		},
 		resize: function()
 		{

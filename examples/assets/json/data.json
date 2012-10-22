@@ -142,7 +142,7 @@
 	"pages": [
 		{
 			"dataId": "home",
-			"page": "RSSA.default.BasicPage",
+			"page": "JW.default.BasicPage",
 			"title": "Home"
 		},
 		{
@@ -157,32 +157,32 @@
 		},
 		{
 			"dataId": "work_1",
-			"page": "RSSA.default.BasicPage",
+			"page": "JW.default.BasicPage",
 			"title": "Work #1"
 		},
 		{
 			"dataId": "work_2",
-			"page": "RSSA.default.BasicPage",
+			"page": "JW.default.BasicPage",
 			"title": "Work #2"
 		},
 		{
 			"dataId": "work_3",
-			"page": "RSSA.default.BasicPage",
+			"page": "JW.default.BasicPage",
 			"title": "Work #3"
 		},
 		{
 			"dataId": "work_4",
-			"page": "RSSA.default.BasicPage",
+			"page": "JW.default.BasicPage",
 			"title": "Work #4"
 		},
 		{
 			"dataId": "work_5",
-			"page": "RSSA.default.BasicPage",
+			"page": "JW.default.BasicPage",
 			"title": "Work #5"
 		},
 		{
 			"dataId": "contact",
-			"page": "RSSA.default.BasicPage",
+			"page": "JW.default.BasicPage",
 			"title": "Contact uus"
 		}
 	]

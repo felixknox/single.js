@@ -5,7 +5,7 @@ $(window).ready(function()
 
 function onLoaded(data)
 {
-	RSSA.init(	{
+	JW.init(	{
 					enabledDebug: true,
 					title: "Title when node has no Title",
 					//enabled google analytics.
@@ -13,7 +13,7 @@ function onLoaded(data)
 				}, data, $("body"));
 }
 
-var AnimationPage = RSSA.default.BasicPage.extend(
+var AnimationPage = JW.default.BasicPage.extend(
 {
 	animate: function()
 	{
