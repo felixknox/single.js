@@ -121,7 +121,7 @@
 		<script src="../src/js/JW.debug.js<?php print $cacheBuster; ?>"></script>
 		<script src="../src/js/JW.default.js<?php print $cacheBuster; ?>"></script>
 
-		<script src="Gallery.js<?php print $cacheBuster; ?>"></script>
+		<script src="assets/js/Gallery.js<?php print $cacheBuster; ?>"></script>
 
 		<script>
 			var _gaq = _gaq || [];
