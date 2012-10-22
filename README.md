@@ -77,7 +77,7 @@ to instantiate the framework:
 
 
 ## Examples:
-* [Gallery example](http://rwatgg.dk/labs/jw/gallery.php)
+* [Gallery example](http://rwatgg.dk/labs/jw/examples/gallery.php)
 uses [Nested](#optional-parameters) pages and [Mustache](https://github.com/janl/mustache.js) templating framework for easy implementation
  <i>Debug-menu is on the left</i>
 
