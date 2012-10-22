@@ -25,24 +25,29 @@
 				top: 0px;
 				left: 0px;
 			}
-
+			#site
+			{
+				width: 100%;
+				height: 100%;
+			}
+			#site.overlay
+			{
+				overflow: hidden;
+			}
 			#site, #site a, #site h2, #site h1, #site h3
 			{
 				font-size: 18px;
 				font-family: Georgia;
 				font-weight: normal;
 			}
-
 			#site a
 			{
 				color: #000000;
 			}
-
 			#site a:hover
 			{
 				text-decoration: none;
 			}
-			
 			#site .gallery-image .gallery-image-wrapper
 			{
 				position: absolute;
@@ -56,13 +61,34 @@
 				padding: 20px;
 				cursor: pointer;
 				display: inline-block;
-				height: 200px;
+				height: 100px;
+
+				border: 1px solid #333333;
+				background: #cccccc;
+				width: 100px;
+				margin: 10px;
+			}
+			#site ul > li:hover
+			{
+				background: #999999;
+			}
+			#site ul > li > div
+			{
+				width: 100%;
+				height: 100%;
+				text-align: center;
+				padding-top: 35px;
 			}
 			#site ul > li img
 			{
 				width: 150px;
 			}
-
+			#site .home-button
+			{
+				margin-left: 50px;
+				padding-top: 50px;
+				display: block;
+			}
 			#site .gallery-text
 			{
 				width: 40%;

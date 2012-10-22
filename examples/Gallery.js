@@ -38,16 +38,16 @@ var GalleryExample = {
 			print: function()
 			{
 				var output = Mustache.render(
-					"<a>Home</a>"+
+					"<a class='home-button'>Go to /home</a>"+
 					"<ul>{{#childNodes}}"+
 						"<li>"+
-						"<img src='{{pageData.picture}}' />"+
+							"<div>{{index}}</div>"+
 						"</li>"+
 					"{{/childNodes}}</ul>", this.dataNode);
 
 				this._el.append(output);
 
-				this._el.find("a").click(function()
+				this._el.find("a.home-button").click(function()
 				{
 					JW.core.pathModel.rootNode.requestNodeLaunch();
 				});
@@ -72,7 +72,7 @@ var GalleryExample = {
 							"<h2>{{data.title}}</h2>"+
 						"</div>"+
 					"</div>", this.dataNode);
-				
+
 				this._el.append(output);
 				this._el.find("img").load(bind(this, this.onLoaded));
 				this._el.addClass("gallery-overlay");
@@ -95,9 +95,27 @@ var GalleryExample = {
 					"visibility": "visible",
 					"opacity": 0,
 					"margin-left": -w,
-					"margin-top": -h});
-				this._el.find(".gallery-image-wrapper").animate({"opacity": 1}, 400);
-			}
+					"margin-top": -h
+				});
+
+				this._el.find(".gallery-image-wrapper").animate({"opacity": 1, ease: "ease-out"}, 400);
+
+				$("#site").addClass("overlay");
+			},
+			animate: function()
+			{
+				if(this._state === "ANIMATING_IN")
+					this._super();
+				else if(this._state === "ANIMATING_OUT")
+				{
+					$("#site").removeClass("overlay");
+					$(this._el).css("opacity", 1).animate({"opacity": 0, ease: "ease-out"},
+					{
+						duration: 400,
+						complete: bind(this, this.onAnimatedOut)
+					});
+				}
+			},
 		})
 	}
 };

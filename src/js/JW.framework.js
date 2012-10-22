@@ -475,18 +475,24 @@ JW.tracker =
 	{
 		this.track(path);
 	},
-	track: function(path)
+	page: function(path)
 	{
-		//page -->
-		//make your own implamentation of this if _gaq is not surfficient.
-		_gaq.push(['_trackPageview', path]);
-		log("track page", path);
+		if(JW.debug.enabled)
+			log("pageTracker, trackPage > "+ path);
+		else if(_gaq && !JW.debug.enabled)
+			_gaq.push(['_trackPageview', path]);
 	},
-	event: function(type, action)
+	/*
+		String		category The general event category (e.g. "Videos").
+		String		action The action for the event (e.g. "Play").
+		String		opt_label An optional descriptor for the event.
+	*/
+	event: function(category, action, opt_label)
 	{
-		//event --> call JW.tracker.event({type}, {action});
-		//make your own implamentation of this if _gaq is not surfficient.
-		_gaq.push(['_trackEvent', type, action]);
+		if(JW.debug.enabled)
+			log("pageTracker, trackEvent > "+ category+" : "+ action +" : "+ opt_label);
+		else if(_gaq && JW.debug.enabled)
+			_gaq.push(['_trackEvent', category, action, opt_label]);
 	}
 };
 
