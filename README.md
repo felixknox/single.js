@@ -100,7 +100,7 @@ uses [Nested](#optional-parameters) pages and [Mustache](https://github.com/janl
 <br>...
 
 ## Auto features:
-* automatically inits rootNode if no deeplink is choosen
+* automatically inits rootNode if no subpage (deeplink) is requested
 
 ## Libraries
 * using [Signals](http://millermedeiros.github.com/js-signals/) as an event framework
