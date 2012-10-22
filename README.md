@@ -62,16 +62,19 @@ check out the [Examples](#examples) for a complete Object structure reference.
 
 ## Instantiation
 to instantiate the framework:
-`JW.init({
-					enabledDebug: true,
-					title: "Fallback title, when node has no title",
-					enableTracking: true
-				}, data, $("#site"));`
+
+	var options = {enabledDebug: true, title: "Fallback title, when node has no title", enableTracking: true};
+	var dataObj = {sitetree:..., pages:...};
+	var domNode = $("#site")
+	JW.init(options, dataObj, domNode);
+
 * `enableDebug`, adds the debug menu for overview and easy navigation
 * `title`, a fallback title for when the [title](#optional-parameters) parameter is not set for a node
 * `enableTracking`, implement google analytics on the page, and page events will automaticlly get called from the framework
  * https://developers.google.com/analytics/devguides/collection/gajs/
  * JW.tracker.event(category, action, opt_label) for custom event tracking.
+
+
 
 ## Examples:
 * [Gallery example](http://rwatgg.dk/labs/jw/gallery.php)
