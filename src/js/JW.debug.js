@@ -83,7 +83,7 @@ JW.debug =
 
 		for (var i = 0; i < cn.length; i++)
 		{
-			var title = cn[i].title === undefined ? "No title" : cn[i].title;
+			var title = cn[i].title === undefined ? cn[i].path.split("/").join("") : cn[i].title;
 			btn = new JW.DebugBtn(cn[i], container.append("<li id='"+cn[i].id+"-btn'><span>"+title+"</span></li>").find("#"+cn[i].id+"-btn"));
 
 			if(cn[i].childNodes.length > 0)
