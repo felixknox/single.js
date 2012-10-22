@@ -273,7 +273,7 @@
 			"dataId": "about",
 			"page": "GalleryExample.pages.GalleryBasic",
 			"title": "About this gallery example",
-			"body": "This example shows how easy it would be to setup a simple gallery - using nested pages - with the use of a straight forward JSON structure.<br><br>Images taken from <a href='http://gmunk.tumblr.com/'>gmunk.tumblr.com</a>",
+			"body": "This example shows how to setup a simple gallery - using nested pages - with the use of a JSON structure approach.<br><br>Images taken from <a href='http://gmunk.tumblr.com/'>gmunk.tumblr.com</a>",
 			"link": "/gallery 1",
 			"link-description": "Check out the gallery"
 		},
