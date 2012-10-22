@@ -10,7 +10,7 @@ A simple framework for single page applications/websites.
 
 ## JSON
 
-The framework relies on certain DATA-Object structure, which can be created via a JS {} (Object) or by loading in an JSON file.
+The framework relies on certain DATA-Object structure, which can be created via a JS {} or by loading in an JSON file.
 
     {
     	sitetree
@@ -61,13 +61,10 @@ Contains each individual page's data.
 
 Check out the examples for a complete Object structure reference.
 
-<br><br>
-
 ## Examples:
 * [Gallery example](http://rwatgg.dk/labs/jw/gallery.php)
 Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) templating framework for easy implementation.
  <i>Debug-menu is on the left</i>
-
 
 ## Todo:
 * add pages dynamicly via JS, and not just via DATA-Object.
@@ -76,7 +73,6 @@ Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) templa
 * test in older browsers/mobile.
 * make a debug view for mobile devices.
 * make an own path implementation, exlude Path.js.
-
 
 ## Features:
 * title, include fallback title or/and set title in the DATA-Object
@@ -90,9 +86,9 @@ Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) templa
 ## Auto features:
 * automatically inits rootNode if no deeplink is choosen.
 
-# Libraries
+## Libraries
 * Using [Signals](http://millermedeiros.github.com/js-signals/) as an event framework.
 * Using a forked version of [Path.js](https://github.com/mtrpcic/pathjs) for path management.
 
-# Thanks to
+## Thanks to
 - Inspired by the work of Josef Kjærgaard and his awesome sauce Flash framework.
