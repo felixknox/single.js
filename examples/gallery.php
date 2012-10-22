@@ -98,7 +98,6 @@
 		</style>
 		<!-- STYLES + RESET -->
 		<link rel="stylesheet" href="../src/css/style.css<?php print $cacheBuster; ?>">
-		<link rel="stylesheet" href="src/css/demo.style.css<?php print $cacheBuster; ?>">
 
 		<!-- LIBS -->
 		<!--[if lt IE 9]>
@@ -112,7 +111,7 @@
 		<script>window.signals || document.write('<script src="src/js/libs/signals.min.js"><\/script>')</script>
 
 		<script src="https://raw.github.com/janl/mustache.js/master/mustache.js"></script>
-		<script>window.Mustache || document.write('<script src="js/libs/mustache.js"><\/script>')</script>
+		<script>window.Mustache || document.write('<script src="src/js/libs/mustache.js"><\/script>')</script>
 
 		<script src="../src/js/libs/libraries.js"></script>
 		<script src="../src/js/libs/path.js"></script>

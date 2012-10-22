@@ -24,12 +24,21 @@ JW.debug =
 	},
 	addStyle: function()
 	{
-		var css = "";
-		//var css = "body{background: #00ff00;}";
+		var css = "html,body{width:100%;height:100%;}"+
+"#JW-debug{background:#e7e7e7;font-family:Georgia, Verdana;font-size:11px;line-height:11px;padding-right:10px;box-shadow:6px 7px 8px -4px #e7e7e7;overflow:auto;width:0;height:100%;position:fixed;z-index:9999999999999999;top:0;left:0;transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);-moz-transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);-webkit-transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);-o-transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);margin:0;}"+
+"#JW-debug.open{width:300px;}"+
+"#JW-debug ul{overflow:hidden;margin:0;padding:0 0 0 15px;}"+
+"#JW-debug > ul{margin-top:10px;margin-bottom:10px;padding:0 0 0 10px;}"+
+"#JW-debug ul li{border:1px solid #fafafa;cursor:pointer;opacity:1;list-style:none;background:white;width:300px;transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);-moz-transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);-webkit-transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);-o-transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);margin:0;padding:4px 2px 4px 6px;}"+
+"#JW-debug ul li.selected:before{content:'> ';}"+
+"#JW-debug ul li.selected{background:#000000;color:#ffffff;margin:10px 0;}"+
+"#JW-debug ul li.prev-selected{background:#e9e9e9;}"+
+"#JW-debug ul li:hover{opacity:.7;}";
 
 		head = document.getElementsByTagName('head')[0],
 		style = document.createElement('style');
 		style.type = 'text/css';
+		
 		if(style.styleSheet){
 			style.styleSheet.cssText = css;
 		}else{
@@ -74,7 +83,8 @@ JW.debug =
 
 		for (var i = 0; i < cn.length; i++)
 		{
-			btn = new JW.DebugBtn(cn[i], container.append("<li id='"+cn[i].id+"-btn'><span>"+cn[i].title+"</span></li>").find("#"+cn[i].id+"-btn"));
+			var title = cn[i].title === undefined ? "No title" : cn[i].title;
+			btn = new JW.DebugBtn(cn[i], container.append("<li id='"+cn[i].id+"-btn'><span>"+title+"</span></li>").find("#"+cn[i].id+"-btn"));
 
 			if(cn[i].childNodes.length > 0)
 			{

@@ -475,7 +475,7 @@ JW.tracker =
 	{
 		this.track(path);
 	},
-	page: function(path)
+	track: function(path)
 	{
 		if(JW.debug.enabled)
 			log("pageTracker, trackPage > "+ path);
