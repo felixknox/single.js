@@ -65,8 +65,8 @@ Check out the examples for a complete Object structure reference.
 
 ## Examples:
 * [Gallery example](http://rwatgg.dk/labs/jw/gallery.php)
-Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) framework for easy implementation.
-Debug-menu is on the left.
+Uses Nested pages and the [Mustache](https://github.com/janl/mustache.js) templating framework for easy implementation.
+ <i>Debug-menu is on the left</i>
 
 
 ## Todo:
@@ -81,8 +81,8 @@ Debug-menu is on the left.
 ## Features:
 * title, include fallback title or/and set title in the DATA-Object
 * Classes with a namespace structure (ex.: com.xxx.views.ContactPage).
-* Overlay pages (see explanation)
-* Nested pages (see explanation)
+* [Overlay](#optional-parameters) pages
+* [Nested](#optional-parameters) pages
 * is sibling of method, way to check if a node-a is a child of node-b
 * next/forward (history)
 * Uses a forked version of [Path.js](https://github.com/mtrpcic/pathjs) to handle hashtags/history.
