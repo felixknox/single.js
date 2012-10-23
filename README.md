@@ -1,7 +1,7 @@
 json-to-website
 =========================
 
-a simple framework for single page applications/websites.
+a simple UI-less framework for single page applications/websites.
 
 ## Installation
 
