@@ -1,6 +1,6 @@
 $(window).ready(function()
 {
-	$.getJSON("assets/json/data.json", bind(window, window.onLoaded));
+	$.getJSON("assets/json/simple.json", bind(window, window.onLoaded));
 });
 
 function onLoaded(data)
@@ -17,7 +17,9 @@ var AnimationPage = JW.default.BasicPage.extend(
 {
 	animate: function()
 	{
-		//don't call this._super if you wanna animate.
+		//don't call "this._super();" if you wanna animate freely
+		//this._super();
+
 		$(this._el).stop(true);
 
 		if(this._state === "ANIMATING_IN")

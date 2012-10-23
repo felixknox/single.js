@@ -61,7 +61,6 @@
 		<section id="site">
 			<!-- dynamic content -->
 			<div id="pages">
-				Non debug view
 			</div>
 		</section>
 	</body>

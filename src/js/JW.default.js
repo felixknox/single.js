@@ -36,14 +36,23 @@ JW.default =
 
 			//DOM manipulation.
 			this._container = container;
-			this._el = this._container.append("<div id='"+this._buildId+"'></div>").find("#"+this._buildId);
+			this._el = this._container.append("<div style='margin-left: 200px; margin-top: 50px;' id='"+this._buildId+"'></div>").find("#"+this._buildId);
 
 			this.print();
 			this.resize();
 		},
 		print: function()
 		{
-			this._el.text("id: "+this.dataNode.id+" >> path: "+this.dataNode.data.path);
+			//Should be overwritten.
+			this._el.append("<div>node id: <b>"+this.dataNode.id+"</b></div>");
+			this._el.append("<div>node relative path: <b>"+this.dataNode.path+"</b></div>");
+			this._el.append("<div>node full path: <b>"+this.dataNode.fullPath+"</b></div>");
+			this._el.append("<br />");
+
+			for(var i in this.dataNode.pageData)
+			{
+				this._el.append("<div>PageData, id: <b>"+i.toString()+"</b> value: <b>"+String(this.dataNode.pageData[i])+"</b></div>");
+			}
 		},
 		animateIn: function()
 		{
