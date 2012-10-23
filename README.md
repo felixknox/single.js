@@ -107,4 +107,4 @@ uses [Nested](#optional-parameters) pages and [Mustache](https://github.com/janl
 * using a forked version of [Path.js](https://github.com/mtrpcic/pathjs) for path management (hashtag/HTML5 History)
 
 ## Thanks to
-- Inspired by the work of Josef Kjærgaard and his awesome sauce Flash framework.
+- Inspired by the work of [Josef Kjærgaard](http://josefkjaergaard.com/) and his "awesome sauce" Flash framework.
