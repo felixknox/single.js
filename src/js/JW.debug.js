@@ -13,14 +13,14 @@ JW.debug =
 
 		//requires jQuery to work, throw error if jQuery is not present.
 		JW.SIGNALS.pageCreated.add(this.onPageChange, this);
-		this._el = $("body").prepend("<div id='JW-debug'></div>").find("#JW-debug");
+		this._el = $("body").prepend("<div id='JW-debug'><div style='line-height: 14px; background: #000000; color: #ffffff; display: block; margin-left: 10px; margin-top: 10px; width: 275px;'>!! Debug menu<br />Only use during development.</div></div>").find("#JW-debug");
 		this.buildTree(rootNode, this._el);
 
 		this.addStyle();
 
 		$("#JW-debug").addClass("open");
 
-		this.onPageChange(JW.currentNode);
+		if(JW.currentNode) this.onPageChange(JW.currentNode);
 	},
 	addStyle: function()
 	{

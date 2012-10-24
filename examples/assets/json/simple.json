@@ -142,7 +142,7 @@
 	"pages": [
 		{
 			"dataId": "home",
-			"page": "JW.default.BasicPage",
+			"page": "SimplePage",
 			"title": "Home",
 			"body": "Lorem ipsum"
 		},
@@ -158,32 +158,32 @@
 		},
 		{
 			"dataId": "work_1",
-			"page": "JW.default.BasicPage",
+			"page": "SimplePage",
 			"title": "Work #1"
 		},
 		{
 			"dataId": "work_2",
-			"page": "JW.default.BasicPage",
+			"page": "SimplePage",
 			"title": "Work #2"
 		},
 		{
 			"dataId": "work_3",
-			"page": "JW.default.BasicPage",
+			"page": "SimplePage",
 			"title": "Work #3"
 		},
 		{
 			"dataId": "work_4",
-			"page": "JW.default.BasicPage",
+			"page": "SimplePage",
 			"title": "Work #4"
 		},
 		{
 			"dataId": "work_5",
-			"page": "JW.default.BasicPage",
+			"page": "SimplePage",
 			"title": "Work #5"
 		},
 		{
 			"dataId": "contact",
-			"page": "JW.default.BasicPage",
+			"page": "SimplePage",
 			"title": "Contact uus"
 		}
 	]

@@ -1,15 +1,25 @@
+// gallery example; shows how to use:
+// the node structure to creat your own UI (gallery thumbs, overlay image)
+// we are using Mustache to show the flexibility to use what ever templating framework/implementation you want to.
+
 $(window).ready(function()
 {
+	// load JSON.
 	$.getJSON("assets/json/gallery.json", bind(window, window.onLoaded));
 });
 
 function onLoaded(data)
 {
+	// init the framework when data has loaded.
 	JW.init(	{
+					// enable debug menu for development purpose only.
 					enabledDebug: true,
+					// add a default title.
 					title: "Title when node has no Title",
-					//enabled google analytics.
-					enableTracking: true
+					// enabled google analytics.
+					enableTracking: true,
+					// exclude "forceHashTag" to let the framework find out if it should use HTML5 History or hashtags.
+					forceHashTag: true
 				}, data, $("#site"));
 }
 
@@ -25,10 +35,12 @@ var GalleryExample = {
 
 				if(this.dataNode.pageData.link)
 				{
+					// get a node from an URL snippet.
 					var linkNode = JW.core.pathModel.getNode(this.dataNode.pageData.link);
 					this._el.find("a").click(function(event)
 					{
 						event.preventDefault();
+						// requestNodeLaunch is a hook into the framework. Basiclly your way to call a page.
 						linkNode.requestNodeLaunch();
 					});
 				}

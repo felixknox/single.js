@@ -38,7 +38,7 @@ JW =
 JW.init = function(options, data, pageContainer)
 {
 	this.core.pages.init(data.pages, pageContainer);
-	this.core.pathModel.setup(data.sitetree, options.title);
+	this.core.pathModel.setup(data.sitetree, options);
 
 	if(options.enableTracking)
 		JW.tracker.init();
@@ -85,8 +85,6 @@ JW.core.pages =
 	},
 	onNewPageRequested: function(currentNode, path)
 	{
-		//var newNode = JW.core.pathModel.getNode(path);
-
 		var isReadyForPageChange = !JW.previousNode || ((JW.previousNode.overlay || JW.previousNode.nested) && JW.previousNode.parent !== currentNode) || (JW.previousNode !== currentNode && (!JW.previousNode.nested && !JW.previousNode.overlay));
 
 		if(!currentNode.overlay && !currentNode.nested)
@@ -167,7 +165,6 @@ JW.core.pages =
 		this.currentPage = new c(node);
 		this.currentPage.setup(this.pageContainer);
 		this.currentPage.animateIn();
-		log(this.currentPage );
 
 		//setup and animate nested page in as well.
 		if(this.currentNestedPage)
@@ -187,7 +184,6 @@ JW.core.pages =
 			JW.currentNode.page = null;
 		}
 
-		if(this.currentPage) log("this.currentPage:", this.currentPage._buildId);
 		if(this.currentPage)
 			this.currentPage.animateOut();
 
@@ -248,9 +244,9 @@ JW.core.pathModel =
 
 	DEFAULT_TITLE: "",
 
-	setup: function(data, defaultTitle)
+	setup: function(data, options)
 	{
-		this.DEFAULT_TITLE = defaultTitle;
+		this.DEFAULT_TITLE = options.title;
 		this.data = data;
 		this.nodes = [];
 
@@ -261,8 +257,8 @@ JW.core.pathModel =
 		Path.rescue(function(){ that.on404(); });
 
 		JW.SIGNALS.pageControlReady.dispatch();
-		
-		forceToHashtag = true;
+
+		forceToHashtag = options.forceHashTag;
 		Path.history.listen(true);
 	},
 	enabledGA: function(ID)

@@ -31,6 +31,10 @@
 		<script src="https://raw.github.com/janl/mustache.js/master/mustache.js"></script>
 		<script>window.Mustache || document.write('<script src="src/js/libs/mustache.js"><\/script>')</script>
 
+		<!-- add bootstrap for example usage -->
+		<script src="assets/js/libs/bootstrap.min.js"></script>
+		<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+
 		<script src="../src/js/libs/libraries.js"></script>
 		<script src="../src/js/libs/path.js"></script>
 

@@ -36,7 +36,7 @@ JW.default =
 
 			//DOM manipulation.
 			this._container = container;
-			this._el = this._container.append("<div style='margin-left: 200px; margin-top: 50px;' id='"+this._buildId+"'></div>").find("#"+this._buildId);
+			this._el = this._container.append("<div style='margin-left: 235px; margin-top: 50px;' id='"+this._buildId+"'></div>").find("#"+this._buildId);
 
 			this.print();
 			this.resize();
@@ -44,11 +44,20 @@ JW.default =
 		print: function()
 		{
 			//Should be overwritten.
+			this._el.css("border", "1px solid #e7e7e7");
 			this._el.append("<div>node id: <b>"+this.dataNode.id+"</b></div>");
 			this._el.append("<div>node relative path: <b>"+this.dataNode.path+"</b></div>");
 			this._el.append("<div>node full path: <b>"+this.dataNode.fullPath+"</b></div>");
 			this._el.append("<br />");
 
+			if(this.dataNode.nested || this.dataNode.overlay)
+			{
+				if(this.dataNode.nested)
+					this._el.append("<div style='background: #000000; color: #ffffff '>page is of <b>nested</b> type. Parent page will open (parent url: "+this.dataNode.parent.fullPath+")</div>");
+				else
+					this._el.append("<div style='background: #333333; color: #ffffff '>page is of <b>overlay</b> type (will not remove the previusly opened page)</div>");
+				this._el.append("<br />");
+			}
 			for(var i in this.dataNode.pageData)
 			{
 				this._el.append("<div>PageData, id: <b>"+i.toString()+"</b> value: <b>"+String(this.dataNode.pageData[i])+"</b></div>");
