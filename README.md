@@ -1,7 +1,8 @@
 json-to-website
 =========================
 
-a simple framework for single page applications/websites.
+a simple UI-less framework for single page applications/websites.<br>
+<i>you won't find a framework that let's you setup a huge site structure and indivual page implementaiton as quick as this ;)</i>
 
 ## Installation
 
@@ -63,21 +64,20 @@ check out the [Examples](#examples) for a complete Object structure reference.
 ## Instantiation
 to instantiate the framework:
 
-	var options = {enabledDebug: true, title: "Fallback title, when node has no title", enableTracking: true};
+	var options = {enabledDebug: true, title: "Fallback title, when node has no title", forceHashTag: false, enableTracking: true};
 	var dataObj = {sitetree:..., pages:...};
 	var domNode = $("#site")
 	JW.init(options, dataObj, domNode);
 
 * `enableDebug`, adds the debug menu for overview and easy navigation
 * `title`, a fallback title for when the [title](#optional-parameters) parameter is not set for a node
+* `forceHashTag`, ignore HTML5 history or not.
 * `enableTracking`, implement google analytics on the page, and page events will automaticlly get called from the framework
  * https://developers.google.com/analytics/devguides/collection/gajs/
  * JW.tracker.event(category, action, opt_label) for custom event tracking.
 
-
-
 ## Examples:
-* [Ultra simple](http://rwatgg.dk/labs/jw/examples/simple.php) only the debug menu, No UI.
+* [A simple example](http://rwatgg.dk/labs/jw/examples/simple.php) it includes the framework debug menu, and prints out data associated to each page.
 * [Gallery example](http://rwatgg.dk/labs/jw/examples/gallery.php)
 uses [Nested](#optional-parameters) pages and [Mustache](https://github.com/janl/mustache.js) templating framework for easy implementation
  <i>Debug-menu is on the left</i>
@@ -90,8 +90,8 @@ uses [Nested](#optional-parameters) pages and [Mustache](https://github.com/janl
 * make a debug view for mobile devices
 
 ## Features:
-* title, include fallback title or/and set title in the DATA-Object
 * Classes with a namespace structure (ex.: com.xxx.views.ContactPage)
+* individual page title, include fallback title or/and set title in the DATA-Object
 * [Overlay](#optional-parameters) pages
 * [Nested](#optional-parameters) pages
 * is sibling of method, way to check if a node-a is a child of node-b
