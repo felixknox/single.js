@@ -23,10 +23,10 @@ function onLoaded(data)
 				}, data, $("#site"));
 
 	// create our own menu, using the bootstrap dropdown module
-	Menu.init();
+	SimpleExampleMenu.init();
 };
 
-var Menu = {
+var SimpleExampleMenu = {
 	nav: null,
 	init: function()
 	{
@@ -85,8 +85,8 @@ var Menu = {
 	}
 };
 
-// extend DefaultPage and make your own implementation (SimplePage is referenced from json/simple.json)
-var SimplePage = JW.default.BasicPage.extend(
+// extend DefaultPage and make your own implementation (SimpleExamplePage is referenced from json/simple.json)
+var SimpleExamplePage = JW.views.BasicPage.extend(
 {
 	print: function()
 	{
@@ -95,8 +95,8 @@ var SimplePage = JW.default.BasicPage.extend(
 	}
 });
 
-// extend DefaultPage and make your own implementation, this w. an animation implementation (AnimationPage is referenced from json/simple.json)
-var AnimationPage = JW.default.BasicPage.extend(
+// extend DefaultPage and make your own implementation, this w. an animation implementation (SimpleExampleAnimationPage is referenced from json/simple.json)
+var SimpleExampleAnimationPage = JW.views.BasicPage.extend(
 {
 	print: function()
 	{

@@ -26,7 +26,7 @@ function onLoaded(data)
 var GalleryExample = {
 	pages:
 	{
-		GalleryBasic: JW.default.BasicPage.extend({
+		GalleryBasic: JW.views.BasicPage.extend({
 			print: function()
 			{
 				var output = Mustache.render("<h1>{{title}}</h1><h2>{{& body}}</h2><a href='{{& link}}'>{{link-description}}</a></section>", this.dataNode.pageData);
@@ -46,7 +46,7 @@ var GalleryExample = {
 				}
 			}
 		}),
-		GalleryGrid: JW.default.BasicPage.extend({
+		GalleryGrid: JW.views.BasicPage.extend({
 			print: function()
 			{
 				var output = Mustache.render(
@@ -74,7 +74,7 @@ var GalleryExample = {
 				});
 			}
 		}),
-		GalleryImage: JW.default.BasicPage.extend({
+		GalleryImage: JW.views.BasicPage.extend({
 			print: function()
 			{
 				var output = Mustache.render(

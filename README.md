@@ -54,7 +54,7 @@ contains each individual page's data.
 * `dataId` : String
  * reference id to an element in sitetree
 * `page` : String
- * reference to a page type created by extending JW.default.BasicPage<br><i>support for namespace structure </i>ex. `GalleryExample.pages.GalleryImage`
+ * reference to a page type created by extending JW.views.BasicPage<br><i>support for namespace structure </i>ex. `GalleryExample.pages.GalleryImage`
 
 #### optional parameters:
 * add fields that your page requires. Parameters will be accesable on a Class level via `this.dataNode`

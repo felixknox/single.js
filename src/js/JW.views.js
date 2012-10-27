@@ -1,4 +1,4 @@
-JW.default =
+JW.views =
 {
 	randomId: 0,
 	getUniqueId: function()
@@ -22,9 +22,9 @@ JW.default =
 
 		init: function(node)
 		{
-			this._buildId = JW.default.getUniqueId();
+			this._buildId = JW.views.getUniqueId();
 			//constructor
-			if(!node) throw new Error("Page (JW.default.BasicPage) error: missing data node.");
+			if(!node) throw new Error("Page (JW.views.BasicPage) error: missing data node.");
 
 			this.dataNode = node;
 

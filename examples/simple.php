@@ -41,7 +41,7 @@
 		<!-- LOGIC -->
 		<script src="../src/js/JW.framework.js<?php print $cacheBuster; ?>"></script>
 		<script src="../src/js/JW.debug.js<?php print $cacheBuster; ?>"></script>
-		<script src="../src/js/JW.default.js<?php print $cacheBuster; ?>"></script>
+		<script src="../src/js/JW.views.js<?php print $cacheBuster; ?>"></script>
 
 		<script src="assets/js/SimpleExample.js<?php print $cacheBuster; ?>"></script>
 

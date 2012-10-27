@@ -142,48 +142,48 @@
 	"pages": [
 		{
 			"dataId": "home",
-			"page": "SimplePage",
+			"page": "SimpleExamplePage",
 			"title": "Home",
 			"body": "Lorem ipsum"
 		},
 		{
 			"dataId": "about",
-			"page": "AnimationPage",
+			"page": "SimpleExampleAnimationPage",
 			"title": "About us"
 		},
 		{
 			"dataId": "work",
-			"page": "AnimationPage",
+			"page": "SimpleExampleAnimationPage",
 			"title": "Overview of all work"
 		},
 		{
 			"dataId": "work_1",
-			"page": "SimplePage",
+			"page": "SimpleExamplePage",
 			"title": "Work #1"
 		},
 		{
 			"dataId": "work_2",
-			"page": "SimplePage",
+			"page": "SimpleExamplePage",
 			"title": "Work #2"
 		},
 		{
 			"dataId": "work_3",
-			"page": "SimplePage",
+			"page": "SimpleExamplePage",
 			"title": "Work #3"
 		},
 		{
 			"dataId": "work_4",
-			"page": "SimplePage",
+			"page": "SimpleExamplePage",
 			"title": "Work #4"
 		},
 		{
 			"dataId": "work_5",
-			"page": "SimplePage",
+			"page": "SimpleExamplePage",
 			"title": "Work #5"
 		},
 		{
 			"dataId": "contact",
-			"page": "SimplePage",
+			"page": "SimpleExamplePage",
 			"title": "Contact uus"
 		}
 	]
