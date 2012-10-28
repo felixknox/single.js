@@ -1,4 +1,4 @@
-json-to-website
+single.js
 =========================
 
 a simple UI-less framework for single page applications/websites.<br>
@@ -6,8 +6,8 @@ a simple UI-less framework for single page applications/websites.<br>
 
 ## Installation
 
-* Download: [zip](https://github.com/flexmotion/json-to-website/zipball/master)
-* Git: `git clone https://github.com/flexmotion/json-to-website.git`
+* Download: [zip](https://github.com/flexmotion/single.js/zipball/master)
+* Git: `git clone https://github.com/flexmotion/single.js.git`
 
 ## JSON
 the framework relies on certain DATA-Object structure, which can be created via a JS {} or by loading in an JSON file.
