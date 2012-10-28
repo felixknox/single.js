@@ -117,9 +117,9 @@
 		<script src="../src/js/libs/path.js"></script>
 
 		<!-- LOGIC -->
-		<script src="../src/js/JW.framework.js<?php print $cacheBuster; ?>"></script>
-		<script src="../src/js/JW.debug.js<?php print $cacheBuster; ?>"></script>
-		<script src="../src/js/JW.views.js<?php print $cacheBuster; ?>"></script>
+		<script src="../src/js/Single.framework.js<?php print $cacheBuster; ?>"></script>
+		<script src="../src/js/Single.debug.js<?php print $cacheBuster; ?>"></script>
+		<script src="../src/js/Single.views.js<?php print $cacheBuster; ?>"></script>
 
 		<script src="assets/js/Gallery.js<?php print $cacheBuster; ?>"></script>
 

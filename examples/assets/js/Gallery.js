@@ -11,7 +11,7 @@ $(window).ready(function()
 function onLoaded(data)
 {
 	// init the framework when data has loaded.
-	JW.init(	{
+	Single.init(	{
 					// enable debug menu for development purpose only.
 					enabledDebug: true,
 					// add a default title.
@@ -26,7 +26,7 @@ function onLoaded(data)
 var GalleryExample = {
 	pages:
 	{
-		GalleryBasic: JW.views.BasicPage.extend({
+		GalleryBasic: Single.views.BasicPage.extend({
 			print: function()
 			{
 				var output = Mustache.render("<h1>{{title}}</h1><h2>{{& body}}</h2><a href='{{& link}}'>{{link-description}}</a></section>", this.dataNode.pageData);
@@ -36,7 +36,7 @@ var GalleryExample = {
 				if(this.dataNode.pageData.link)
 				{
 					// get a node from an URL snippet.
-					var linkNode = JW.core.pathModel.getNode(this.dataNode.pageData.link);
+					var linkNode = Single.core.pathModel.getNode(this.dataNode.pageData.link);
 					this._el.find("a").click(function(event)
 					{
 						event.preventDefault();
@@ -46,7 +46,7 @@ var GalleryExample = {
 				}
 			}
 		}),
-		GalleryGrid: JW.views.BasicPage.extend({
+		GalleryGrid: Single.views.BasicPage.extend({
 			print: function()
 			{
 				var output = Mustache.render(
@@ -61,7 +61,7 @@ var GalleryExample = {
 
 				this._el.find("a.home-button").click(function()
 				{
-					JW.core.pathModel.rootNode.requestNodeLaunch();
+					Single.core.pathModel.rootNode.requestNodeLaunch();
 				});
 				
 				var that = this;
@@ -74,7 +74,7 @@ var GalleryExample = {
 				});
 			}
 		}),
-		GalleryImage: JW.views.BasicPage.extend({
+		GalleryImage: Single.views.BasicPage.extend({
 			print: function()
 			{
 				var output = Mustache.render(

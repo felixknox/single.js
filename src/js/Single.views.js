@@ -1,4 +1,4 @@
-JW.views =
+Single.views =
 {
 	randomId: 0,
 	getUniqueId: function()
@@ -22,13 +22,13 @@ JW.views =
 
 		init: function(node)
 		{
-			this._buildId = JW.views.getUniqueId();
+			this._buildId = Single.views.getUniqueId();
 			//constructor
-			if(!node) throw new Error("Page (JW.views.BasicPage) error: missing data node.");
+			if(!node) throw new Error("Page (Single.views.BasicPage) error: missing data node.");
 
 			this.dataNode = node;
 
-			JW.SIGNALS.pageStatus.dispatch("init", this);
+			Single.SIGNALS.pageStatus.dispatch("init", this);
 		},
 		setup: function(container)
 		{
@@ -72,7 +72,7 @@ JW.views =
 		onAnimatedIn: function()
 		{
 			this._state = "ANIMATED_IN";
-			JW.SIGNALS.pageStatus.dispatch("in", this);
+			Single.SIGNALS.pageStatus.dispatch("in", this);
 		},
 		animateOut: function()
 		{
@@ -83,7 +83,7 @@ JW.views =
 		onAnimatedOut: function()
 		{
 			this._state = "ANIMATED_OUT";
-			JW.SIGNALS.pageStatus.dispatch("out", this);
+			Single.SIGNALS.pageStatus.dispatch("out", this);
 
 			this.dealoc();
 		},
@@ -102,7 +102,7 @@ JW.views =
 			this._el = null;
 			this.dataNode = null;
 
-			JW.SIGNALS.pageStatus.dispatch("dealoc", this);
+			Single.SIGNALS.pageStatus.dispatch("dealoc", this);
 		},
 		resize: function()
 		{

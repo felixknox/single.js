@@ -11,7 +11,7 @@ $(window).ready(function()
 function onLoaded(data)
 {
 	// init the framework when data has loaded.
-	JW.init(	{
+	Single.init(	{
 					// enable debug menu for development purpose only.
 					enabledDebug: true,
 					// add a default title.
@@ -48,12 +48,12 @@ var SimpleExampleMenu = {
 
 		this.nav = $("#site .navbar .nav .dropdown");
 
-		this.createMenuLevel(JW.core.pathModel.rootNode.id, JW.core.pathModel.rootNode.childNodes, this.nav);
+		this.createMenuLevel(Single.core.pathModel.rootNode.id, Single.core.pathModel.rootNode.childNodes, this.nav);
 
 		// init bootstrap jQuery module
 		$('.dropdown-toggle').dropdown();
 
-		// connect the menu nodes with the JW framework.
+		// connect the menu nodes with the Single framework.
 		this.connectMenuNodesWithFramework();
 	},
 	createMenuLevel: function(id, nodes, container)
@@ -78,7 +78,7 @@ var SimpleExampleMenu = {
 			$(el).click(function(event)
 			{
 				event.preventDefault();
-				var linkNode = JW.core.pathModel.getNode($(this).attr("data-url"));
+				var linkNode = Single.core.pathModel.getNode($(this).attr("data-url"));
 				linkNode.requestNodeLaunch();
 			});
 		});
@@ -86,7 +86,7 @@ var SimpleExampleMenu = {
 };
 
 // extend DefaultPage and make your own implementation (SimpleExamplePage is referenced from json/simple.json)
-var SimpleExamplePage = JW.views.BasicPage.extend(
+var SimpleExamplePage = Single.views.BasicPage.extend(
 {
 	print: function()
 	{
@@ -96,7 +96,7 @@ var SimpleExamplePage = JW.views.BasicPage.extend(
 });
 
 // extend DefaultPage and make your own implementation, this w. an animation implementation (SimpleExampleAnimationPage is referenced from json/simple.json)
-var SimpleExampleAnimationPage = JW.views.BasicPage.extend(
+var SimpleExampleAnimationPage = Single.views.BasicPage.extend(
 {
 	print: function()
 	{

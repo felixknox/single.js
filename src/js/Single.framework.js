@@ -5,7 +5,7 @@
   /     \
  /      _\
 `"""""`` author: felix nielsen - felix . nielsen [ a ] rwatgg . dk */
-JW =
+Single =
 {
 	PAGE_TYPES: [],
 	SIGNALS:
@@ -35,16 +35,16 @@ JW =
 	
 		
 //
-JW.init = function(options, data, pageContainer)
+Single.init = function(options, data, pageContainer)
 {
 	this.core.pages.init(data.pages, pageContainer);
 	this.core.pathModel.setup(data.sitetree, options);
 
 	if(options.enableTracking)
-		JW.tracker.init();
+		Single.tracker.init();
 
 	if(options.enabledDebug)
-		JW.debug.init(this.core.pathModel.rootNode);
+		Single.debug.init(this.core.pathModel.rootNode);
 };
 
 /***
@@ -57,7 +57,7 @@ JW.init = function(options, data, pageContainer)
 */
 //Controls the pages of the app. When a new page gets requested via the pageControl (calls a HTTP receiver)
 //It waits for proper feedback from the server, removes old page and shows the new page.
-JW.core.pages =
+Single.core.pages =
 {
 	currentPage: null,
 	currentOverlayPage: null,
@@ -71,7 +71,7 @@ JW.core.pages =
 	{
 		this.pageContainer = container;
 
-		JW.SIGNALS.pageStatus.add(this.onPageStatusChange, this);
+		Single.SIGNALS.pageStatus.add(this.onPageStatusChange, this);
 		this._pagesData = [];
 		for (var i = 0; i < data.length; i++) {
 			this._pagesData[data[i].dataId] = data[i];
@@ -80,12 +80,12 @@ JW.core.pages =
 	requestNewPage: function(path)
 	{
 		//request a new page from a specific path, used for when you don't have a reference to a node.
-		var node = JW.core.pathModel.getNode(path);
+		var node = Single.core.pathModel.getNode(path);
 		node.requestNodeLaunch();
 	},
 	onNewPageRequested: function(currentNode, path)
 	{
-		var isReadyForPageChange = !JW.previousNode || ((JW.previousNode.overlay || JW.previousNode.nested) && JW.previousNode.parent !== currentNode) || (JW.previousNode !== currentNode && (!JW.previousNode.nested && !JW.previousNode.overlay));
+		var isReadyForPageChange = !Single.previousNode || ((Single.previousNode.overlay || Single.previousNode.nested) && Single.previousNode.parent !== currentNode) || (Single.previousNode !== currentNode && (!Single.previousNode.nested && !Single.previousNode.overlay));
 
 		if(!currentNode.overlay && !currentNode.nested)
 		{
@@ -99,10 +99,10 @@ JW.core.pages =
 		this.removeOldNestedPage();
 
 		//debug.
-		if(JW.debug.enabled) log("pageControl > onNewPageRequested:", path, currentNode);
+		if(Single.debug.enabled) log("pageControl > onNewPageRequested:", path, currentNode);
 
 		//build the data and class.
-		var _class = JW.tools.stringToFunction(currentNode.pageData.page);
+		var _class = Single.tools.stringToFunction(currentNode.pageData.page);
 
 		//check the type of page, and setup accordingly.
 		if(currentNode.overlay)
@@ -118,7 +118,7 @@ JW.core.pages =
 				//there is a current page, but it is not the parent of the nested page, therefore remove it and setup parent.
 				this.removeOldPage();
 
-				_class = JW.tools.stringToFunction(currentNode.parent.pageData.page);
+				_class = Single.tools.stringToFunction(currentNode.parent.pageData.page);
 				this.setupPage(_class, currentNode.parent);
 			}else if(this.currentPage && this.currentPage.dataNode.dataId === currentNode.parent.dataId)
 			{
@@ -127,7 +127,7 @@ JW.core.pages =
 			}else if(!this.currentPage)
 			{
 				//no current page, therefore set it up.
-				_class = JW.tools.stringToFunction(currentNode.parent.pageData.page);
+				_class = Single.tools.stringToFunction(currentNode.parent.pageData.page);
 				this.setupPage(_class, currentNode.parent);
 			}
 		}else
@@ -138,7 +138,7 @@ JW.core.pages =
 		}
 
 		//dispatch a signal about the new page for all the listeners.
-		JW.SIGNALS.pageCreated.dispatch(JW.currentNode, JW.previousNode);
+		Single.SIGNALS.pageCreated.dispatch(Single.currentNode, Single.previousNode);
 	},
 	//Page setup
 	setupOverlayPage: function(c, node)
@@ -148,7 +148,7 @@ JW.core.pages =
 		this.currentOverlayPage.animateIn();
 
 		//set the page of the currentNode (for deepbinding reference)
-		JW.currentNode.page = this.currentOverlayPage;
+		Single.currentNode.page = this.currentOverlayPage;
 	},
 	setupNestedPage: function(c, node)
 	{
@@ -158,7 +158,7 @@ JW.core.pages =
 			this.currentNestedPage.setup(this.pageContainer);
 
 		//set the page of the currentNode (for deepbinding reference)
-		JW.currentNode.page = this.currentNestedPage;
+		Single.currentNode.page = this.currentNestedPage;
 	},
 	setupPage: function(c, node)
 	{
@@ -173,15 +173,15 @@ JW.core.pages =
 		}
 
 		//set the page of the currentNode (for deepbinding reference)
-		JW.currentNode.page = this.currentPage;
+		Single.currentNode.page = this.currentPage;
 	},
 
 	//removal of the pages.
 	removeOldPage: function()
 	{
-		if(JW.currentNode)
+		if(Single.currentNode)
 		{
-			JW.currentNode.page = null;
+			Single.currentNode.page = null;
 		}
 
 		if(this.currentPage)
@@ -191,9 +191,9 @@ JW.core.pages =
 	},
 	removeOldOverlayPage: function()
 	{
-		if(JW.currentNode)
+		if(Single.currentNode)
 		{
-			JW.currentNode.page = null;
+			Single.currentNode.page = null;
 		}
 
 		if(this.currentOverlayPage)
@@ -228,7 +228,7 @@ JW.core.pages =
 *    | _|    /__/     \__\  |__|     |__|  |__| |__|  |__|  \______/  |_______/ |_______||_______|
 */
 //Controls the path of the application. Uses Path.js to handle crossbrowser issues.
-JW.core.pathModel =
+Single.core.pathModel =
 {
 	//consts
 	DEBUG_MODE: false,
@@ -256,7 +256,7 @@ JW.core.pathModel =
 		var that = this;
 		Path.rescue(function(){ that.on404(); });
 
-		JW.SIGNALS.pageControlReady.dispatch();
+		Single.SIGNALS.pageControlReady.dispatch();
 
 		forceToHashtag = options.forceHashTag;
 		Path.history.listen(true);
@@ -278,7 +278,7 @@ JW.core.pathModel =
 	},
 	getNode: function(path)
 	{
-		path = JW.tools.cleanPath(path);
+		path = Single.tools.cleanPath(path);
 
 		for (var i = 0; i < this.nodes.length; i++)
 		{
@@ -293,7 +293,7 @@ JW.core.pathModel =
 	onEnter: function (fns)
 	{
 		//scope of Path (this).
-		JW.core.pathModel.onPathChange(this.path);
+		Single.core.pathModel.onPathChange(this.path);
 	},
 	createNode: function(data, trailingPath, parentNode, index)
 	{
@@ -354,10 +354,10 @@ JW.core.pathModel =
 	},
 	set: function(name, path)
 	{
-		if(JW.core.pages.currentNode && JW.core.pages.currentNode.fullPath === path)
+		if(Single.core.pages.currentNode && Single.core.pages.currentNode.fullPath === path)
 		{
 			// if path is the same, then it means a user has clicked an already active menu item, therefore we should reset the list.
-			JW.SIGNALS.core.pathModelameSame.dispatch(JW.currentNode);
+			Single.SIGNALS.core.pathModelameSame.dispatch(Single.currentNode);
 		}else
 		{
 			/* falls back to hash tag if HTML5 history is not supported */
@@ -389,15 +389,15 @@ JW.core.pathModel =
 
 		this.currentPathNoHash = currentPath.split("#").join("");
 		
-		JW.previousNode = JW.currentNode;
-		JW.currentNode = this.getCurrentNode();
+		Single.previousNode = Single.currentNode;
+		Single.currentNode = this.getCurrentNode();
 
-		JW.SIGNALS.pathChange.dispatch(this.currentPathNoHash);
+		Single.SIGNALS.pathChange.dispatch(this.currentPathNoHash);
 
 		// only update the page if an dataId is set.
 		// undefined dataId can be used if no HTML output is wanted (ex. a deeplinkable slideshow)
-		if(JW.currentNode.dataId)
-			JW.core.pages.onNewPageRequested(JW.currentNode, this.currentPathNoHash);
+		if(Single.currentNode.dataId)
+			Single.core.pages.onNewPageRequested(Single.currentNode, this.currentPathNoHash);
 
 		this.updateTitle();
 	},
@@ -417,7 +417,7 @@ JW.core.pathModel =
 	}
 };
 
-JW.tools =
+Single.tools =
 {
 	stringToFunction: function(str)
 	{
@@ -459,13 +459,13 @@ JW.tools =
 	}
 };
 
-JW.tracker =
+Single.tracker =
 {
 	init: function()
 	{
 		//GA implementation should be done after googles guidelines -->
 		//https://developers.google.com/analytics/devguides/collection/gajs/
-		JW.SIGNALS.pathChange.add(this.onPathChange, this);
+		Single.SIGNALS.pathChange.add(this.onPathChange, this);
 	},
 	onPathChange: function(path)
 	{
@@ -473,9 +473,9 @@ JW.tracker =
 	},
 	track: function(path)
 	{
-		if(JW.debug.enabled)
+		if(Single.debug.enabled)
 			log("pageTracker, trackPage > "+ path);
-		else if(_gaq && !JW.debug.enabled)
+		else if(_gaq && !Single.debug.enabled)
 			_gaq.push(['_trackPageview', path]);
 	},
 	/*
@@ -485,9 +485,9 @@ JW.tracker =
 	*/
 	event: function(category, action, opt_label)
 	{
-		if(JW.debug.enabled)
+		if(Single.debug.enabled)
 			log("pageTracker, trackEvent > "+ category+" : "+ action +" : "+ opt_label);
-		else if(_gaq && JW.debug.enabled)
+		else if(_gaq && Single.debug.enabled)
 			_gaq.push(['_trackEvent', category, action, opt_label]);
 	}
 };
@@ -540,7 +540,7 @@ var PathNode = Class.extend({
 		this.id = data.id === undefined || data.id === "" ? model.getUniqueId() : data.id;
 		
 		this.dataId = data.dataId;
-		this.pageData = JW.core.pages.getPageData(this);
+		this.pageData = Single.core.pages.getPageData(this);
 		this.data = data;
 
 		//path handeling.
@@ -605,7 +605,7 @@ var PathNode = Class.extend({
 		if(splt[splt.length-1] !== undefined)
 			this.path = splt[splt.length-1];
 
-		this.path = JW.tools.cleanPath(this.path);
+		this.path = Single.tools.cleanPath(this.path);
 
 		if(!this._isRootNode)
 		{
@@ -631,7 +631,7 @@ var PathNode = Class.extend({
 	requestNodeLaunch: function()
 	{
 		// log("requestNodeLaunch:", this.fullPath);
-		JW.core.pathModel.set(this.name, this.fullPath);
+		Single.core.pathModel.set(this.name, this.fullPath);
 	}
 });
 

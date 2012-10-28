@@ -54,7 +54,7 @@ contains each individual page's data.
 * `dataId` : String
  * reference id to an element in sitetree
 * `page` : String
- * reference to a page type created by extending JW.views.BasicPage<br><i>support for namespace structure </i>ex. `GalleryExample.pages.GalleryImage`
+ * reference to a page type created by extending Single.views.BasicPage<br><i>support for namespace structure </i>ex. `GalleryExample.pages.GalleryImage`
 
 #### optional parameters:
 * add fields that your page requires. Parameters will be accesable on a Class level via `this.dataNode`
@@ -67,18 +67,18 @@ to instantiate the framework:
 	var options = {enabledDebug: true, title: "Fallback title, when node has no title", forceHashTag: false, enableTracking: true};
 	var dataObj = {sitetree:..., pages:...};
 	var domNode = $("#site")
-	JW.init(options, dataObj, domNode);
+	Single.init(options, dataObj, domNode);
 
 * `enableDebug`, adds the debug menu for overview and easy navigation
 * `title`, a fallback title for when the [title](#optional-parameters) parameter is not set for a node
 * `forceHashTag`, ignore HTML5 history or not.
 * `enableTracking`, implement google analytics on the page, and page events will automaticlly get called from the framework
  * https://developers.google.com/analytics/devguides/collection/gajs/
- * JW.tracker.event(category, action, opt_label) for custom event tracking.
+ * Single.tracker.event(category, action, opt_label) for custom event tracking.
 
 ## Examples:
-* [A simple example](http://rwatgg.dk/labs/jw/examples/simple.php) it includes the framework debug menu, and prints out data associated to each page.
-* [Gallery example](http://rwatgg.dk/labs/jw/examples/gallery.php)
+* [A simple example](http://rwatgg.dk/labs/single.js/examples/simple.php) it includes the framework debug menu, and prints out data associated to each page.
+* [Gallery example](http://rwatgg.dk/labs/single.js/examples/gallery.php)
 uses [Nested](#optional-parameters) pages and [Mustache](https://github.com/janl/mustache.js) templating framework for easy implementation
  <i>Debug-menu is on the left</i>
 
