@@ -77,17 +77,23 @@ to instantiate the framework:
  * Single.tracker.event(category, action, opt_label) for custom event tracking.
 
 ## Examples:
-* [A simple example](http://rwatgg.dk/labs/single.js/examples/simple.php) it includes the framework debug menu, and prints out data associated to each page.
-* [Gallery example](http://rwatgg.dk/labs/single.js/examples/gallery.php)
+* [a simple example](http://rwatgg.dk/labs/single.js/examples/simple.php) it includes the framework debug menu, and prints out data (JSON defined) associated to each page.<br>
+it uses Bootstrap styling and dropdown component to show usage of the JSON structure via the framework.
+* [gallery example](http://rwatgg.dk/labs/single.js/examples/gallery.php)
 uses [Nested](#optional-parameters) pages and [Mustache](https://github.com/janl/mustache.js) templating framework for easy implementation
  <i>Debug-menu is on the left</i>
 
+## SEO:
+this framework won't provide you with any SEO tools!<br>
+For reference, I have used this framework together with Drupal where the SEO was handled by Drupal, worked perfectly (no dirty hacks)
+reference: [shamballajewels.com](http://shamballajewels.com)
+
 ## Todo:
 * add pages dynamicly via JS, and not just via DATA-Object
-* make a couple more good practice examples
-* parameters, possibility to add querystring like parameters: /gallery?page=2&sort=alphabetic
-* test in older browsers/mobile.
+* parameters, possibility to add querystring like parameters, ex.: /gallery?page=2&sort=alphabetic
+* test in older browsers/mobile
 * make a debug view for mobile devices
+* do a couple of performance tests
 
 ## Features:
 * Classes with a namespace structure (ex.: com.xxx.views.ContactPage)
