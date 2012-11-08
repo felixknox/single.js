@@ -38,7 +38,7 @@ var SimpleExampleMenu = {
 					'<div class="nav-collapse">'+
 						'<ul class="nav">'+
 							'<li class="dropdown">'+
-								'<a data-toggle="dropdown" class="dropdown-toggle" href="#">Site menu (from JSON) <b class="caret"></b></a>'+
+								'<a data-toggle="dropdown" class="dropdown-toggle" href="#"><b>Site menu (from JSON)</b> <b class="caret"></b></a>'+
 							'</li>'+
 						'</ul>'+
 					'</div>'+
@@ -88,20 +88,50 @@ var SimpleExampleMenu = {
 // extend DefaultPage and make your own implementation (SimpleExamplePage is referenced from json/simple.json)
 var SimpleExamplePage = Single.views.BasicPage.extend(
 {
+	_el: null,
 	print: function()
 	{
-		this._el.append("<h3>Instance of SimplePage Class</h3>");
-		this._super();
+		//override
+		this._el = this._container.append("<div class='hero-unit' style='margin-left: 20px; margin-top: 50px;' id='"+this._buildId+"'></div>").find("#"+this._buildId);
+		this.printTitle();
+		this._el.css("border", "1px solid #e7e7e7");
+		this._el.append("<p>node id: <b>"+this.dataNode.id+"</b></p>");
+		this._el.append("<p>node relative path: <b>"+this.dataNode.path+"</b></p>");
+		this._el.append("<p>node full path: <b>"+this.dataNode.fullPath+"</b></p>");
+
+		if(this.dataNode.nested || this.dataNode.overlay)
+		{
+			this._el.addClass(this.dataNode.nested ? "nested" : "overlay");
+			if(this.dataNode.nested)
+				this._el.append("<div class='alert' >page is of <b>nested</b> type. Parent page will open (parent url: "+this.dataNode.parent.fullPath+")</div>");
+			else
+				this._el.append("<div class='alert' >page is of <b>overlay</b> type (will not remove the previusly opened page)</div>");
+		}
+
+		for(var i in this.dataNode.pageData)
+		{
+			this._el.append("<p>PageData, id: <b>"+i.toString()+"</b> value: <b>"+String(this.dataNode.pageData[i])+"</b></p>");
+		}
+	},
+	printTitle: function()
+	{
+		this._el.append("<h1>"+this.dataNode.pageData.title+"</h1><p> (Instance of SimplePage Class)</p>");
+	},
+	dealoc: function()
+	{
+		//override
+		this._el.remove();
+		this._el = null;
 	}
 });
 
 // extend DefaultPage and make your own implementation, this w. an animation implementation (SimpleExampleAnimationPage is referenced from json/simple.json)
-var SimpleExampleAnimationPage = Single.views.BasicPage.extend(
+var SimpleExampleAnimationPage = SimpleExamplePage.extend(
 {
-	print: function()
+	_el: null,
+	printTitle: function()
 	{
-		this._el.append("<h3>Instance of AnimationPage Class</h3>");
-		this._super();
+		this._el.append("<h1>"+this.dataNode.pageData.title+"</h1><p> (Instance of SimpleExampleAnimationPage Class)</p>");
 	},
 	animate: function()
 	{
@@ -128,5 +158,11 @@ var SimpleExampleAnimationPage = Single.views.BasicPage.extend(
 				complete: bind(this, this.onAnimatedOut)
 			});
 		}
+	},
+	dealoc: function()
+	{
+		//override
+		this._el.remove();
+		this._el = null;
 	}
 });

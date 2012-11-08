@@ -17,6 +17,9 @@
 		<!-- STYLES + RESET -->
 		<link rel="stylesheet" href="../src/css/style.css<?php print $cacheBuster; ?>">
 
+		<!-- example specific stylesheet -->
+		<link rel="stylesheet" href="assets/css/simpleexample.css<?php print $cacheBuster; ?>">
+
 		<!-- LIBS -->
 		<!--[if lt IE 9]>
 			<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>

@@ -11,7 +11,6 @@ Single.views =
 	BasicPage: Class.extend({
 		_buildId: -1,
 
-		_el: null,
 		_container: null,
 		_state: "",
 		dataNode: null,
@@ -36,7 +35,6 @@ Single.views =
 
 			//DOM manipulation.
 			this._container = container;
-			this._el = this._container.append("<div style='margin-left: 235px; margin-top: 50px;' id='"+this._buildId+"'></div>").find("#"+this._buildId);
 
 			this.print();
 			this.resize();
@@ -44,24 +42,15 @@ Single.views =
 		print: function()
 		{
 			//Should be overwritten.
-			this._el.css("border", "1px solid #e7e7e7");
-			this._el.append("<div>node id: <b>"+this.dataNode.id+"</b></div>");
-			this._el.append("<div>node relative path: <b>"+this.dataNode.path+"</b></div>");
-			this._el.append("<div>node full path: <b>"+this.dataNode.fullPath+"</b></div>");
-			this._el.append("<br />");
+			console.log("node id: "+this.dataNode.id);
+			console.log("node relative path: "+this.dataNode.path);
+			console.log("node full path: "+this.dataNode.fullPath);
+			
+			console.log("nested: "+(this.dataNode.nested ? "YES" : "NO"));
+			console.log("overlay: "+(this.dataNode.overlay ? "YES" : "NO"));
 
-			if(this.dataNode.nested || this.dataNode.overlay)
-			{
-				if(this.dataNode.nested)
-					this._el.append("<div style='background: #000000; color: #ffffff '>page is of <b>nested</b> type. Parent page will open (parent url: "+this.dataNode.parent.fullPath+")</div>");
-				else
-					this._el.append("<div style='background: #333333; color: #ffffff '>page is of <b>overlay</b> type (will not remove the previusly opened page)</div>");
-				this._el.append("<br />");
-			}
 			for(var i in this.dataNode.pageData)
-			{
-				this._el.append("<div>PageData, id: <b>"+i.toString()+"</b> value: <b>"+String(this.dataNode.pageData[i])+"</b></div>");
-			}
+				console.log("param in pageData: id: "+i.toString()+" value: "+String(this.dataNode.pageData[i]));
 		},
 		animateIn: function()
 		{
@@ -97,11 +86,7 @@ Single.views =
 		},
 		dealoc: function()
 		{
-			//remove from memory.
-			this._el.remove();
-			this._el = null;
 			this.dataNode = null;
-
 			Single.SIGNALS.pageStatus.dispatch("dealoc", this);
 		},
 		resize: function()
