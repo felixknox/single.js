@@ -13,7 +13,7 @@ Single.debug =
 
 		//requires jQuery to work, throw error if jQuery is not present.
 		Single.SIGNALS.pageCreated.add(this.onPageChange, this);
-		this._el = $("body").prepend("<div id='Single-debug'><div style='line-height: 14px; background: #000000; color: #ffffff; display: block; margin-left: 10px; margin-top: 10px; width: 275px;'>!! Debug menu<br />Only use during development.</div></div>").find("#Single-debug");
+		this._el = $("body").prepend("<div id='Single-debug'><div style='line-height: 16px; padding: 4px; padding-left: 6px; background-color: #FCF8E3; color: #555555; display: block; margin-left: 10px; margin-top: 10px; width: 280px;'>!! <b>single.js</b> debug menu<br />Only use during development/production</div></div>").find("#Single-debug");
 		this.buildTree(rootNode, this._el);
 
 		this.addStyle();
@@ -25,11 +25,11 @@ Single.debug =
 	addStyle: function()
 	{
 		var css = "html,body{width:100%;height:100%;}"+
-"#Single-debug{background:#e7e7e7;font-family:Georgia, Verdana;font-size:11px;line-height:11px;padding-right:10px;box-shadow:6px 7px 8px -4px #e7e7e7;overflow:auto;width:0;height:100%;position:fixed;z-index:9999999999999999;top:0;left:0;transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);-moz-transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);-webkit-transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);-o-transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);margin:0;}"+
+"#Single-debug{background:#e7e7e7;font-family:Georgia, Verdana;font-size:11px; line-height:11px;padding-right:10px;box-shadow:6px 7px 8px -4px #e7e7e7;overflow:auto;width:0;height:100%;position:fixed;z-index:9999999999999999;top:0;left:0;transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);-moz-transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);-webkit-transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);-o-transition:width .5s cubic-bezier(0.190,1.000,0.220,1.000);margin:0;}"+
 "#Single-debug.open{width:300px;}"+
 "#Single-debug ul{overflow:hidden;margin:0;padding:0 0 0 15px;}"+
 "#Single-debug > ul{margin-top:10px;margin-bottom:10px;padding:0 0 0 10px;}"+
-"#Single-debug ul li{border:1px solid #fafafa;cursor:pointer;opacity:1;list-style:none;background:white;width:300px;transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);-moz-transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);-webkit-transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);-o-transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);margin:0;padding:4px 2px 4px 6px;}"+
+"#Single-debug ul li{border:1px solid #fafafa;cursor:pointer;opacity:1;list-style:none;background:white;width:300px;transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);-moz-transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);-webkit-transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);-o-transition:margin .25s cubic-bezier(0.190,1.000,0.220,1.000);margin:0;padding:7px 2px 7px 6px;}"+
 "#Single-debug ul li.selected:before{content:'> ';}"+
 "#Single-debug ul li.selected{background:#000000;color:#ffffff;margin:10px 0;}"+
 "#Single-debug ul li.prev-selected{background:#e9e9e9;}"+

@@ -27,8 +27,11 @@ var GalleryExample = {
 	pages:
 	{
 		GalleryBasic: Single.views.BasicPage.extend({
+			_el: null,
 			print: function()
 			{
+				this._el = this._container.append("<div class='hero-unit' style='margin-left: 20px; margin-top: 50px;' id='"+this._buildId+"'></div>").find("#"+this._buildId);
+
 				var output = Mustache.render("<h1>{{title}}</h1><h2>{{& body}}</h2><a href='{{& link}}'>{{link-description}}</a></section>", this.dataNode.pageData);
 				this._el.append(output);
 				this._el.addClass("gallery-text");
@@ -44,19 +47,26 @@ var GalleryExample = {
 						linkNode.requestNodeLaunch();
 					});
 				}
+			},
+			dealoc: function()
+			{
+				this._el.remove();
+				this._el = null;
 			}
 		}),
 		GalleryGrid: Single.views.BasicPage.extend({
+			_el: null,
 			print: function()
 			{
+				this._el = this._container.append("<div class='hero-unit' style='margin-left: 20px; margin-top: 50px;' id='"+this._buildId+"'></div>").find("#"+this._buildId);
 				var output = Mustache.render(
 					"<a class='home-button'>Go to /home</a>"+
 					"<ul>{{#childNodes}}"+
-						"<li>"+
+						"<li style='background: url({{pageData.picture}});'>"+
 							"<div>{{index}}</div>"+
 						"</li>"+
 					"{{/childNodes}}</ul>", this.dataNode);
-
+				log(this.dataNode.childNodes[0].pageData.picture);
 				this._el.append(output);
 
 				this._el.find("a.home-button").click(function()
@@ -72,11 +82,17 @@ var GalleryExample = {
 						that.dataNode.childNodes[i].requestNodeLaunch();
 					});
 				});
+			},
+			dealoc: function()
+			{
+				this._el.remove();
+				this._el = null;
 			}
 		}),
 		GalleryImage: Single.views.BasicPage.extend({
 			print: function()
 			{
+				this._el = this._container.append("<div class='hero-unit' style='margin-left: 20px; margin-top: 50px;' id='"+this._buildId+"'></div>").find("#"+this._buildId);
 				var output = Mustache.render(
 					"<div class='gallery-image'>"+
 						"<div class='gallery-image-wrapper'>"+
@@ -94,6 +110,11 @@ var GalleryExample = {
 				{
 					parentNode.requestNodeLaunch();
 				});
+			},
+			dealoc: function()
+			{
+				this._el.remove();
+				this._el = null;
 			},
 			onLoaded: function()
 			{
