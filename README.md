@@ -2,7 +2,7 @@ single.js
 =========================
 
 a simple UI-less framework for single page applications/websites.<br>
-<i>you won't find a framework that let's you setup a huge site structure and indivual page implementaiton as quick as this ;)</i>
+<i>you won't find a framework that let's you setup a huge site structure and individual page implementation as quick as this ;)</i>
 
 ## Installation
 
@@ -34,7 +34,7 @@ contains the structure of the actual site (the name says it all)
 
 #### optional parameters:
 * `id` : String
- * used for uniquly seperating the elements - <i>will get created if not defined</i>
+ * used for uniquely separating the elements - <i>will get created if not defined</i>
 * `dataId` : String
  * reference to an element in pages - if not defined a page change event will be dispatched, but no page manipulation will get handled. Can be used for slideshow deeplinking, where the parent page is the slideshow
 * `title` : String
@@ -44,12 +44,13 @@ contains the structure of the actual site (the name says it all)
 * `overlay` : Boolean
  * if a page is set to overlay, it keeps the current page open and opens the page on top of it (if no current page, rootNode will be opened)
 
-OBS. if an element is both defined as nested and overlay, an error will be thrown.
+FYI. if an element is both defined as nested and overlay, an error will be thrown.
 
 <br>
 
 ### pages (JSON):
-contains each individual page's data.
+contains the data of the individual page.
+
 #### mandatory fields:
 * `dataId` : String
  * reference id to an element in sitetree
@@ -57,7 +58,7 @@ contains each individual page's data.
  * reference to a page type created by extending Single.views.BasicPage<br><i>support for namespace structure </i>ex. `GalleryExample.pages.GalleryImage`
 
 #### optional parameters:
-* add fields that your page requires. Parameters will be accesable on a Class level via `this.dataNode`
+* add fields that your page requires. Parameters will be accessable on a Class level via `this.dataNode`
 
 check out the [Examples](#examples) for a complete Object structure reference.
 
@@ -89,7 +90,7 @@ For reference, I have used this framework together with Drupal where the SEO was
 reference: [shamballajewels.com](http://shamballajewels.com)
 
 ## Todo:
-* add pages dynamicly via JS, and not just via DATA-Object
+* add pages dynamiclly via JS, and not just via DATA-Object
 * parameters, possibility to add querystring like parameters, ex.: /gallery?page=2&sort=alphabetic
 * test in older browsers/mobile
 * make a debug view for mobile devices
