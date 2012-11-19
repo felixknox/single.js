@@ -148,12 +148,12 @@
 		},
 		{
 			"dataId": "about",
-			"page": "SimpleExampleAnimationPage",
+			"page": "SimpleExamplePage",
 			"title": "About us"
 		},
 		{
 			"dataId": "work",
-			"page": "SimpleExampleAnimationPage",
+			"page": "SimpleExamplePage",
 			"title": "Overview of all work"
 		},
 		{

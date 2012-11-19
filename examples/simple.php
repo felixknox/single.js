@@ -1,7 +1,3 @@
-<?php
-	//kill that cache on JS files.
-	$cacheBuster = "?cache=".rand();
-?>
 <!doctype html>
 	<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
 	<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8" lang="en"> <![endif]-->
@@ -15,10 +11,10 @@
 		<meta name="viewport" content="user-scalable=no, initial-scale=1">
 
 		<!-- STYLES + RESET -->
-		<link rel="stylesheet" href="../src/css/style.css<?php print $cacheBuster; ?>">
+		<link rel="stylesheet" href="../src/css/style.css">
 
 		<!-- example specific stylesheet -->
-		<link rel="stylesheet" href="assets/css/simpleexample.css<?php print $cacheBuster; ?>">
+		<link rel="stylesheet" href="assets/css/simpleexample.css">
 
 		<!-- LIBS -->
 		<!--[if lt IE 9]>
@@ -42,23 +38,12 @@
 		<script src="../src/js/libs/path.js"></script>
 
 		<!-- LOGIC -->
-		<script src="../src/js/Single.framework.js<?php print $cacheBuster; ?>"></script>
-		<script src="../src/js/Single.debug.js<?php print $cacheBuster; ?>"></script>
-		<script src="../src/js/Single.views.js<?php print $cacheBuster; ?>"></script>
+		<script src="../src/js/Single.framework.js"></script>
+		<script src="../src/js/Single.debug.js"></script>
+		<script src="../src/js/Single.views.js"></script>
 
-		<script src="assets/js/SimpleExample.js<?php print $cacheBuster; ?>"></script>
-
-		<script>
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', "U-XXXXXX-XX"]);
-			_gaq.push(['_trackPageview']);
-
-			(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
-		</script>
+		<script src="assets/js/SimpleExampleMenu.js"></script>
+		<script src="assets/js/SimpleExample.js"></script>
 	</head>
 	<body>
 		<script>

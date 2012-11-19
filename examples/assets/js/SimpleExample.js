@@ -26,65 +26,6 @@ function onLoaded(data)
 	SimpleExampleMenu.init();
 };
 
-var SimpleExampleMenu = {
-	nav: null,
-	init: function()
-	{
-		// append
-		$("#site").append(''+
-		'<div class="navbar navbar-fixed-top">'+
-			'<div class="navbar-inner">'+
-				'<div class="container-fluid">'+
-					'<div class="nav-collapse">'+
-						'<ul class="nav">'+
-							'<li class="dropdown">'+
-								'<a data-toggle="dropdown" class="dropdown-toggle" href="#"><b>Site menu (from JSON)</b> <b class="caret"></b></a>'+
-							'</li>'+
-						'</ul>'+
-					'</div>'+
-				'</div>'+
-			'</div>'+
-		'</div>');
-
-		this.nav = $("#site .navbar .nav .dropdown");
-
-		this.createMenuLevel(Single.core.pathModel.rootNode.id, Single.core.pathModel.rootNode.childNodes, this.nav);
-
-		// init bootstrap jQuery module
-		$('.dropdown-toggle').dropdown();
-
-		// connect the menu nodes with the Single framework.
-		this.connectMenuNodesWithFramework();
-	},
-	createMenuLevel: function(id, nodes, container)
-	{
-		var currentNav = $(container).append('<ul id="'+id+'" class="dropdown-menu"></ul>').find("ul#"+id), that = this;
-		$(nodes).each(function(i, el)
-		{
-			if(el.childNodes && el.childNodes.length > 0)
-			{
-				currentNav.append('<li class="dropdown-submenu"><a data-url="'+el.fullPath+'" href="#">'+el.fullPath+'</a><ul id="'+el.id+'" class="dropdown-menu"></ul></li>');
-				that.createMenuLevel(el.id, el.childNodes, currentNav);
-			}else
-			{
-				currentNav.append('<li><a data-url="'+el.fullPath+'" id="'+el.id+'" href="#">'+el.fullPath+'</a></li>');
-			}
-		});
-	},
-	connectMenuNodesWithFramework: function()
-	{
-		this.nav.find("a:not(.dropdown-toggle)").each(function(i, el)
-		{
-			$(el).click(function(event)
-			{
-				event.preventDefault();
-				var linkNode = Single.core.pathModel.getNode($(this).attr("data-url"));
-				linkNode.requestNodeLaunch();
-			});
-		});
-	}
-};
-
 // extend DefaultPage and make your own implementation (SimpleExamplePage is referenced from json/simple.json)
 var SimpleExamplePage = Single.views.BasicPage.extend(
 {
@@ -116,48 +57,6 @@ var SimpleExamplePage = Single.views.BasicPage.extend(
 	printTitle: function()
 	{
 		this._el.append("<h1>"+this.dataNode.pageData.title+"</h1><p> (Instance of SimplePage Class)</p>");
-	},
-	dealoc: function()
-	{
-		//override
-		this._el.remove();
-		this._el = null;
-	}
-});
-
-// extend DefaultPage and make your own implementation, this w. an animation implementation (SimpleExampleAnimationPage is referenced from json/simple.json)
-var SimpleExampleAnimationPage = SimpleExamplePage.extend(
-{
-	_el: null,
-	printTitle: function()
-	{
-		this._el.append("<h1>"+this.dataNode.pageData.title+"</h1><p> (Instance of SimpleExampleAnimationPage Class)</p>");
-	},
-	animate: function()
-	{
-		// don't call "this._super();" if you wanna animate freely. But remember to call framework hooks "onAnimatedIn" and "onAnimatedOut" when done animating.
-		// this._super();
-
-		$(this._el).stop(true);
-
-		if(this._state === "ANIMATING_IN")
-		{
-			$(this._el).css("opacity", 0).animate({"opacity": 1},
-			{
-				duration: 800,
-				// remember to call this.onAnimatedIn
-				complete: bind(this, this.onAnimatedIn)
-			});
-		}
-		else if(this._state === "ANIMATING_OUT")
-		{
-			$(this._el).css("opacity", 1).animate({"opacity": 0},
-			{
-				duration: 800,
-				// remember to call this.onAnimatedOut
-				complete: bind(this, this.onAnimatedOut)
-			});
-		}
 	},
 	dealoc: function()
 	{
