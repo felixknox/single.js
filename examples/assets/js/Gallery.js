@@ -19,7 +19,9 @@ function onLoaded(data)
 					// enabled google analytics.
 					enableTracking: true,
 					// exclude "forceHashTag" to let the framework find out if it should use HTML5 History or hashtags.
-					forceHashTag: true
+					forceHashTag: true,
+
+					cachePages: false
 				}, data, $("#site"));
 }
 
@@ -54,6 +56,7 @@ var GalleryExample = {
 				this._el = null;
 			}
 		}),
+		
 		GalleryGrid: Single.views.BasicPage.extend({
 			_el: null,
 			print: function()
@@ -89,6 +92,7 @@ var GalleryExample = {
 				this._el = null;
 			}
 		}),
+
 		GalleryImage: Single.views.BasicPage.extend({
 			print: function()
 			{
@@ -130,7 +134,7 @@ var GalleryExample = {
 					"margin-left": -w,
 					"margin-top": -h
 				});
-
+				
 				this._el.find(".gallery-image-wrapper").animate({"opacity": 1, ease: "ease-out"}, 400);
 
 				$("#site").addClass("overlay");
@@ -148,7 +152,7 @@ var GalleryExample = {
 						complete: bind(this, this.onAnimatedOut)
 					});
 				}
-			},
+			}
 		})
 	}
 };

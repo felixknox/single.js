@@ -17,28 +17,33 @@ Single =
 		pathChange: new signals.Signal() //dispatches a signal containing the current path [String]
 	},
 
-	core: {},
-
-	//options
-		//enabledDebug (default: false) - true/false.
-	initOptions: null,
+	core: {
+		options: {
+			// (Boolean) disable/enable debug menu. For development purpose only.
+			enabledDebug: false,
+			// (String) Default title, should be overwriten from the custom option object.
+			title: "",
+			// (Boolean) enabled google analytics.
+			enableTracking: false,
+			// (Boolean) true/false, false to let the framework find out if it should use HTML5 History or hashtag.
+			forceHashTag: false,
+			//cachePages
+			cachePages: true
+		}
+	},
 
 	//variables
 	currentNode: null,
 	previousNode: null
-	// addNode: function(path, pageData)
-	// {
-	// 	this.core.pages.init(data.pages, pageContainer);
-	// 	this.core.pathModel.setup(data.sitetree, options.title);
-	// }
 };
 	
 		
 //
 Single.init = function(options, data, pageContainer)
 {
+	this.core.options = options;
 	this.core.pages.init(data.pages, pageContainer);
-	this.core.pathModel.setup(data.sitetree, options);
+	this.core.pathModel.setup(data.sitetree);
 
 	if(options.enableTracking)
 		Single.tracker.init();
@@ -95,15 +100,15 @@ Single.core.pages =
 
 		//always remove overlay page when changing page.
 		this.removeOldOverlayPage();
-
+		
 		this.removeOldNestedPage();
-
+		
 		//debug.
 		if(Single.debug.enabled) log("pageControl > onNewPageRequested:", path, currentNode);
-
+		
 		//build the data and class.
 		var _class = Single.tools.stringToFunction(currentNode.pageData.page);
-
+		
 		//check the type of page, and setup accordingly.
 		if(currentNode.overlay)
 		{
@@ -143,7 +148,7 @@ Single.core.pages =
 	//Page setup
 	setupOverlayPage: function(c, node)
 	{
-		this.currentOverlayPage = new c(node);
+		this.currentOverlayPage = this.getNewPageNode(c, node);
 		this.currentOverlayPage.setup(this.pageContainer);
 		this.currentOverlayPage.animateIn();
 
@@ -152,7 +157,7 @@ Single.core.pages =
 	},
 	setupNestedPage: function(c, node)
 	{
-		this.currentNestedPage = new c(node);
+		this.currentNestedPage = this.getNewPageNode(c, node);
 		//only setup the nested page if there is a current page, else the nested page have to wait.
 		if(this.currentPage && this.currentPage.dataNode === node.parent)
 			this.currentNestedPage.setup(this.pageContainer);
@@ -162,7 +167,7 @@ Single.core.pages =
 	},
 	setupPage: function(c, node)
 	{
-		this.currentPage = new c(node);
+		this.currentPage = this.getNewPageNode(c, node);
 		this.currentPage.setup(this.pageContainer);
 		this.currentPage.animateIn();
 
@@ -175,6 +180,16 @@ Single.core.pages =
 		//set the page of the currentNode (for deepbinding reference)
 		Single.currentNode.page = this.currentPage;
 	},
+	getNewPageNode: function(c, node)
+	{
+		//check if page caching is enabled.
+		var p;
+		if(Single.core.options.cachePages && this.cache.has(node.id))
+			p = this.cache.get(node.id);
+		else
+			p = new c(node);
+		return p;
+	},
 
 	//removal of the pages.
 	removeOldPage: function()
@@ -185,7 +200,12 @@ Single.core.pages =
 		}
 
 		if(this.currentPage)
+		{
 			this.currentPage.animateOut();
+
+			if(Single.core.options.cachePages && !this.cache.has(this.currentPage))
+				this.cache.add(this.currentPage.dataNode.id, this.currentPage);
+		}
 
 		this.currentPage = null;
 	},
@@ -197,14 +217,24 @@ Single.core.pages =
 		}
 
 		if(this.currentOverlayPage)
+		{
 			this.currentOverlayPage.animateOut();
+
+			if(Single.core.options.cachePages && !this.cache.has(this.currentOverlayPage))
+				this.cache.add(this.currentOverlayPage.dataNode.id, this.currentOverlayPage);
+		}
 
 		this.currentOverlayPage = null;
 	},
 	removeOldNestedPage: function()
 	{
 		if(this.currentNestedPage)
+		{
 			this.currentNestedPage.animateOut();
+
+			if(Single.core.options.cachePages && !this.cache.has(this.currentNestedPage))
+				this.cache.add(this.currentNestedPage.dataNode.id, this.currentNestedPage);
+		}
 
 		this.currentNestedPage = null;
 	},
@@ -216,6 +246,45 @@ Single.core.pages =
 	{
 		node.pageData = this._pagesData[node.dataId];
 		return node.pageData;
+	}
+};
+
+Single.core.pages.cache =
+{
+	data: [],
+	add: function(id, page)
+	{
+		this.data[id] = page;
+	},
+	get: function(id)
+	{
+		if(!this.has(id))
+			throw new Error("page is not cached exist!");
+		return this.data[id];
+	},
+	has: function(data)
+	{
+		if(this.data.length === 0)
+			return false;
+
+		if(typeof data === "string" && this.data[data] !== undefined)
+			return true;
+		else
+		{
+			for(var i in this.data)
+			{
+				if(this.data[i] === data)
+					return true;
+			}
+
+			return false;
+		}
+
+		return false;
+	},
+	remove: function()
+	{
+
 	}
 };
 
@@ -244,9 +313,9 @@ Single.core.pathModel =
 
 	DEFAULT_TITLE: "",
 
-	setup: function(data, options)
+	setup: function(data)
 	{
-		this.DEFAULT_TITLE = options.title;
+		this.DEFAULT_TITLE = Single.core.options.title;
 		this.data = data;
 		this.nodes = [];
 
@@ -258,7 +327,7 @@ Single.core.pathModel =
 
 		Single.SIGNALS.pageControlReady.dispatch();
 
-		forceToHashtag = options.forceHashTag;
+		forceToHashtag = Single.core.options.forceHashTag;
 		Path.history.listen(true);
 	},
 	enabledGA: function(ID)

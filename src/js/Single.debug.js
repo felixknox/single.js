@@ -13,7 +13,7 @@ Single.debug =
 
 		//requires jQuery to work, throw error if jQuery is not present.
 		Single.SIGNALS.pageCreated.add(this.onPageChange, this);
-		this._el = $("body").prepend("<div id='Single-debug'><div style='line-height: 16px; padding: 4px; padding-left: 6px; background-color: #FCF8E3; color: #555555; display: block; margin-left: 10px; margin-top: 10px; width: 280px;'>!! <b>single.js</b> debug menu<br />Only use during development/production</div></div>").find("#Single-debug");
+		this._el = $("body").prepend("<div id='Single-debug'><div style='line-height: 16px; padding: 4px; padding-left: 6px; background-color: #FCF8E3; color: #555555; display: block; margin-left: 10px; margin-top: 10px; width: 280px;'><b>! single.js !</b> debug menu<br />Only use during development</div></div>").find("#Single-debug");
 		this.buildTree(rootNode, this._el);
 
 		this.addStyle();
@@ -121,8 +121,8 @@ Single.DebugBtn = Class.extend({
 
 		this._node.requestNodeLaunch();
 
-		var that = this;
-		setTimeout(function() { log("isSiblingOf previous node:", that._node.isSiblingOf(Single.previousNode)); }, 10);
+		//var that = this;
+		//setTimeout(function() { log("isSiblingOf previous node:", that._node.isSiblingOf(Single.previousNode)); }, 10);
 	}
 });
 

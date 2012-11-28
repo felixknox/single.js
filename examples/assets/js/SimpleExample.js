@@ -19,7 +19,9 @@ function onLoaded(data)
 					// enabled google analytics.
 					enableTracking: true,
 					// exclude "forceHashTag" to let the framework find out if it should use HTML5 History or hashtags.
-					forceHashTag: true
+					forceHashTag: true,
+					
+					cachePages: true
 				}, data, $("#site"));
 
 	// create our own menu, using the bootstrap dropdown module
