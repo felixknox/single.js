@@ -2,7 +2,6 @@ single.js
 =========================
 
 a simple UI-less framework for single page applications/websites.<br>
-<i>you won't find a framework that let's you setup a huge site structure and individual page implementation as quick as this ;)</i>
 
 ## Installation
 
