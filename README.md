@@ -25,7 +25,7 @@ the framework relies on certain DATA-Object structure, which can be created via 
 <br>
 
 ### sitetree (JSON):
-contains the structure of the actual site (the name says it all)
+contains the structure of the actual site
 
 #### mandatory Fields:
 * `path` : String
@@ -64,7 +64,7 @@ check out the [Examples](#examples) for a complete Object structure reference.
 ## Instantiation
 to instantiate the framework:
 
-	var options = {enabledDebug: true, title: "Fallback title, when node has no title", forceHashTag: false, enableTracking: true};
+	var options = {enabledDebug: true, title: "Fallback title, when node has no title", forceHashTag: false, enableTracking: true, cachePages: true};
 	var dataObj = {sitetree:..., pages:...};
 	var domNode = $("#site")
 	Single.init(options, dataObj, domNode);
@@ -75,6 +75,7 @@ to instantiate the framework:
 * `enableTracking`, implement google analytics on the page, and page events will automaticlly get called from the framework
  * https://developers.google.com/analytics/devguides/collection/gajs/
  * Single.tracker.event(category, action, opt_label) for custom event tracking.
+* `cachePages`, true/false. If set to true, then a page wont be deleted, but keept for later use.
 
 ## Examples:
 * [a simple example](http://rwatgg.dk/labs/single.js/examples/simple.php) it includes the framework debug menu, and prints out data (JSON defined) associated to each page.<br>
