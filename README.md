@@ -86,8 +86,7 @@ uses [Nested](#optional-parameters) pages and [Mustache](https://github.com/janl
 
 ## SEO:
 this framework won't provide you with any SEO tools!<br>
-For reference, I have used this framework together with Drupal where the SEO was handled by Drupal, worked perfectly (no dirty hacks)
-reference: [shamballajewels.com](http://shamballajewels.com)
+for reference, the framework has been used together with Drupal where the SEO was handled by Drupal, here: [shamballajewels.com](http://shamballajewels.com)
 
 ## Todo:
 * add pages dynamiclly via JS, and not just via DATA-Object
