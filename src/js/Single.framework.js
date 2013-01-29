@@ -14,7 +14,8 @@ Single =
 		pageControlReady: new signals.Signal(), //when the data has been loaded
 		pathSameSame: new signals.Signal(), // if path is the same, signals gets fired.
 		pageStatus: new signals.Signal(), //with a value [String] of "in" or "out".
-		pathChange: new signals.Signal() //dispatches a signal containing the current path [String]
+		pathChange: new signals.Signal(), //dispatches a signal containing the current path [String]
+		path404: new signals.Signal()
 	},
 
 	core: {
@@ -42,14 +43,17 @@ Single =
 Single.init = function(options, data, pageContainer)
 {
 	this.core.options = options;
-	this.core.pages.init(data.pages, pageContainer);
-	this.core.pathModel.setup(data.sitetree);
+	if(data)
+	{
+		this.core.pages.init(data.pages, pageContainer);
+		this.core.pathModel.setup(data.sitetree);
+
+		if(options.enabledDebug)
+			Single.debug.init(this.core.pathModel.rootNode);
+	}
 
 	if(options.enableTracking)
 		Single.tracker.init();
-
-	if(options.enabledDebug)
-		Single.debug.init(this.core.pathModel.rootNode);
 };
 
 /***
@@ -62,6 +66,7 @@ Single.init = function(options, data, pageContainer)
 */
 //Controls the pages of the app. When a new page gets requested via the pageControl (calls a HTTP receiver)
 //It waits for proper feedback from the server, removes old page and shows the new page.
+
 Single.core.pages =
 {
 	currentPage: null,
@@ -79,8 +84,12 @@ Single.core.pages =
 		Single.SIGNALS.pageStatus.add(this.onPageStatusChange, this);
 		this._pagesData = [];
 		for (var i = 0; i < data.length; i++) {
-			this._pagesData[data[i].dataId] = data[i];
+			this.addPageData(data[i].dataId, data[i]);
 		}
+	},
+	addPageData: function(id, data)
+	{
+		this._pagesData[id] = data;
 	},
 	requestNewPage: function(path)
 	{
@@ -297,6 +306,7 @@ Single.core.pages.cache =
 *    | _|    /__/     \__\  |__|     |__|  |__| |__|  |__|  \______/  |_______/ |_______||_______|
 */
 //Controls the path of the application. Uses Path.js to handle crossbrowser issues.
+
 Single.core.pathModel =
 {
 	//consts
@@ -329,10 +339,6 @@ Single.core.pathModel =
 
 		forceToHashtag = Single.core.options.forceHashTag;
 		Path.history.listen(true);
-	},
-	enabledGA: function(ID)
-	{
-
 	},
 	bindable: function()
 	{
@@ -377,13 +383,36 @@ Single.core.pathModel =
 			Path.root(this.rootNode.fullPath);
 		}
 
+		this.mapNode(pathNode);
+
+		return pathNode;
+	},
+	createSubNode: function(node, data, pageData /*optional*/)
+	{
+		var isRootNode = this.rootNode === null;
+		var parentNode = node;
+		//var pathNode = new PathNode(data, node.fullPath, parentNode, this, this.nodes.length, isRootNode);
+		//this.nodes.push(pathNode);
+		//this.mapNode(pathNode);
+		//if(isRootNode)
+		//{
+			//this.rootNode = pathNode;
+			//Path.root(this.rootNode.fullPath);
+		//}
+		//if(pageData)
+		//{
+			//if page data.
+			//add page data, linked to the node.
+			//Single.core.pages.addPageData(pathNode.id, pageData);
+		//}
+	},
+	mapNode: function(pathNode)
+	{
 		Path.map(pathNode.fullPath).to(this.bindable).enter(this.onEnter);
 		if(pathNode.fullPath.length > 1 && pathNode.fullPath.substr(pathNode.fullPath.length-1, 1) !== "/")
 		{
 			Path.map(pathNode.fullPath+"/").to(this.bindable).enter(this.onEnter);
 		}
-
-		return pathNode;
 	},
 	map: function(elems, trailingPath)
 	{
@@ -419,7 +448,8 @@ Single.core.pathModel =
 	},
 	on404: function(params)
 	{
-		log("404: show 404 madness", params);
+		log("404: Path not found");
+		Single.SIGNALS.path404.dispatch(params);
 	},
 	set: function(name, path)
 	{
@@ -498,7 +528,7 @@ Single.tools =
 		}
 
 		if (typeof fn !== "function") {
-			throw new Error("function not found");
+			throw new Error("function not found. Function: "+str);
 		}
 		return  fn;
 	},
@@ -561,8 +591,6 @@ Single.tracker =
 	}
 };
 
-
-
 /***
  *    .______      ___   .___________. __    __  .__   __.   ______    _______   _______
  *    |   _  \    /   \  |           ||  |  |  | |  \ |  |  /  __  \  |       \ |   ____|
@@ -571,6 +599,7 @@ Single.tracker =
  *    |  |     /  _____  \   |  |     |  |  |  | |  |\   | |  `--'  | |  '--'  ||  |____
  *    | _|    /__/     \__\  |__|     |__|  |__| |__| \__|  \______/  |_______/ |_______|
  */
+
 var PathNode = Class.extend({
 
 	id: "",

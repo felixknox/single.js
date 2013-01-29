@@ -34,14 +34,16 @@
 		<script src="assets/js/libs/bootstrap.min.js"></script>
 		<link rel="stylesheet" href="assets/css/bootstrap.min.css" />
 
+		<!-- FRAMEWORK DEPENDENCIES -->
 		<script src="../src/js/libs/libraries.js"></script>
 		<script src="../src/js/libs/path.js"></script>
 
-		<!-- LOGIC -->
+		<!-- FRAMEWORK -->
 		<script src="../src/js/Single.framework.js"></script>
 		<script src="../src/js/Single.debug.js"></script>
 		<script src="../src/js/Single.views.js"></script>
 
+		<!-- EXAMPLE -->
 		<script src="assets/js/SimpleExampleMenu.js"></script>
 		<script src="assets/js/SimpleExample.js"></script>
 	</head>

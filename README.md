@@ -89,7 +89,7 @@ this framework won't provide you with any SEO tools!<br>
 for reference, the framework has been used together with Drupal where the SEO was handled by Drupal, here: [shamballajewels.com](http://shamballajewels.com)
 
 ## Todo:
-* add pages dynamiclly via JS, and not just via DATA-Object
+* add pages dynamiclly via JS, and not just via DATA-Object (check createSubNode method created)
 * parameters, possibility to add querystring like parameters, ex.: /gallery?page=2&sort=alphabetic
 * test in older browsers/mobile
 * make a debug view for mobile devices
@@ -114,3 +114,8 @@ for reference, the framework has been used together with Drupal where the SEO wa
 
 ## Thanks to
 - Inspired by the work of [Josef Kjærgaard](http://josefkjaergaard.com/) and his "awesome sauce" Flash framework.
+
+
+
+
+
